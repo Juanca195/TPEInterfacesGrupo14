@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrega</title>
+</head>
+<body>
+  <style>
+      body{
+        background-image: url('IconoParaFondo.jpeg');
+        background-repeat: no-repeat;  /* <-- ESTA evita que se duplique */
+        background-size: cover;        /* <-- ESTA estira la imagen para que tape toda la pantalla */
+        background-position: center;   /* <-- ESTA centra la imagen */
+        background-attachment: fixed; 
+
+        display: flex;            /* Activa el diseño flexible */
+        justify-content: center;  /* Centra de forma horizontal (izquierda/derecha) */
+        align-items: center;      /* Centra de forma vertical (arriba/abajo) */
+        min-height: 100vh;        /* Obliga a la página a medir el 100% del alto de la pantalla */
+    
+    box-sizing: border-box;
+      }
+        /* Estilos sencillos para darle forma de cuadro */
+        table {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f6f8fa;
+            color: #24292f;
+        }
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+        a {
+            color: #0969da;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Estilo de los botones */
+        .btn-enlace {
+            display: block;
+            margin: 12px 0;
+            padding: 12px 20px;
+            background-color: #2ea44f; /* Verde estilo GitHub */
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(27, 31, 36, 0.15);
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cuadro con los enlaces -->
+    <table>
+        <thead>
+            <tr>
+                <th>TPE-Entrega1</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="https://www.figma.com/design/qLwiq0nP3i1bYUdUfouNm4/TPE-1-entrega?node-id=0-1&t=iNszGC9v2pTPxrkH-1" class="btn-enlace">Modo editor</a></td>
+            </tr>
+            <tr>
+                <td><a href="https://www.figma.com/design/qLwiq0nP3i1bYUdUfouNm4/TPE-1-entrega?node-id=11-17&t=iNszGC9v2pTPxrkH-1" class="btn-enlace">Modo presentaciópn</a></td>
+            </tr>
+        </tbody>
+      </table>
+
+  
+    
+</body>
+</html>
