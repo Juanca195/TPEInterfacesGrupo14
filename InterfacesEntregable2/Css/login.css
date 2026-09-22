@@ -1,0 +1,420 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Exo 2', Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button, input {
+  font: inherit;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+p,h1,h2,h3 {
+  margin: 0;
+}
+
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
+.topbar {
+  width: 100%;
+  height: 48px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-inner {
+  width: 100%;
+  max-width: 1920px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  display: inline-block;
+  height: 0;
+  border: 4px solid #d5b4ff;
+  border-radius: 999px;
+}
+
+.brand-mark--wide {
+  width: 36px;
+}
+
+.brand-mark--short {
+  width: 16px;
+}
+
+.brand-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #d5b4ff;
+  border-radius: 50%;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo img {
+  width: 149px;
+  height: 28px;
+}
+
+.profile-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #8d52ff;
+  position: relative;
+}
+
+.profile-head {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #000;
+  top: 3px;
+  left: 11px;
+}
+
+.profile-body {
+  position: absolute;
+  width: 22px;
+  height: 14px;
+  border-radius: 18px 18px 8px 8px;
+  background: #000;
+  left: 7px;
+  bottom: 5px;
+}
+
+.profile-badge-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ff3b30;
+  border-radius: 50%;
+  right: 0;
+  top: 0;
+}
+
+.page-hero {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  display: block;
+}
+
+/* La imagen y el formulario comparten una zona; así el formulario se centra sobre el hero. */
+.login-stage {
+  width: 100%;
+  min-height: 560px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.footer-shell {
+    /* El footer usa todo el ancho y conserva poco espacio vertical. */
+    width: 100%;
+    padding: 8px 12px;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+}
+
+.footer-grid {
+  /* Las cinco columnas se reparten todo el ancho disponible. */
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  align-items: start;
+  margin-bottom: none;
+}
+
+.footer-column {
+  padding: 0;
+  min-width: 0;
+}
+
+.footer-column h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.footer-column ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.footer-column--developers p {
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.footer-branding {
+  /* La fila inferior también ocupa todo el ancho del footer. */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tagline {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: none;
+}
+
+.footer-image {
+  /* Mantiene el logo proporcionado dentro de la fila inferior. */
+  width:500px;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-banner {
+  width: min(100%, 500px);
+  height: 125px;
+  object-fit: cover;
+}
+
+.social-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.social-area h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.social-area small {
+  color: #d9d9d9;
+  font-size: 0.7rem;
+}
+
+.login-card {
+  /* El grid de login-stage centra esta tarjeta horizontal y verticalmente. */
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(459px, calc(100% - 32px));
+  min-height: auto;
+  padding: 48px 48px 40px;
+  background: rgba(23, 12, 52, 0.96);
+  border-radius: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  /* Ya no usamos un margen negativo: el centrado lo controla login-stage. */
+  margin: 0;
+  z-index: 10;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.login-title {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.login-field {
+  width: 100%;
+  height: 48px;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.125rem;
+}
+
+.login-field input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.7);
+  font: inherit;
+  outline: none;
+}
+
+.field-label {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-toggle {
+  width: 22px;
+  height: 16px;
+  border: 2px solid #1e1e1e;
+  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+  position: relative;
+  opacity: 0.75;
+}
+
+.password-toggle::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid #1e1e1e;
+  top: 3px;
+  left: 5px;
+}
+
+.login-button {
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 50px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.register-link {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.register-link a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.9);
+}
+
+.social-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-button {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.125rem;
+  cursor: pointer;
+}
+
+.social-button.facebook {
+  background: #1877f2;
+  color: #fff;
+}
+
+.social-button.google {
+  background: #fff;
+  color: #111;
+}
+
+.social-icon,
+.google-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.google-icon {
+  color: #4285f4;
+}
+

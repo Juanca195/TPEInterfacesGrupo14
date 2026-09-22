@@ -1,0 +1,356 @@
+/* Faltan detalles */
+:root {
+     --purple: #250e36;
+     --accent: #9f4cdb;
+     --blue: #3030fb;
+     --muted: #c1c1c1;
+}
+
+* {
+     box-sizing: border-box;
+}
+
+body {
+     margin: 0;
+     background: #000;
+     color: #fff;
+     font-family: 'Exo 2', sans-serif;
+}
+
+.page {
+     min-height: 100vh;
+     background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('../Img/IconoParaFondo.jpeg') center/cover;
+     display: flex;
+     flex-direction: column;
+     gap: 50px;
+}
+
+.navbar {
+     height: 50px;
+     padding: 8px 12px;
+     background: #000;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+
+.Menu {
+     display: flex;
+     align-items: center;
+     gap: 3px;
+     width: 110px;
+}
+
+.Menu img {
+     width: 90px;
+     height: 20px;
+}
+
+.profile-icon {
+     width: 35px;
+     height: 35px;
+     position: relative;
+     border-radius: 50%;
+     background: var(--accent);
+}
+
+.profile-head,
+.profile-body {
+     position: absolute;
+     background: #000;
+}
+
+.profile-head {
+     width: 13px;
+     height: 14px;
+     top: 3px;
+     left: 11px;
+     border-radius: 50%;
+}
+
+.profile-body {
+     width: 25px;
+     height: 14px;
+     bottom: 4px;
+     left: 5px;
+     border-radius: 14px 14px 3px 3px;
+}
+
+.notification {
+     position: absolute;
+     width: 10px;
+     height: 10px;
+     right: -1px;
+     top: 0;
+     border-radius: 50%;
+     background: #f00;
+}
+
+.register-card {
+     width: min(577px, calc(100% - 32px));
+     margin: 0 auto;
+     padding: 50px;
+     background: var(--purple);
+     border-radius: 30px;
+}
+
+h1 {
+     margin: 0 0 25px;
+     text-align: center;
+     font-size: 28px;
+     font-weight: 600;
+     text-shadow: 0 4px 4px #000;
+}
+
+.register-form,
+.field {
+     display: flex;
+     flex-direction: column;
+}
+
+.register-form {
+     gap: 15px;
+}
+
+.field {
+     gap: 13px;
+     font-size: 20px;
+     font-weight: 500;
+}
+
+input {
+     width: 100%;
+     height: 50px;
+     padding: 0 17px;
+     border: 0;
+     border-radius: 20px;
+     font: 400 20px 'Exo 2';
+     color: rgba(0, 0, 0, .7);
+}
+
+input:focus {
+     outline: 2px solid var(--accent);
+}
+
+small {
+     color: var(--muted);
+     font-size: 14px;
+     font-weight: 400;
+}
+
+.field-with-help,
+.password-field {
+     gap: 8px;
+}
+
+.password-input {
+     height: 50px;
+     padding: 0 17px;
+     background: #fff;
+     border-radius: 20px;
+     display: flex;
+     align-items: center;
+}
+
+.password-input input {
+     padding: 0;
+}
+
+.eye-icon {
+     width: 20px;
+     height: 12px;
+     border: 2px solid #000;
+     border-radius: 80% 0;
+     transform: rotate(45deg);
+}
+
+.captcha {
+     width: 302px;
+     padding: 8px 16px;
+     align-self: flex-start;
+     background: #f9f9f9;
+     color: #000;
+     border: 1px solid #d3d3d3;
+     border-radius: 2px;
+     box-shadow: 2px 2px rgba(0, 0, 0, .05);
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     font: 14px Roboto;
+}
+
+.captcha-check {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+}
+
+.checkbox {
+     width: 28px;
+     height: 28px;
+     background: #fff;
+     border: 2px solid #c1c1c1;
+     border-radius: 2px;
+}
+
+.captcha-logo {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-end;
+     gap: 2px;
+     font-size: 10px;
+}
+
+.captcha-logo small {
+     color: #000;
+     font-size: 8px;
+}
+
+.captcha-mark {
+     width: 22px;
+     height: 16px;
+     background: linear-gradient(135deg, #b5b6b5 45%, #4d8df4 45% 70%, #1b3cac 70%);
+}
+
+.primary-button,
+.social-button {
+     border: 0;
+     border-radius: 50px;
+     padding: 14px 30px;
+     font: 700 20px 'Exo 2';
+     text-decoration: none;
+     text-align: center;
+     cursor: pointer;
+}
+
+.primary-button {
+     align-self: center;
+     color: #fff;
+     background: var(--blue);
+}
+
+.login-link {
+     margin: 0;
+     text-align: center;
+     font-size: 15px;
+}
+
+.login-link a {
+     color: #fff;
+     font-weight: 500;
+}
+
+.separator {
+     height: 1px;
+     margin-top: 10px;
+     background: #fff;
+}
+
+.social-buttons {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 33px;
+     margin-top: 30px;
+}
+
+.social-button {
+     width: 100%;
+     padding: 10px 16px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px;
+     font-weight: 400;
+}
+
+.facebook {
+     color: #fff;
+     background: #1877f2;
+}
+
+.google {
+     color: #000;
+     background: #fff;
+}
+
+.social-icon,
+.google-icon {
+     font-weight: 700;
+     font-size: 25px;
+}
+
+.google-icon {
+     color: #4285f4;
+}
+
+/* position: fixed; saca el elemento del flujo normal del documento y lo ancla a la ventana del navegador. */
+.footer {
+     padding: 16px;
+     background: #000;
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+}
+
+.footer-columns,
+.footer-bottom {
+     display: flex;
+     justify-content: space-between;
+     gap: 20px;
+}
+
+.footer-columns section {
+     padding: 0 10px;
+}
+
+.footer h2 {
+     margin: 0;
+     font-size: 18px;
+     font-weight: 500;
+}
+
+.footer p {
+     font-size: 14px;
+     line-height: 1.45;
+     margin: 5px 0 0;
+}
+
+.footer-bottom {
+     align-items: center;
+}
+
+.tagline {
+     font-weight: 700;
+     line-height: 1.2;
+}
+
+/* Aca falta la imagen del logo */
+.footer-image {
+     width: min(40%, 779px);
+     height: 135px;
+     object-fit: cover;
+}
+
+.social-area {
+     text-align: center;
+}
+
+.social-icons {
+     display: flex;
+     justify-content: center;
+     gap: 30px;
+     margin: 12px 0 25px;
+}
+
+.social-icons a {
+     color: #fff;
+     font-size: 28px;
+     text-decoration: none;
+}
+
+.social-area small {
+     color: #dedede;
+     font-size: 20px;
+}
+
