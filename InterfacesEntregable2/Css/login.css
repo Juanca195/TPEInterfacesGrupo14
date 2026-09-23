@@ -3,9 +3,11 @@
 }
 
 body {
+  width: 100%;
+  min-height: 100%;
   margin: 0;
   font-family: 'Exo 2', Arial, sans-serif;
-  background: #000;
+  background: #111114;
   color: #fff;
 }
 
@@ -38,6 +40,8 @@ p,h1,h2,h3 {
  
 }
 
+/* ------------- Inicio de header y nav -------------*/
+
 .topbar {
   width: 100%;
   height: 48px;
@@ -45,111 +49,232 @@ p,h1,h2,h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
-.topbar-inner {
+
+.nav {
   width: 100%;
-  max-width: 1920px;
-  height: 100%;
+  margin: 12px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+ 
 }
 
-.brand-group {
+
+.content_nav_left {
+  display: flex;
+  align-items: center;
+}
+
+
+.btn-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    
+}
+
+
+.btn-burger-icon {
+    width: 24px;
+    height: 24px;
+    fill: #9F4CDB
+    ;
+}
+
+
+.content_nav_right {
   display: flex;
   align-items: center;
   gap: 10px;
+  align-self: stretch; 
+  border-radius: 10px;
+  background: rgba(159, 76, 219, 0.50);
+  padding: 8px 12px;
+  text-decoration: none;
+  color: inherit
 }
 
-.brand-mark {
-  display: inline-block;
-  height: 0;
-  border: 4px solid #d5b4ff;
-  border-radius: 999px;
+
+.premium-icon {
+  fill: #FFCD29;
 }
 
-.brand-mark--wide {
-  width: 36px;
-}
+/*------------- Fin de header y nav ------------- */
 
-.brand-mark--short {
-  width: 16px;
-}
 
-.brand-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #d5b4ff;
-  border-radius: 50%;
-}
+/*------------- Main ------------- */
 
-.brand-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.brand-logo img {
-  width: 149px;
-  height: 28px;
-}
-
-.profile-badge {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #8d52ff;
-  position: relative;
-}
-
-.profile-head {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #000;
-  top: 3px;
-  left: 11px;
-}
-
-.profile-body {
-  position: absolute;
-  width: 22px;
-  height: 14px;
-  border-radius: 18px 18px 8px 8px;
-  background: #000;
-  left: 7px;
-  bottom: 5px;
-}
-
-.profile-badge-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #ff3b30;
-  border-radius: 50%;
-  right: 0;
-  top: 0;
-}
-
-.page-hero {
-  width: 100%;
-  height: 560px;
-  object-fit: cover;
-  display: block;
-}
-
-/* La imagen y el formulario comparten una zona; así el formulario se centra sobre el hero. */
 .login-stage {
-  width: 100%;
-  min-height: 560px;
   position: relative;
+  width: 100%;
+  min-height: calc(100vh - 48px);
+  overflow: hidden;
   display: grid;
   place-items: center;
 }
+
+.page-hero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.login-card {
+  position: relative; 
+  width: min(459px, calc(100% - 32px));
+  padding: 48px 48px 40px;
+  background: #26004D;
+  border-radius: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.login-title {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.login-field {
+  width: 100%;
+  height: 48px;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  font-size: 1.125rem;
+}
+
+.login-field input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #000;
+  outline: none;
+  font-size: 1rem;
+}
+
+
+.password-field {
+  position: relative;
+}
+
+
+.password-toggle {
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  width: 22px;
+  height: 25px;
+}
+
+
+.login-button {
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 50px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.register-link {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.register-link a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.social-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-button {
+  width: 100%;
+  min-height: 52px;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.125rem;
+  cursor: pointer;
+}
+
+.social-button.facebook {
+  background: #1877f2;
+  color: #fff;
+}
+
+.social-button.google {
+  background: #fff;
+  color: #111;
+}
+
+.social-icon,
+.google-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.google-icon {
+  color: #4285f4;
+}
+
+
+/*------------- Fin main ------------- */
 
 .footer-shell {
     /* El footer usa todo el ancho y conserva poco espacio vertical. */
@@ -255,166 +380,3 @@ p,h1,h2,h3 {
   color: #d9d9d9;
   font-size: 0.7rem;
 }
-
-.login-card {
-  /* El grid de login-stage centra esta tarjeta horizontal y verticalmente. */
-  position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-  width: min(459px, calc(100% - 32px));
-  min-height: auto;
-  padding: 48px 48px 40px;
-  background: rgba(23, 12, 52, 0.96);
-  border-radius: 50px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-
-  /* Ya no usamos un margen negativo: el centrado lo controla login-stage. */
-  margin: 0;
-  z-index: 10;
-}
-
-.login-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-}
-
-.login-title {
-  width: 100%;
-  text-align: center;
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.login-field {
-  width: 100%;
-  height: 48px;
-  border-radius: 20px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.125rem;
-}
-
-.login-field input {
-  width: 100%;
-  border: 0;
-  background: transparent;
-  color: rgba(0, 0, 0, 0.7);
-  font: inherit;
-  outline: none;
-}
-
-.field-label {
-  color: rgba(0, 0, 0, 0.7);
-}
-
-.password-field {
-  position: relative;
-}
-
-.password-toggle {
-  width: 22px;
-  height: 16px;
-  border: 2px solid #1e1e1e;
-  border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
-  position: relative;
-  opacity: 0.75;
-}
-
-.password-toggle::before {
-  content: "";
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 2px solid #1e1e1e;
-  top: 3px;
-  left: 5px;
-}
-
-.login-button {
-  padding: 12px 28px;
-  border: 0;
-  border-radius: 50px;
-  background: #4f46e5;
-  color: #fff;
-  font-size: 1.125rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.register-link {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  color: #fff;
-  font-size: 1rem;
-}
-
-.register-link a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.separator {
-  width: 100%;
-  height: 1px;
-  background: rgba(255,255,255,0.9);
-}
-
-.social-login {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.social-button {
-  width: 100%;
-  min-height: 52px;
-  border: none;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 1.125rem;
-  cursor: pointer;
-}
-
-.social-button.facebook {
-  background: #1877f2;
-  color: #fff;
-}
-
-.social-button.google {
-  background: #fff;
-  color: #111;
-}
-
-.social-icon,
-.google-icon {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.3rem;
-}
-
-.google-icon {
-  color: #4285f4;
-}
-
