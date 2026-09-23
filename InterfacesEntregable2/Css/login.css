@@ -1,5 +1,16 @@
 * {
   box-sizing: border-box;
+  --secondary-dark-2: #26004D;
+  --secondary-dark-1: #4D0099;
+  --secondary: #9f4cdb;
+  --secondary-light-1: #B366FF;
+  --secondary-light-2: #E6CCFF;
+  --primary-dark-2: #002040;
+  --primary-dark-1: #004080;
+  --primary: #0000FF;
+  --primary-light-1: #4DA6FF;
+  --primary-light-2: #CCE6FF;
+  --accent: #FFD700;
 }
 
 body {
@@ -16,7 +27,8 @@ img {
   display: block;
 }
 
-button, input {
+button,
+input {
   font: inherit;
 }
 
@@ -26,7 +38,10 @@ ul {
   margin: 0;
 }
 
-p,h1,h2,h3 {
+p,
+h1,
+h2,
+h3 {
   margin: 0;
 }
 
@@ -37,7 +52,7 @@ p,h1,h2,h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+
 }
 
 /* ------------- Inicio de header y nav -------------*/
@@ -60,7 +75,7 @@ p,h1,h2,h3 {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
- 
+
 }
 
 
@@ -71,22 +86,21 @@ p,h1,h2,h3 {
 
 
 .btn-burger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background:none;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+
 }
 
 
 .btn-burger-icon {
-    width: 24px;
-    height: 24px;
-    fill: #9F4CDB
-    ;
+  width: 24px;
+  height: 24px;
+  fill: #9F4CDB;
 }
 
 
@@ -94,7 +108,7 @@ p,h1,h2,h3 {
   display: flex;
   align-items: center;
   gap: 10px;
-  align-self: stretch; 
+  align-self: stretch;
   border-radius: 10px;
   background: rgba(159, 76, 219, 0.50);
   padding: 8px 12px;
@@ -132,7 +146,7 @@ p,h1,h2,h3 {
 }
 
 .login-card {
-  position: relative; 
+  position: relative;
   width: min(459px, calc(100% - 32px));
   padding: 48px 48px 40px;
   background: #26004D;
@@ -194,7 +208,7 @@ p,h1,h2,h3 {
 }
 
 
-.login-button {
+/* .login-button {
   padding: 12px 28px;
   border: 0;
   border-radius: 50px;
@@ -203,7 +217,7 @@ p,h1,h2,h3 {
   font-size: 1.125rem;
   font-weight: 700;
   cursor: pointer;
-}
+} */
 
 .register-link {
   display: flex;
@@ -219,6 +233,24 @@ p,h1,h2,h3 {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
+}
+
+.login-button {
+  width: 178px;
+  height: 52px;
+  font-size: 20px;
+  border-radius: 30px;
+  align-self: center;
+  border: 0;
+  color: #fff;
+  background: var(--primary);
+}
+
+/* Posible animacion    */
+.login-button:hover {
+  background-color: var(--secondary);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(6, 16, 37, 0.45);
 }
 
 .separator {
@@ -277,14 +309,14 @@ p,h1,h2,h3 {
 /*------------- Fin main ------------- */
 
 .footer-shell {
-    /* El footer usa todo el ancho y conserva poco espacio vertical. */
-    width: 100%;
-    padding: 8px 12px;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-top: auto;
+  /* El footer usa todo el ancho y conserva poco espacio vertical. */
+  width: 100%;
+  padding: 8px 12px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
 }
 
 .footer-grid {
@@ -339,7 +371,7 @@ p,h1,h2,h3 {
 
 .footer-image {
   /* Mantiene el logo proporcionado dentro de la fila inferior. */
-  width:500px;
+  width: 500px;
   height: auto;
   object-fit: contain;
 }

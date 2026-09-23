@@ -1,8 +1,16 @@
 
 :root {
-     --purple: #250e36;
-     --accent: #9f4cdb;
-     --blue: #3030fb;
+     --secondary-dark-2: #26004D;
+     --secondary-dark-1:#4D0099;
+     --secondary: #9f4cdb;
+     --secondary-light-1: #B366FF;
+     --secondary-light-2: #E6CCFF;
+     --primary-dark-2:#002040;
+     --primary-dark-1: #004080;
+     --primary: #0000FF;
+     --primary-light-1: #4DA6FF;
+     --primary-light-2: #CCE6FF;
+     --accent:#FFD700;
      --muted: #c1c1c1;
      --font : 'Exo 2';
 }
@@ -106,6 +114,7 @@ body {
      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
      
 }
+
 
 h1 {
      margin: 0 0 25px;
@@ -246,7 +255,7 @@ small {
 }
 
 /*-- Botones redes sociales ---*/
-.primary-button,
+.register-button,
 .social-button {
      border: 0;
      border-radius: 50px;
@@ -257,18 +266,18 @@ small {
      cursor: pointer;
 }
 
-.primary-button {
+.register-button {
      width: 178px;
      height: 52px;
      font-size: 20px;
      border-radius: 30px ;
      align-self: center;
      color: #fff;
-     background: var(--blue);
+     background: var(--primary);
 }
 /* Posible animacion    */
-.primary-button:hover{
-     background-color: var(-blue);
+.register-button:hover{
+     background-color: var(--secondary);
      transform: scale(1.05);  
      box-shadow: 0 8px 20px rgba(6, 16, 37, 0.45);
 }
