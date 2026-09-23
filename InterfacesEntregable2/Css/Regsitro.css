@@ -1,4 +1,4 @@
-/* Faltan detalles */
+
 :root {
      --purple: #250e36;
      --accent: #9f4cdb;
@@ -18,88 +18,98 @@ body {
 }
 
 .page {
+     width: 100%;
      min-height: 100vh;
-     background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url('../Img/IconoParaFondo.jpeg') center/cover;
+     background:
+     linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),
+     url('../Img/IconoParaFondo.jpeg') center/cover no-repeat;
      display: flex;
      flex-direction: column;
-     gap: 50px;
-}
+     align-items: center;
+     }
 
+/*---------- Inicio de Header ----------*/
 .navbar {
-     height: 50px;
-     padding: 8px 12px;
+     width: 100%;
+     height: 48px;
      background: #000;
      display: flex;
-     justify-content: space-between;
      align-items: center;
+     justify-content: space-between;
+     padding: 0 16px;
 }
 
 .Menu {
      display: flex;
      align-items: center;
-     gap: 3px;
-     width: 110px;
+     gap: 8px;
 }
 
 .Menu img {
      width: 90px;
      height: 20px;
 }
-
-.profile-icon {
-     width: 35px;
-     height: 35px;
-     position: relative;
-     border-radius: 50%;
-     background: var(--accent);
+.content_nav_left {
+  display: flex;
+  align-items: center;
 }
 
-.profile-head,
-.profile-body {
-     position: absolute;
-     background: #000;
+
+.btn-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    
 }
 
-.profile-head {
-     width: 13px;
-     height: 14px;
-     top: 3px;
-     left: 11px;
-     border-radius: 50%;
+
+.btn-burger-icon {
+    width: 24px;
+    height: 24px;
+    fill: #9F4CDB
+    ;
 }
 
-.profile-body {
-     width: 25px;
-     height: 14px;
-     bottom: 4px;
-     left: 5px;
-     border-radius: 14px 14px 3px 3px;
+.content_nav_right {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     border-radius: 10px;
+     background: rgba(159, 76, 219, 0.50);
+     padding: 8px 12px;
+     text-decoration: none;
+     color: #fff;
+     font-weight: 500;
 }
 
-.notification {
-     position: absolute;
-     width: 10px;
-     height: 10px;
-     right: -1px;
-     top: 0;
-     border-radius: 50%;
-     background: #f00;
+.premium-icon {
+     fill: #FFCD29;
 }
 
+/*---------- Fin Header ----------*/
+
+/*     Registro    */
 .register-card {
-     width: min(577px, calc(100% - 32px));
-     margin: 0 auto;
-     padding: 50px;
-     background: var(--purple);
-     border-radius: 30px;
+     width: 577px;
+     margin: 50px ;
+     padding: 48px 48px 40px;
+     background: #26004D;
+     border-radius: 50px;
+     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
 h1 {
      margin: 0 0 25px;
      text-align: center;
-     font-size: 28px;
+     color: #fff;
+     font-size: 2rem;
      font-weight: 600;
-     text-shadow: 0 4px 4px #000;
+     line-height: 1.2;
+     text-shadow: none;
 }
 
 .register-form,
@@ -120,12 +130,13 @@ h1 {
 
 input {
      width: 100%;
-     height: 50px;
+     height: 48px;
      padding: 0 17px;
      border: 0;
      border-radius: 20px;
      font: 400 20px 'Exo 2';
      color: rgba(0, 0, 0, .7);
+     background: #fff;
 }
 
 input:focus {
@@ -163,34 +174,50 @@ small {
      border-radius: 80% 0;
      transform: rotate(45deg);
 }
+/*-- Fin registro ----*/
 
+/*   Re armarlo  */
 .captcha {
-     width: 302px;
-     padding: 8px 16px;
-     align-self: flex-start;
-     background: #f9f9f9;
-     color: #000;
-     border: 1px solid #d3d3d3;
-     border-radius: 2px;
-     box-shadow: 2px 2px rgba(0, 0, 0, .05);
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     font: 14px Roboto;
+     /* Centrado en el formulario */
+  margin: 20px auto; 
+  /* Apariencia del recuadro blanco clásico */
+  background-color: #f9f9f9; /* Color de fondo oficial */
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.08);
+  /* Dimensiones oficiales de Google reCAPTCHA */
+  width: 304px; 
+  height: 78px; 
+  padding: 0 10px 0 12px;
+  box-sizing: border-box;
+
+  /* Diseño interno para separar el check (izq) y el logo (der) */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  /* Tipografía similar a la de Google */
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+   
 }
 
 .captcha-check {
      display: flex;
      align-items: center;
      gap: 12px;
+     font-size: 14px;
+     color: #222;
 }
 
 .checkbox {
      width: 28px;
      height: 28px;
-     background: #fff;
+     background-color: #fff;
      border: 2px solid #c1c1c1;
      border-radius: 2px;
+}
+.checkbox:hover {
+  border-color: #b2b2b2; /* Oscurece un poco al pasar el mouse */
 }
 
 .captcha-logo {
@@ -212,6 +239,7 @@ small {
      background: linear-gradient(135deg, #b5b6b5 45%, #4d8df4 45% 70%, #1b3cac 70%);
 }
 
+/*-- Botones redes sociales ---*/
 .primary-button,
 .social-button {
      border: 0;
@@ -224,9 +252,19 @@ small {
 }
 
 .primary-button {
+     width: 178px;
+     height: 52px;
+     font-size: 20px;
+     border-radius: 30px ;
      align-self: center;
      color: #fff;
      background: var(--blue);
+}
+/* Posible animacion    */
+.primary-button:hover{
+     background-color: var(-blue);
+     transform: scale(1.05);  
+     box-shadow: 0 8px 20px rgba(6, 16, 37, 0.45);
 }
 
 .login-link {
@@ -276,21 +314,36 @@ small {
 
 .social-icon,
 .google-icon {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
      font-weight: 700;
      font-size: 25px;
+}
+/*Tamaños de las redes*/
+.social-icon img,
+.google-icon img,
+.social-icons img {
+     display: block;
+     width: 30px;
+     height: 30px;
+     object-fit: contain;
 }
 
 .google-icon {
      color: #4285f4;
 }
 
+/*      Inicio del footer*/
 /* position: fixed; saca el elemento del flujo normal del documento y lo ancla a la ventana del navegador. */
 .footer {
-     padding: 16px;
+     width: 100%;
+     padding: 8px 12px;
      background: #000;
      display: flex;
      flex-direction: column;
-     gap: 20px;
+     gap: 4px;
+     margin-top: auto;
 }
 
 .footer-columns,
@@ -306,12 +359,12 @@ small {
 
 .footer h2 {
      margin: 0;
-     font-size: 18px;
+     font-size: 20px;
      font-weight: 500;
 }
 
 .footer p {
-     font-size: 14px;
+     font-size: 16px;
      line-height: 1.45;
      margin: 5px 0 0;
 }
@@ -325,10 +378,10 @@ small {
      line-height: 1.2;
 }
 
-/* Aca falta la imagen del logo */
+
 .footer-image {
-     width: min(40%, 779px);
-     height: 135px;
+     width: 500px;
+     height: auto;
      object-fit: cover;
 }
 
