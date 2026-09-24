@@ -147,6 +147,7 @@ h3 {
 
 .login-card {
   position: relative;
+  margin: 50px;
   width: min(459px, calc(100% - 32px));
   padding: 48px 48px 40px;
   background: #26004D;
@@ -316,7 +317,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: auto;
+  margin-top: 50px 10px;
 }
 
 .footer-grid {
@@ -344,12 +345,12 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 0.78rem;
+  font-size: 14px;
   line-height: 1.3;
 }
 
 .footer-column--developers p {
-  font-size: 0.82rem;
+  font-size: 14px;
   line-height: 1.3;
 }
 
@@ -371,7 +372,7 @@ h3 {
 
 .footer-image {
   /* Mantiene el logo proporcionado dentro de la fila inferior. */
-  width: 500px;
+  width: 300px;
   height: auto;
   object-fit: contain;
 }
