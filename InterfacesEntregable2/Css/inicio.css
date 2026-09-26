@@ -167,7 +167,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 40px;
   background: linear-gradient(90deg, var(--primary) 3%, var(--primary-2) 100%);
   padding: 18px 20px;
 }
@@ -245,15 +245,16 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow-x: auto;
+  /* overflow-x: auto;
   overflow-y: hidden;
 
-  /* Oculta el scrollbar visualmente */
-  scrollbar-width: none;
+  /* Oculta el scrollbar visualmente 
+  scrollbar-width:none; */
 }
 
 .game-section h2 {
-  margin: 0;
+
+  margin: 10px;
   color: var(--white);
   font-size: 36px;
   font-weight: 800;
@@ -264,6 +265,12 @@ button {
   grid-template-columns: repeat(20, minmax(300px, 1fr));
   gap: 12px;
   position: relative;
+  /*con esta implementacion al hacer scroll 
+  se despaza horizontalmente se desplazan juntos la seccion con el h2.*/
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+
 }
 
 .game-card {
@@ -499,19 +506,17 @@ footer {
      
 }
 
-
-section {
-     display: flex;
-     flex-direction: column;
-     gap: 8px;                /* separación controlada por vos, no por el navegador */
+/* aca pasa lo mismo, me genea conflicto con lo ya definido*/
+/* section {
+     gap: 8px;                /* separación controlada por vos, no por el navegador 
      font: var(--font-family-secondary) normal 14px;
     
-}
+} */
 
-section h3 {
+/* section h2{
      font-weight: normal; 
      margin: 0px;
-}
+} */
 
 section ul{
      margin: 0;

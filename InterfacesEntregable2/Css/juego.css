@@ -237,12 +237,12 @@ main {
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5), -10px -10px 4px rgba(0, 0, 0, 0.5);
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 8px;
   place-items: center;
 }
-
-.token {
+/* Los circulos del peg solitarie*/
+/* .token {
   width: 70px;
   height: 73px;
   max-width: 100%;
@@ -250,11 +250,11 @@ main {
   border: 1px solid var(--negro);
   border-radius: 9999px;
   box-shadow: 0 0 12px 6px rgba(0, 0, 0, 0.7);
-}
+} */
 
-.token--empty {
+/* .token--empty {
   background: rgba(87, 85, 85, 0.8);
-}
+} */
 
 .game-hero__infobar {
   padding: 8px;
@@ -808,14 +808,12 @@ footer {
      
 }
 
-
-section {
-     display: flex;
-     flex-direction: column;
-     gap: 8px;                /* separación controlada por vos, no por el navegador */
-     font: var(--font-family-secondary) normal 14px;
+/* le saque el flex porque me genraba conflicto y despelotaba la pagina */
+/* section {
+    gap: 20px;                /* separación controlada por vos, no por el navegador 
+    font: var(--font-family-secondary) normal 14px;
     
-}
+} */
 
 section h3 {
      font-weight: normal; 
