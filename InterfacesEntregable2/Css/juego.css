@@ -843,3 +843,90 @@ button {
     line-height: 36px;
   }
 }
+
+
+/*      Inicio del footer*/
+
+
+footer {
+     /* El footer usa todo el ancho y conserva poco espacio vertical. */
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     width: 100%;
+     padding: 32px 16px 32px;
+     gap: 30px;
+     background: #000;
+     font-family: var(--font-secondary);
+
+}
+
+.footer-grid {
+     width: 100%;
+     display: grid;
+     grid-template-columns: minmax(250px, 300px) repeat(5, max-content);
+     gap: 70px;
+     justify-content: center;
+     align-items: start;
+     font-family: var(--font-secondary);
+}
+
+.footer-content-logo-description {
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: start;
+     gap: 20px;
+     margin: 0px;
+    
+     
+}
+
+.footer-logo {
+     /* Mantiene el logo proporcionado dentro de la fila inferior. */
+     width: 100%;;
+     max-width: 250px;
+    
+
+}
+
+.footer-content-logo-description span {
+     width: 100%;
+     
+}
+
+
+section {
+     display: flex;
+     flex-direction: column;
+     gap: 8px;                /* separación controlada por vos, no por el navegador */
+     font: var(--font-family-secondary) normal 14px;
+    
+}
+
+section h3 {
+     font-weight: normal; 
+     margin: 0px;
+}
+
+section ul{
+     margin: 0;
+     padding: 0;
+     list-style: none;
+     display: flex;
+     flex-direction: column;
+     gap: 8px;     
+}
+
+.social-area {
+     text-align: center;
+     gap: 18px;
+}
+
+.social-icons {
+     display: flex;
+     justify-content: center;
+     gap: 30px;
+     margin: 12px 0 25px;
+}
