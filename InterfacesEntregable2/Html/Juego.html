@@ -6,252 +6,416 @@
   <title>Peg Solitaire - Juego</title>
   <link rel="stylesheet" href="../Css/juego.css" />
 </head>
-<body class="game-page">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand-group">
-        <span class="brand-mark"></span>
-        <div class="brand-logo">
-          <img src="https://placehold.co/149x28" alt="Logo" />
-        </div>
-      </div>
+<body>
+  <div class="page">
 
-      <div class="search-box">
+
+    <header class="navbar">
+      <div class="navbar__left">
+        <button class="btn-burger" type="button" aria-label="Abrir menú hamburguesa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="28" viewBox="0 0 38 28" fill="none">
+              <path d="M1.5 1.5H36.4992" stroke="#9F4CDB" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M19 9.83398H36.4996" stroke="#9F4CDB" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M19 18.166H36.4996" stroke="#9F4CDB" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M1.5 26.5H36.4992" stroke="#9F4CDB" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M10.2498 9.37109L1.5 14.0007L10.2498 18.6304V9.37109Z" stroke="#9F4CDB" stroke-width="3"
+                stroke-linejoin="round" />
+            </svg>
+        </button>
+        <a href="#" class="navbar__brand">
+          <img class="navbar__logo" src="../Img/game_png_1.png" alt="Logo" />
+        </a>
+      </div>
+  
+      <div class="navbar__search">
         <span>¿A que jugamos hoy?</span>
-        <span class="search-icon" aria-label="Buscar"></span>
+        <span class="icon icon--search" aria-hidden="true"></span>
       </div>
 
-      <div class="header-actions">
-        <div class="pill-button">
-          <span class="icon"></span>
-          <span>Mis juegos</span>
-        </div>
-        <div class="avatar-badge" aria-label="Perfil"></div>
+
+       <div class="header-actions">
+            <a href="" class="content_nav_right" aria-label="Ir a la sección de mis juegos">
+              <svg class="premium-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19"
+                fill="none">
+                <path
+                  d="M18 0L13 5L9 0L5 5L0 0V13H18V0ZM2 19H16C16.5304 19 17.0391 18.7893 17.4142 18.4142C17.7892 18.0391 18 17.5304 18 17V15H0V17C0 17.5304 0.210714 18.0391 0.585786 18.4142C0.960859 18.7892 1.46957 19 2 19Z"
+                  fill="#FFCD29" />
+              </svg>
+              Obtener premium
+            </a>
+            <a class="content-perfil">
+              <svg class="avatar" viewBox="0 0 35 35" role="img" aria-label="Perfil">
+                <circle class="avatar__head" cx="17" cy="12" r="5.5"/>
+                <path class="avatar__body" d="M6.5 29c0-5.5 4.7-9.5 10.5-9.5S27.5 23.5 27.5 29"/>
+                <circle class="avatar__dot" cx="28.5" cy="6.5" r="4.5"/>
+              </svg>
+            </a>
+          </div>
+  
       </div>
-    </div>
-  </header>
-
-  <main>
-    <div class="breadcrumb">Mis Juegos &gt; Estrategia &gt; Peg solitari</div>
-
-    <section class="game-layout">
-      <div class="board-stage">
-        <img class="board-bg" src="https://placehold.co/1280x720" alt="Fondo del tablero" />
-
-        <div class="board-panel">
-          <div class="board-grid" aria-label="Tablero de juego">
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token empty"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-            <span class="token"></span>
-          </div>
-        </div>
-      </div>
-
-      <aside class="sidebar">
-        <div class="side-card">
-          <h3>Controles</h3>
-          <div class="controls-illustration">
-            <div class="pad"></div>
-            <div class="stick"></div>
-            <div class="arrow left"></div>
-            <div class="arrow right"></div>
-          </div>
-          <p>Haz click y arrastra para mover la ficha</p>
-        </div>
-
-        <div class="side-card">
-          <h3>Como Ganar</h3>
-          <p>Retirar todas las fichas del tablero mediante saltos en línea recta (vertical u horizontal) hasta que quede una sola ficha exactamente en el centro.</p>
-        </div>
-      </aside>
-    </section>
-
-    <section class="info-stack">
-      <article class="description-panel">
-        <div class="description-header">
-          <h2 class="description-title">Descripción</h2>
-
-          <div class="rating-box">
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star"></span>
-            <span class="star empty"></span>
-            <span class="rating-count">Calificaciones: 103</span>
-          </div>
-        </div>
-
-        <div class="description-text">
-          Peg Solitaire: Dragon Ball es un juego de lógica y estrategia para un jugador, ambientado en el planeta Namek. Las fichas están representadas por Shenlong y el objetivo es ir eliminándolas mediante saltos hasta conseguir que quede una sola ficha en el tablero. El jugador deberá planificar cuidadosamente sus movimientos para evitar quedarse sin jugadas disponibles.
-        </div>
-
-        <div class="community-link">
-          <span class="dot"></span>
-          <span>Accede a la comunidad</span>
-        </div>
-      </article>
-
-      <aside class="media-panel">
-        <div class="media-header">Multimedia</div>
-        <div class="media-gallery">
-          <img src="https://placehold.co/275x173" alt="Captura 1" />
-          <img src="https://placehold.co/275x173" alt="Captura 2" />
-          <img src="https://placehold.co/275x173" alt="Captura 3" />
-          <img src="https://placehold.co/275x173" alt="Captura 4" />
-        </div>
-
-        <div class="share-line"></div>
-
-        <div class="media-header media-header--share">Comparti nuestro juego!</div>
-
-        <div class="social-row" aria-label="Redes sociales">
-          <span>f</span>
-          <span>x</span>
-          <span>◎</span>
-          <span>▶</span>
-          <span>◉</span>
-        </div>
-      </aside>
-    </section>
-
-    <h2 class="comments-header">Comentarios de la comunidad ZGames</h2>
-    <div class="comments-divider"></div>
-
-    <section class="comments-wrap">
-      <div class="comments-list">
-        <div class="comment-input">
-          <div class="avatar"></div>
-          <div class="input-box">
-            <button type="button">Comentar</button>
-          </div>
-        </div>
-
-        <article class="comment-box">
-          <div class="comment-user">
-            <div class="comment-avatar">
-              <img src="https://placehold.co/40x40" alt="Avatar de Pepe" />
+    </header>
+  
+    <p class="breadcrumb">Mis Juegos &gt; Estrategia &gt; Peg solitarie</p>
+  
+    <main>
+  
+      <section class="game-hero">
+        <div class="game-hero__media">
+          <div class="game-hero__frame">
+            <img class="game-hero__bg" src="../Img/Peg solitari.png" alt="Fondo de Peg Solitaire Dragon Ball" />
+            <!-- Overlay del tablero: 32 fichas + 1 hueco vacío. Reemplazar por el tablero real del juego. -->
+            <div class="game-hero__board" aria-hidden="true">
+             
             </div>
-            <div class="comment-bubble">
-              <div class="comment-meta">
-                <span class="comment-user-name">Pepe</span>
-                <span class="comment-time">Hace 12 minutos</span>
-                <span class="comment-badge"></span>
+          </div>
+  
+          <!--- Falta el drigrama de peg completo --->
+          <div class="game-hero__infobar">
+            <div class="game-hero__title">
+              <img src="../Img/IconJuego.png" alt="">
+              <h1>DragonBall Z - Peg Solitarie</h1>
+            </div>
+            <div class="game-hero__stats">
+              <div class="counter">
+                <img  class="Like"  src="../Img/Like.png" alt="">
+                <span>14mil</span>
+                <img src="../Img/Like.png" alt="">
               </div>
-              <p class="comment-text">Muy buen juego</p>
-
-              <div class="comment-actions">
-                <span class="action-icon up"></span>
-                <span class="action-icon down"></span>
-                <span class="reply-link">Responder</span>
+              <div class="game-hero__vote-buttons">
+                <button class="icon-btn" aria-label="Anterior"><img src="../Img/Pantallita.png" alt=""></button>
+                <button class="icon-btn" aria-label="Me gusta"><img class="Like" src="../Img/Like.png" alt=""></button>
+                <button class="icon-btn" aria-label="No me gusta"><img src="../Img/Like.png" alt=""></button>
               </div>
             </div>
           </div>
-          <div class="comment-menu" aria-label="Más opciones"></div>
+        </div>
+  
+        <aside class="game-hero__sidebar">
+          <article class="info-card">
+            <h2>Controles</h2>
+            <div class="info-card__gamepad" aria-hidden="true">
+              <img src="../Img/ImagenRaton.png" alt="" />
+            </div>
+            <p>Haz click y arrastra para mover la ficha</p>
+          </article>
+          <article class="info-card">
+            <h2>Como Ganar</h2>
+            <p>Retirar todas las fichas del tablero mediante saltos en línea recta (vertical u horizontal) hasta que quede una sola ficha exactamente en el centro.</p>
+          </article>
+        </aside>
+      </section>
+  
+      <section class="about">
+        <article class="about__description">
+          <div class="about__header">
+            <h2>Descripción</h2>
+            <div class="about__rating">
+              <div class="stars" aria-label="Calificación 4 de 5 estrellas">
+                <span class="stars__star stars__star--filled">★</span>
+                <span class="stars__star stars__star--filled">★</span>
+                <span class="stars__star stars__star--filled">★</span>
+                <span class="stars__star stars__star--filled">★</span>
+                <span class="stars__star">★</span>
+              </div>
+              <p class="about__ratings-count">Calificaciones: 103</p>
+            </div>
+          </div>
+          <p class="about__text">Peg Solitaire: Dragon Ball es un juego de lógica y estrategia para un jugador, ambientado en el planeta Namek. Las fichas están representadas por Shenlong y el objetivo es ir eliminándolas mediante saltos hasta conseguir que quede una sola ficha en el tablero. El jugador deberá planificar cuidadosamente sus movimientos para evitar quedarse sin jugadas disponibles. El juego transforma el clásico tablero de lógica en un campo de batalla definitivo, diseñado para poner a prueba tu intelecto como si estuvieras entrenando en la Habitación del Tiempo. El tablero representa la plataforma del Torneo de las Artes Marciales (o el Torneo del Poder), y cada pieza (esfera o clavija) es un guerrero participando en la batalla campal.</p>
+          <a href="#" class="about__community-link">
+           <img src="../Img/IconCom.png" alt="">
+            Accede a la comunidad
+          </a>
         </article>
-
-        <article class="comment-box">
-          <div class="comment-user">
-            <div class="comment-avatar">
-              <img src="https://placehold.co/81x79" alt="Avatar de jugador" />
-            </div>
-            <div class="comment-bubble">
-              <div class="comment-meta">
-                <span class="comment-user-name">Pepe</span>
-                <span class="comment-time">Hace 12 minutos</span>
-                <span class="comment-badge"></span>
-              </div>
-              <p class="comment-text">Me quedaron las esferas tan separadas que ni con la Danza de la Fusión gano esta partida.</p>
-
-              <div class="comment-actions">
-                <span class="action-icon up"></span>
-                <span class="action-icon down"></span>
-                <span class="reply-link">Responder</span>
-              </div>
-            </div>
+  
+        <article class="about__media">
+          <h2 class="about__media-title">Multimedia</h2>
+          <div class="about__gallery">
+            <img src="../Img/image 22.png" alt="Captura de pantalla 1" />
+            <img src="../Img/image 23.png" alt="Captura de pantalla 2" />
+            <img src="../Img/image 24.png" alt="Captura de pantalla 3" />
+            <img src="../Img/image 25.png" alt="Captura de pantalla 4" />
           </div>
-          <div class="comment-menu" aria-label="Más opciones"></div>
-        </article>
-
-        <article class="comment-box">
-          <div class="comment-user">
-            <div class="comment-avatar">
-              <img src="https://placehold.co/81x79" alt="Avatar de jugador" />
-            </div>
-            <div class="comment-bubble">
-              <div class="comment-meta">
-                <span class="comment-user-name">Pepe</span>
-                <span class="comment-time">Hace 12 minutos</span>
-                <span class="comment-badge"></span>
-              </div>
-              <p class="comment-text">Sencillo, rápido y con la mejor temática. Ideal para pasar el rato.</p>
-
-              <div class="comment-actions">
-                <span class="action-icon up"></span>
-                <span class="action-icon down"></span>
-                <span class="reply-link">Responder</span>
-              </div>
-            </div>
+          <h3 class="about__share-title">Comparti nuestro juego!</h3>
+          <div class="about__share-icons">
+            <a href="#" aria-label="Compartir en Facebook" class="icon icon--social-1">
+              <img src="../Img/Social Icons.png" alt="" />
+            </a>
+            <a href="#" aria-label="Compartir en Instagram" class="icon icon--social-2">
+              <img src="../Img/Negative.png" alt="" />
+            </a>
+            <a href="#" aria-label="Compartir en X" class="icon icon--social-3">
+              <img src="../Img/Twitter.png" alt="" />
+            </a>
+            <a href="#" aria-label="Compartir en Discord" class="icon icon--social-4">
+              <img src="../Img/Component.png" alt="" />
+            </a>
           </div>
-          <div class="comment-menu" aria-label="Más opciones"></div>
         </article>
+      </section>
+  
+      <div class="section-heading-row">
+        <h2>Comentarios de la comunidad ZGames</h2>
+        <h2>Tambien te podria gustar....</h2>
       </div>
-
-      <aside class="suggestions">
-        <h2>También te podria gustar....</h2>
-
-        <div class="game-suggestion">
-          <img src="https://placehold.co/250x159" alt="Ajedrez Dragon Ball super" />
-          <div class="game-info">
-            <strong>Ajedrez Dragon Ball super</strong>
-            <span>Categoria: Estrategia</span>
-            <div class="stars-row">
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-            </div>
-          </div>
+  
+      <div class="content-row">
+  
+        <!---  Cambiar las imagen de los comentarios    --->
+        <section class="comments">
+          <form class="comments__new">
+            <img class="comments__avatar" src="https://placehold.co/20x20" alt="" />
+            <label class="comments__input">
+              <span class="sr-only">Añadir un comentario</span>
+              <input type="text" placeholder="Añade un comentario..." />
+            </label>
+          </form>
+  
+          <ul class="comments__list">
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Pepe</span>
+                  <span class="comment__time">Hace 12 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Muy buen juego</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img  src="../Img/Like.png" alt=""></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+  
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Pablo</span>
+                  <span class="comment__time">Hace 15 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Me quedaron las esferas tan separadas que ni con la Danza de la Fusión gano esta partida.</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img  src="../Img/Like.png" alt=""></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+  
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Martin</span>
+                  <span class="comment__time">Hace 20 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Sencillo, rápido y con la mejor temática. Ideal para pasar el rato.</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img src="../Img/Like.png" alt=""></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+  
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Pedro</span>
+                  <span class="comment__time">Hace 7 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Perdí más rápido que Yamcha contra los Saibaiman, pero me estoy divirtiendo un montón. ¡Gran juego!</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img  src="../Img/Like.png" alt=""></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+  
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Facu</span>
+                  <span class="comment__time">Hace 8 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Me quedaron las esferas tan separadas que ni con la Danza de la Fusión gano esta partida.</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img src="../Img/Like.png" alt=""></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+  
+            <li class="comment">
+              <img class="comment__avatar" src="https://placehold.co/40x40" alt="" />
+              <div class="comment__body">
+                <div class="comment__meta">
+                  <span class="comment__author">Juan</span>
+                  <span class="comment__time">Hace 10 minutos</span>
+                  <img src="../Img/Usuario+.png" alt="">
+                </div>
+                <p class="comment__text">Muy buen juego, no paro de viciar</p>
+                <div class="comment__actions">
+                  <button class="icon-btn" aria-label="Me gusta"><img  class="Like"  src="../Img/Like.png" alt=""></button>
+                  <button class="icon-btn" aria-label="No me gusta"><img  src="../Img/Like.png" alt=""></span></button>
+                  <button class="comment__reply">Responder</button>
+                </div>
+              </div>
+              <button class="comment__menu" aria-label="Más opciones"><span class="icon icon--dots" aria-hidden="true"></span></button>
+            </li>
+          </ul>
+        </section>
+  
+        <aside class="related">
+          <ul class="related__list">
+            <li class="related-game">
+              <img src="../Img/image 60.png" alt="Ajedrez Dragon Ball super" />
+              <div class="related-game__info">
+                <h3>Ajedrez Dragon Ball super</h3>
+                <p>Categoria: Estrategia</p>
+                <div class="stars" aria-label="5 de 5 estrellas">
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                </div>
+              </div>
+            </li>
+            <li class="related-game">
+              <img src="../Img/image 61.png" alt="Sudoku Dragon Ball super" />
+              <div class="related-game__info">
+                <h3>Sudoku Dragon Ball super</h3>
+                <p>Categoria: Estrategia</p>
+                <div class="stars" aria-label="5 de 5 estrellas">
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                </div>
+              </div>
+            </li>
+            <li class="related-game">
+              <img src="../Img/image 62.png" alt="Damas Dragon Ball super" />
+              <div class="related-game__info">
+                <h3>Damas Dragon Ball super</h3>
+                <p>Categoria: Estrategia</p>
+                <div class="stars" aria-label="5 de 5 estrellas">
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                </div>
+              </div>
+            </li>
+            <li class="related-game">
+              <img src="../Img/image 60.png" alt="Ajedrez Dragon Ball super" />
+              <div class="related-game__info">
+                <h3>Ajedrez Dragon Ball super</h3>
+                <p>Categoria: Estrategia</p>
+                <div class="stars" aria-label="5 de 5 estrellas">
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                  <span class="stars__star stars__star--filled">★</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button class="btn btn--related-more">Ver mas juegos</button>
+        </aside>
+  
+      </div>
+    </main>
+  
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img class="footer__logo" src="../Img/LogoPg.png" alt="Logo" />
+          <p class="footer__description">La plataforma de gaming más completa, enfocada en tus gustos y en brindarte la mejor experiencia de juego. Explorá una amplia variedad de títulos, personalizá tu perfil, seguí tus estadísticas y logros, y conectá con una comunidad de miles de jugadores activos que comparten tu misma pasión por los videojuegos, sin importar dónde te encuentres.</p>
         </div>
-
-        <div class="game-suggestion">
-          <img src="https://placehold.co/250x159" alt="Sudoku Dragon Ball super" />
-          <div class="game-info">
-            <strong>Sudoku Dragon Ball super</strong>
-            <span>Categoria: Estrategia</span>
-            <div class="stars-row">
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-              <span class="star"></span>
-            </div>
-          </div>
+  
+        <div class="footer__col">
+          <h3>Legal y Politicas</h3>
+          <a href="#">Terminos y condiciones</a>
+          <a href="#">Politicas de privacidad</a>
+          <a href="#">Politicas de Cookies</a>
+          <a href="#">Aviso legal</a>
+          <a href="#">Accesibilidad</a>
         </div>
-      </aside>
-    </section>
-  </main>
+  
+        <div class="footer__col">
+          <h3>Soporte</h3>
+          <a href="#">Suscribirse</a>
+          <a href="#">Centro de ayuda</a>
+          <a href="#">Informar un problema</a>
+          <a href="#">Politicas de seguridad</a>
+          <a href="#">Preguntas frecuentes</a>
+          <a href="#">Terminos de servicio</a>
+          <a href="#">Estado del servicios</a>
+        </div>
+  
+        <div class="footer__col">
+          <h3>Categorias</h3>
+          <a href="#">Acción</a>
+          <a href="#">Aventura</a>
+          <a href="#">Cartas</a>
+          <a href="#">Estrategia</a>
+          <a href="#">Deportes</a>
+        </div>
+  
+        <div class="footer__col">
+          <h3>Sobre nosotros</h3>
+          <a href="#">Quienes somos</a>
+          <a href="#">Contactanos</a>
+          <a href="#">Colaborá con nosotros</a>
+          <a href="#">Blog</a>
+        </div>
+  
+        <div class="footer__col">
+          <h3>Desarrolladores</h3>
+          <span>Nahuel Alberto</span>
+          <span>Juan Carlos Rojas Ortiz</span>
+        </div>
+        </div>
+  
+        <div class="footer__bottom">
+          <h3>Redes Sociales</h3>
+          <div class="footer__social">
+             <a href="#" aria-label="Facebook"><img src="../Img/Social Icons.png" alt=""></a>
+            <a href="#" aria-label="Instagram"><img src="../Img/Negative.png" alt=""></a>
+            <a href="#" aria-label="X"><img src="../Img/Twitter.png" alt=""></a>
+            <a href="#" aria-label="Discord"><img src="../Img/Component.png" alt=""></a>
+          </div>
+          <p class="footer__copyright">© 2026 Games. Todos los derechos reservados.</p>
+        </div>
+      </footer>
+ 
+</div>
+
+
+  
 </body>
 </html>
