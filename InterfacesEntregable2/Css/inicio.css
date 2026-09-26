@@ -172,11 +172,11 @@ button {
   padding: 18px 20px;
 }
 
-.hero-image {
-  width: min(870px, 50vw);
-  height: 400px;
-  object-fit: cover;
-  border-radius: 20px;
+/*Hover clasico para peg solitarie*/
+.hero-image:hover{
+  box-shadow: 0 15px 30px rgba(0, 51, 204, 0.7);
+  transform: scale(1.03);
+  cursor: pointer;
 }
 
 .hero-side {
@@ -245,11 +245,11 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* overflow-x: auto;
+  overflow-x: auto;
   overflow-y: hidden;
 
-  /* Oculta el scrollbar visualmente 
-  scrollbar-width:none; */
+  /* Oculta el scrollbar visualmente*/ 
+  scrollbar-width:none; 
 }
 
 .game-section h2 {
@@ -259,28 +259,61 @@ button {
   font-size: 36px;
   font-weight: 800;
 }
-
+/* Tatjeta de juegos */
+/*  Cardd de juegooo */
 .game-row {
   display: grid;
   grid-template-columns: repeat(20, minmax(300px, 1fr));
-  gap: 12px;
-  position: relative;
-  /*con esta implementacion al hacer scroll 
-  se despaza horizontalmente se desplazan juntos la seccion con el h2.*/
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-
+  gap: 20px;
+  padding: 20px;
+  
 }
-
-.game-card {
+.game-card{
   position: relative;
-  width: 100%;
-  min-height: 200px;
+  cursor: pointer; /* cambia el cursor a una mano*/
+
   overflow: hidden;
-  border-radius: 30px;
-  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
+/*  Animaciones para que se vean los nombres de los juegos  */
+.game-card img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* El cuadro de color con el nombre del juego (oculto por defecto) */
+.game-title {
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(13, 30, 74, 0.623); /* Fondo color semitransparente */
+  color: white;
+  text-align:justify;
+  font-weight: bold;
+  font-family: sans-serif;
+  border-radius: 20px;
+  
+  /* ESTOS DOS SON PARA LA ANIMACIÓN */
+  transform: translateY(100%); /* Empuja el texto hacia abajo, fuera del contenedor */
+  transition: transform 0.3s ease; /* Animación suave */
+}
+/*Al aplicar el escalado al contenedor completo, se agrandan la imagen y el borde al mismo tiempo,
+ manteniendo la proporción y pareciendo que el objeto físico "se acerca".*/
+.game-card:hover{
+  transform: scale(1.08);
+  box-shadow: 0 15px 30px rgba(0, 51, 204, 0.7);
+/*Aseguramos que la tarjeta agrandada siempres este arriba*/
+  z-index: 10px;
+}
+
+.game-card:hover .game-title {
+  transform: translateY(0); /* Lo devuelve a su posición original visible */
+}
+
 
 .game-card img {
   width: 100%;
@@ -390,73 +423,9 @@ button {
   font-size: 20px;
 }
 
-/*
-@media (max-width: 980px) {
-  .header-inner {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 10px 12px;
-  }
-
-  .header-actions {
-    margin-left: auto;
-  }
-
-  .hero-strip {
-    flex-wrap: wrap;
-  }
-
-  .hero-image {
-    width: min(100%, 700px);
-  }
-
-  .game-row {
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
-  }
-
-  .footer-columns {
-    grid-template-columns: repeat(2, minmax(180px, 1fr));
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 640px) {
-  .search-box {
-    order: 3;
-    width: 100%;
-  }
-
-  .brand-group {
-    min-width: 0;
-  }
-
-  .hero-side {
-    width: 100%;
-    align-items: center;
-  }
-
-  .game-row {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-tagline {
-    font-size: 22px;
-  }
-}
-*/
-
 
 
 /*      Inicio del footer*/
-
 
 footer {
      /* El footer usa todo el ancho y conserva poco espacio vertical. */
@@ -497,26 +466,12 @@ footer {
      /* Mantiene el logo proporcionado dentro de la fila inferior. */
      width: 100%;;
      max-width: 250px;
-    
-
 }
 
 .footer-content-logo-description span {
      width: 100%;
      
 }
-
-/* aca pasa lo mismo, me genea conflicto con lo ya definido*/
-/* section {
-     gap: 8px;                /* separación controlada por vos, no por el navegador 
-     font: var(--font-family-secondary) normal 14px;
-    
-} */
-
-/* section h2{
-     font-weight: normal; 
-     margin: 0px;
-} */
 
 section ul{
      margin: 0;
@@ -539,3 +494,262 @@ section ul{
      margin: 12px 0 25px;
 }
 
+
+/* Desarrollo Mobile */
+@media (max-width: 640px) {
+  .topbar {
+    height: auto;
+  }
+
+  /* La cabecera queda en dos filas para conservar logo y acciones sin desbordar. */
+  .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .brand-group {
+    min-width: 0;
+    align-self: center;
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .btn-burger svg {
+    width: 30px;
+    height: auto;
+  }
+
+  .brand-logo img {
+    width: 100px;
+    height: auto;
+  }
+
+  .search-box {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    order: 0;
+    width: 100%;
+    height: 36px;
+  }
+
+  .header-actions {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .content_nav_right {
+    gap: 5px;
+    padding: 7px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .content-perfil {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* El banner mantiene la composicion de escritorio, con columnas proporcionales. */
+  .hero-strip {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+
+  .hero-side {
+    width: auto;
+    min-width: 0;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .hero-side h1 {
+    font-size: 18px;
+  }
+
+  .mini-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 6px;
+  }
+
+  .mini-cards img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hero-price {
+    font-size: 22px;
+  }
+
+  .cta-button {
+    /*hace que un elemento individual dentro de un contenedor
+    se estire para ocupar todo el espacio disponible*/
+    align-self: stretch;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+
+
+  .catalog {
+    width: 100%;
+    gap: 28px;
+    padding: 24px 12px 0;
+  }
+
+  .game-section h2 {
+    font-size: 18px;
+  }
+
+  /* Las cards siguen en una fila desplazable; cada imagen se reduce en alto. */
+  .game-row {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(160px, 78vw);
+    gap: 12px;
+    padding: 12px 2px;
+  }
+
+  .game-card img {
+    height: 130px;
+    border-radius: 16px;
+  }
+
+  .game-title {
+    padding: 10px;
+    font-size: 14px;
+    transform: none;
+  }
+
+  /* Los efectos hover solo se activan con mouse para evitar estados pegados al tocar. */
+    .game-card:hover {
+      z-index: 2;
+      transform: scale(1.04);
+    }
+
+    .game-card:hover img {
+      filter: brightness(0.8);
+    }
+
+    .mini-cards img:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    .cta-button:hover,
+    .content_nav_right:hover,
+    .content-perfil:hover {
+      filter: brightness(1.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-burger:hover {
+      filter: brightness(1.25);
+      transform: scale(1.08);
+    }
+
+     .game-card:active,
+  .mini-cards img:active,
+  .cta-button:active,
+  .content_nav_right:active,
+  .content-perfil:active,
+  .btn-burger:active {
+    transform: scale(0.97);
+  }
+
+  /* El contorno hace visibles los controles al navegar con teclado. */
+  .cta-button:focus-visible,
+  .content_nav_right:focus-visible,
+  .content-perfil:focus-visible,
+  .btn-burger:focus-visible,
+  .game-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  
+  /* El footer usa sus clases reales y reorganiza sus seis columnas en movil. */
+   footer {
+    padding: 24px 12px;
+    gap: 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
+
+  .footer-content-logo-description {
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    text-align: left;
+    gap: 12px;
+  }
+
+  .footer-content-logo-description span {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .footer-grid > section {
+    min-width: 0;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    justify-content: center;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  .footer-logo {
+    width: min(200px, 100%);
+  }
+
+  .social-area {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .social-area h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .social-icons {
+    gap: 20px;
+    margin: 8px 0;
+  }
+
+  .social-area small {
+    color: #dedede;
+    font-size: 12px;
+    text-align: center;
+  } 
+
+
+
+
+}
+
+ 

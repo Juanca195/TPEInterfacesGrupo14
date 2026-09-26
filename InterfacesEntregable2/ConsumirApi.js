@@ -54,12 +54,13 @@ function renderCards(row, games) {
   }
 
   games.forEach(game => {
-    const card = document.createElement('article');
+    const card = document.createElement('div');
     card.className = 'game-card';
     card.innerHTML = `
       <img src="${game.background_image}" alt="${game.name}"
            loading="lazy"
            onerror="this.src='../Img/game-placeholder.png'">
+      <div class ="game-title">${game.name}</div>
     `;
     row.appendChild(card);
   });
