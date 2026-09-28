@@ -45,11 +45,14 @@
               <span class="label">Recientes</span>
             </a>
             <a href="#estrategia" class="menu-item" data-section="estrategia">
-              <svg class="icon icon-estrategia" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="9" stroke-width="1.8" />
-                <circle cx="12" cy="12" r="5" stroke-width="1.8" />
-                <circle cx="12" cy="12" r="1" stroke-width="1.8" fill="currentColor" />
-              </svg>
+                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/>
+                  <circle cx="3" cy="6" r="1.2"/>
+                  <circle cx="12" cy="3.5" r="1.2"/>
+                  <circle cx="21" cy="6" r="1.2"/>
+                </svg>
               <span class="label">Estrategia</span>
             </a>
             <a href="#aventura" class="menu-item" data-section="aventura">
@@ -106,15 +109,35 @@
           </button>
           <div class="menu-perfil">
             <a href="#perfil" class="menu-item">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
               <span class="label">Mi Perfil</span>
             </a>
+
             <a href="#metodos-pago" class="menu-item">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
               <span class="label">Mis métodos de pago</span>
             </a>
             <a href="#amigos" class="menu-item">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
               <span class="label">Amigos</span>
             </a>
             <a href="Login.html" class="menu-item">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                     <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
               <span class="label">Cerrar sesión</span>
             </a>
           </div>
@@ -124,7 +147,7 @@
     </header>
 
   <!-- Hero principal con banner destacado -->
-  <section class="hero-strip" aria-label="Banner principal">
+  <section id="inicio" class="hero-strip" aria-label="Banner principal">
     <img class="hero-image" src="../Img/imgCarrusel.png" alt="Juego destacado" />
 
     <div class="hero-side">
@@ -151,7 +174,7 @@
           <div class="game-row"></div>
         </section> -->
 
-    <section class="game-section" data-category="Strategy" aria-labelledby="estrategia-titulo">
+    <section id="estrategia" class="game-section" data-category="Strategy" aria-labelledby="estrategia-titulo">
       <h2>Estrategia</h2>
 
       <div class="game-row">
@@ -159,7 +182,7 @@
       </div>
     </section>
 
-    <section class="game-section" data-category="Adventure" aria-labelledby="deportes-titulo">
+    <section id="aventura" class="game-section" data-category="Adventure" aria-labelledby="deportes-titulo">
       <h2>Aventura</h2>
 
       <div class="game-row"></div>
@@ -173,7 +196,7 @@
       </div>
     </section>
 
-    <section class="game-section" data-category="Action" aria-labelledby="Accion-titulo">
+    <section id="accion" class="game-section" data-category="Action" aria-labelledby="Accion-titulo">
       <h2>Acción</h2>
 
       <div class="game-row">

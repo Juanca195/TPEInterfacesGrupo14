@@ -124,7 +124,7 @@ header{
     background: #000;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 5px;
     z-index: 950;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
@@ -135,32 +135,44 @@ header{
   }
   
 /* ---------- Ítems del menú ---------- */
+  /* Ambos menús usan violeta en reposo y blanco sobre violeta al hover/activo. */
   .menu-item {
     display: flex;
     align-items: center;
     gap: 10px;
     text-decoration: none;
     padding: 12px 20px;
-    /* padding: 6px 8px;
-    margin: -6px -8px;
     border-radius: 6px;
-    transition: background 0.2s ease, transform 0.2s ease; */
+    transition: background-color 0.2s ease, transform 0.2s ease;
   }
-    
-    .menu-item:hover {
-      background: rgba(114, 42, 165, 0.15);
+
+  .menu-hamburguesa .menu-item:hover,
+  .menu-hamburguesa .menu-item.active,
+  .menu-perfil .menu-item:hover,
+  .menu-perfil .menu-item.active {
+      background: #9F4CDB;
       transform: translateX(2px);
-    }
- 
-  .menu-item:hover .label {
-    color: #74049a;
   }
-  
-  .menu-item.active {
-    background: rgba(159, 76, 219, 0.25);
+
+  .menu-hamburguesa .label,
+  .menu-hamburguesa .icon,
+  .menu-perfil .label,
+  .menu-perfil .icon {
+    color: #9F4CDB;
   }
- 
-  .menu-item.active .label {
+
+  .menu-hamburguesa .menu-item:hover .label,
+  .menu-hamburguesa .menu-item:hover .icon,
+  .menu-hamburguesa .menu-item.active .label,
+  .menu-hamburguesa .menu-item.active .icon,
+  .menu-perfil .menu-item:hover .label,
+  .menu-perfil .menu-item:hover .icon,
+  .menu-perfil .menu-item.active .label,
+  .menu-perfil .menu-item.active .icon {
+    color: #fff;
+  }
+
+  .menu-hamburguesa .menu-item.active .label {
     font-weight: 700;
   }
 
@@ -187,12 +199,12 @@ header{
 
     /* El menú oculto por defecto */
   .menu-perfil {
-    display: none; /* Oculta el menú */
+    display: none; 
     position: absolute;
-    top: 50px; /* Lo ubica justo debajo del botón */
-    right: 0; /* Lo alinea a la derecha (opcional) */
+    top: 50px; 
+    right: 0;
     height: auto;
-    background-color: #000; /* Ajusta los colores a tu diseño */
+    background-color: #000; 
     min-width: 200px;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
