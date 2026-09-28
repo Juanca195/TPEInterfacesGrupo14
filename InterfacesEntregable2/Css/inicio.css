@@ -33,7 +33,13 @@ body {
 a { color: inherit; text-decoration: none; }
 h1, h2, h3, p { margin: 0; }
 ul { list-style: none; margin: 0; padding: 0; }
-button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+button { 
+  font: inherit; 
+  color: inherit; 
+  background: none; 
+  border: none;
+  cursor: pointer; 
+}
 
 
 img {
@@ -66,6 +72,139 @@ header{
     gap: 10px;
   }
 
+  /* Boton */
+  .btn-burger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    z-index: 1000;
+  }
+  
+  .btn-burger:hover {
+    opacity: 0.7;
+  }
+  /*  Con estas clases gira solo la flecha  */
+  .icon-arrow {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-burger.active .icon-arrow {
+    transform: rotate(180deg);
+  }
+/* ---------- Overlay (se inyecta por JS) ---------- */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 900;
+  }
+  
+  .overlay.active {
+    visibility: visible;
+  }
+ 
+/* ---------- Menú desplegable ---------- */
+  .menu-hamburguesa {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: auto;
+    width: 220px;
+    padding: 90px 20px 20px 20px;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 950;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .menu-hamburguesa.active {
+    transform: translateX(0);
+  }
+  
+/* ---------- Ítems del menú ---------- */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 12px 20px;
+    /* padding: 6px 8px;
+    margin: -6px -8px;
+    border-radius: 6px;
+    transition: background 0.2s ease, transform 0.2s ease; */
+  }
+    
+    .menu-item:hover {
+      background: rgba(114, 42, 165, 0.15);
+      transform: translateX(2px);
+    }
+ 
+  .menu-item:hover .label {
+    color: #74049a;
+  }
+  
+  .menu-item.active {
+    background: rgba(159, 76, 219, 0.25);
+  }
+ 
+  .menu-item.active .label {
+    font-weight: 700;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    color: var(--Secundario);
+    stroke: currentColor;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+
+  .icon-inicio { height: 23px; }
+  .icon-estrategia { height: 18px; }
+  
+  .label {
+    color: var(--Secundario);
+    font-size: 20px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+
+    /* El menú oculto por defecto */
+  .menu-perfil {
+    display: none; /* Oculta el menú */
+    position: absolute;
+    top: 50px; /* Lo ubica justo debajo del botón */
+    right: 0; /* Lo alinea a la derecha (opcional) */
+    height: auto;
+    background-color: #000; /* Ajusta los colores a tu diseño */
+    min-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 100; /* Asegura que quede por encima de otros elementos */
+    padding: 8px 0;
+  }
+
+  /* ESTA ES LA CLAVE: la clase que JavaScript agregará para mostrar el menú */
+  .menu-perfil.activo {
+    display: flex;
+    flex-direction: column;
+  }
 
   .content-nav-search-center{
     display: flex;
@@ -188,7 +327,7 @@ header{
   font-size: 35px;
   font-weight: 700;
   color: var(--accent);
-}
+}t
 
 /*Acomodar el boton*/
 .cta-button {
