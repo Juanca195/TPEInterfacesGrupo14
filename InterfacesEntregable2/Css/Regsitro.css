@@ -200,6 +200,53 @@ small {
      border-radius: 80% 0;
      transform: rotate(45deg);
 }
+/*  Animacion del boton registro  */
+     .btn {
+     width: 178px;
+     height: 52px;
+     padding: 12px 28px; 
+     border: none; 
+     border-radius: 30px;
+     align-self: center;
+     background: #4f46e5; 
+     color: #fff; 
+     font-size: 16px; 
+     cursor: pointer;
+     transition: transform .2s, background .4s, box-shadow .2s, opacity .3s;
+     }
+     .btn:hover  { 
+          box-shadow: 0 6px 16px rgba(79,70,229,.4); }
+     .btn:active { 
+          transform: scale(.95); }
+
+     /* Estado: cargando */
+     .btn.loading { 
+          pointer-events: none; 
+          opacity: .85; }
+
+     /* Estado: registrado */
+     .btn.done { 
+          background: #12aa04; 
+          pointer-events: none; }
+
+     /* Rebote: se agrega y quita desde JS */
+     .btn.pop { 
+          transform: scale(1.15); }
+
+     /* Spinner (oculto por defecto) */
+     .spinner {
+     display: none; 
+     width: 16px; 
+     height: 16px; 
+     margin-left: 8px;
+     border: 2px solid #fff; 
+     border-top-color: transparent; 
+     border-radius: 50%;
+     vertical-align: middle;
+     }
+     .btn.loading .spinner { 
+          display: inline-block;
+     }
 
 /*-- Fin registro ----*/
 

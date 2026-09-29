@@ -60,7 +60,7 @@
             <section>
 
                 <h1>Creá tu cuenta ZGames</h1>
-                <form class="register-form">
+                <form id="form" class="register-form">
                     <div class="field">
                         <span>Nombre</span>
                         <input type="text" placeholder="Nombre">
@@ -119,7 +119,12 @@
                             <small>Privacidad - Condiciones</small>
                         </div>
                     </div>
-                    <button class="register-button" type="submit">Registrarme</button>
+
+                    <button  id="btn" class="btn" >
+                       <span id="texto">Registrarse</span>
+                        <span id="spinner" class="spinner"></span>
+                    </button>
+
                     <p class="login-link">¿Ya tenes cuenta? <a href="./Login.html">Inicia sesión</a></p>
                 </form>
                 <div class="separator"></div>
@@ -231,5 +236,6 @@
         </footer>
     <!-- </div> -->
 </body>
+<script src="../AnimacionRegis.js"></script>
 
 </html>
