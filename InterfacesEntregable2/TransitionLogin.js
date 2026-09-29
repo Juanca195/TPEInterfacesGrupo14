@@ -34,7 +34,7 @@ form.addEventListener("submit", async (e) => {
 
   
   btn.classList.add("loading");          // activa los estilos de carga
-  texto.textContent = "Registrando...";  
+  texto.textContent = "Logueando...";  
   girando = true;                        // enciende el interruptor
   girar();                               // arranca el giro del spinner
 
@@ -43,7 +43,7 @@ form.addEventListener("submit", async (e) => {
     girando = false;                       
     btn.classList.remove("loading");       // quita el estado de carga
     btn.classList.add("done");             // pone el botón verde
-    texto.textContent = "✓ ¡Registrado!";  // texto final
+    texto.textContent = "✓ !Logueado!";  // texto final
 
  
   btn.classList.add("pop");                              // agranda el botón
