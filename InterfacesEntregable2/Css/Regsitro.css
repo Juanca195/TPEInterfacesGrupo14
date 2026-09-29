@@ -201,36 +201,38 @@ small {
      transform: rotate(45deg);
 }
 /*  Animacion del boton registro  */
-     .btn {
-     width: 178px;
+     .btn-register {
+     width: auto;
      height: 52px;
+     display: flex;
      padding: 12px 28px; 
      border: none; 
      border-radius: 30px;
      align-self: center;
+     align-items: center;
      background: #4f46e5; 
      color: #fff; 
      font-size: 16px; 
      cursor: pointer;
      transition: transform .2s, background .4s, box-shadow .2s, opacity .3s;
      }
-     .btn:hover  { 
+     .btn-register:hover  { 
           box-shadow: 0 6px 16px rgba(79,70,229,.4); }
-     .btn:active { 
+     .btn-register:active { 
           transform: scale(.95); }
 
      /* Estado: cargando */
-     .btn.loading { 
+     .btn-register.loading { 
           pointer-events: none; 
           opacity: .85; }
 
      /* Estado: registrado */
-     .btn.done { 
+     .btn-register.done { 
           background: #12aa04; 
           pointer-events: none; }
 
      /* Rebote: se agrega y quita desde JS */
-     .btn.pop { 
+     .btn-register.pop { 
           transform: scale(1.15); }
 
      /* Spinner (oculto por defecto) */
@@ -244,8 +246,9 @@ small {
      border-radius: 50%;
      vertical-align: middle;
      }
-     .btn.loading .spinner { 
-          display: inline-block;
+     .btn-register.loading .spinner { 
+          display: flex;
+          flex-direction: flex-end;
      }
 
 /*-- Fin registro ----*/
@@ -497,4 +500,87 @@ section ul{
      justify-content: center;
      gap: 30px;
      margin: 12px 0 25px;
+}
+
+/* --------------Fin footer------------ */
+
+.img-background-transition{
+    display: block;
+    margin: 0 auto;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+    from {filter: drop-shadow(0 0 50px #A64DFF) drop-shadow(0 0 0 #A64DFF);; }
+    to{filter: drop-shadow(0 0 15px #A64DFF) drop-shadow(0 0 2px #4D0099); }
+}
+
+.loading-overlay[hidden]{
+    display: none;
+}
+
+.loading-overlay{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-dark-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  z-index: 9999;
+}
+
+.loader {
+    width: 100%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.loading-text{
+    color: #e0e0e0;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center; 
+    font-family: 'Exo 2';
+    font-size: 20px;
+}
+
+.progress-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    background-color: #4D0099;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #E6CCFF;
+    transition: width 0.1s linear;
+}
+
+.persent {
+    margin: 0 5px 0 0;
+    min-width: 45px;
+    text-align: right;
+    color: white;
+    font-weight: bold;
 }

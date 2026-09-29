@@ -4,6 +4,12 @@ const btn = document.getElementById("btn");
 const texto = document.getElementById("texto");     
 const spinner = document.getElementById("spinner"); 
 
+// Variables para transicion
+const overlay = document.getElementById('loading-overlay');
+const loadingText = document.querySelector('.loading-text');
+const progress = document.querySelector('.progress');
+const progressNumber = document.querySelector('.persent');
+
 
 let girando = false; // interruptor: true = el spinner gira, false = se detiene
 let angulo = 0;      // grados que lleva girado
@@ -47,5 +53,38 @@ form.addEventListener("submit", async (e) => {
   // Espera 1 segundo para que el usuario alcance a ver el botón verde
   // y recién después envía el formulario (esto recarga o cambia de página).
   await new Promise(r => setTimeout(r, 1000));
+  overlay.hidden = false;
+
+  let dots = '';
+  let progressWidth = 0;
+
+  
+  await new Promise((resolve) => {
+    
+    const textInterval = setInterval(() => {
+      dots = dots.length < 3 ? dots + '.' : '';
+      loadingText.innerHTML = 'Preparando la diversion' + dots;
+    }, 500);
+    
+    const progressInterval = setInterval(() => {
+      progressWidth += 2;
+      progress.style.width = progressWidth + '%';
+      progressNumber.textContent = progressWidth + '%';
+
+      if (progressWidth >= 100) {
+        clearInterval(progressInterval);
+        clearInterval(textInterval)
+        loadingText.textContent = '¡Disfruta tu experiencia!';
+        resolve(); // recién acá se resuelve la promesa
+      }
+    }, 50);
+  });
+
+  setTimeout(() => {
+    window.location.href = 'Inicio.html';
+  },50);
+
+  await new Promise(r => setTimeout(r, 500));
+
   form.submit();
 });
