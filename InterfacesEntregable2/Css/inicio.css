@@ -340,62 +340,104 @@ header{
 /*    Fin del nav   */
 
 
-/*   inicio de heroo  */
-.hero-strip {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  background: linear-gradient(50deg, var(--primary-dark-1) 3%, var(--primary-dark-2) 100%);
-  padding: 18px 20px;
+
+/* banner */
+.banner-container {
+    position: relative;
+    width: 100%;
 }
 
-/*Hover clasico para peg solitarie*/
-.hero-image:hover{
-  box-shadow: 0 15px 30px rgba(0, 51, 204, 0.7);
-  transform: scale(1.03);
-  cursor: pointer;
+.banner-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;   /* cada slide "se pega" al borde */
+    scrollbar-width: none;           /* oculta la barra de scroll */
 }
 
-.hero-side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
-  width: 420px;
+.banner-slide {
+    position: relative;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;                 /* cada slide ocupa todo el ancho */
+    scroll-snap-align: start;
+    /* height: 500px; aca modo desktop, en media se usa el clamp, lo dejo por el momento */
+    height: clamp(300px, 40vw, 480px);
 }
 
-.hero-side h1 {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--muted);
-  margin: 0;
+.banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;               /* recorta sin deformar */
+    display: block;
 }
 
-.mini-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-
-  width: 420px;
+/* Degradado para que el texto se lea sobre cualquier imagen */
+.banner-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent 65%);
+    pointer-events: none;
 }
 
-/*Proporcion de la imagen*/
-.mini-cards img {
-  width: 200px;
-  height: 110px;
-  border-radius: 20px;
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
+.banner-content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;                      /* por encima del degradado */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 0px 100px;
+    color: #fff;
+    
 }
 
-.hero-price {
-  font-size: 35px;
-  font-weight: 700;
-  color: var(--accent);
+.banner-content h2 {
+    margin: 0;
+    font-size: 70px;
+    text-transform: uppercase;
+    
 }
+
+.banner-content p {
+    width: 50%;
+    font-weight: 500;
+    
+}
+.banner-viewport {
+    position: relative;   /* referencia de las flechas */
+}
+
+
+/* Flechas */
+.banner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--secondary) 70%, transparent);
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.banner-arrow:hover {
+    background: var(--secondary);
+}
+
+.banner-arrow.prev { left: 16px; }
+.banner-arrow.next { right: 16px; }
+
+/* banner */
+
+
 /*  Animacion de btnJUgar */
 /* Se podria jugar con el tema de los colores*/
 .btn-jugar {

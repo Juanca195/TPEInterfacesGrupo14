@@ -87,7 +87,7 @@
             </a>
           </div>
 
-          <a href="../Html/Login.html">
+          <a href="../Html/Inicio.html">
             <img src="../Img/game_png_1.png" alt="ZGames logo" width="150" height="30" />
           </a>
         </div>
@@ -133,7 +133,7 @@
                 fill="#FF0000" />
             </svg>
           </button>
-          
+
           <div class="menu-perfil">
             <a href="#perfil" class="menu-item">
               <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -178,35 +178,69 @@
     </header>
 
     <!-- Hero principal con banner destacado -->
-    <section id="inicio" class="hero-strip" aria-label="Banner principal">
-      <img class="hero-image" src="../Img/imgCarrusel.png" alt="Juego destacado" />
 
-      <div class="hero-side">
-        <h1>Peg Solitarie Z</h1>
+    <section class="banner-container" aria-roledescription="carrusel" aria-label="Juegos destacados">
+      <div class="banner-viewport">
 
-        <div class="mini-cards" aria-label="Miniaturas del juego">
-          <img src="../Img/Img4.png" alt="Vista previa 1" />
-          <img src="../Img/img5.png" alt="Vista previa 2" />
-          <img src="../Img/img6.png" alt="Vista previa 3" />
-          <img src="../Img/img7.png" alt="Vista Previa 4">
-        </div>
-
-        <div class="hero-price">Gratis</div>
-        <button class="btn-jugar btn-rebote" id="btnJugar">
-          <samp class="tri"></samp>JUGAR
-        </button>
+        <div class="banner-track">
+          <article class="banner-slide">
+            <img class="banner-img" src="../Img/imagesBanner/peg_fondo_banner.png" alt="">
+            
+            <div class="banner-content">
+              <h2>Peg Solitarie Z</h2>
+              <p>Peg Solitaire Z es un juego de lógica y estrategia para un jugador, ambientado en el planeta Namek. Las fichas están representadas por Shenlong con el objetivo es ir eliminándolas mediante saltos hasta conseguir que quede una sola ficha en el tablero.</p>
+              <button class="btn-jugar btn-rebote" id="btnJugar">
+                <span class="tri"></span>JUGAR
+              </button>
+            </div>
+          </article>
+          
+          <article class="banner-slide">
+            <img class="banner-img" src="../Img/imagesBanner/superm-fondo-banner.jpg" alt="">
+            <div class="banner-content">
+              <h2>Super Mario</h2>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+              <button class="btn-jugar btn-rebote" id="btnJugar">
+                <span class="tri"></span>JUGAR
+              </button>
+            </div>
+          </article>
+          
+          <article class="banner-slide">
+            <img class="banner-img" src="../Img/imagesBanner/aoe_fondo_banner.jpg" alt="">
+            <div class="banner-content">
+              <h2>Age of Empires II</h2>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+              <button class="btn-jugar btn-rebote" id="btnJugar">
+                <span class="tri"></span>JUGAR
+              </button>
+            </div>
+          </article>
+          
+          <article class="banner-slide">
+            <img class="banner-img" src="../Img/imagesBanner/peak_fondo_banner.jpg">
+          <div class="banner-content">
+            <h2>Peak</h2>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <button class="btn-jugar btn-rebote" id="btnJugar">
+              <span class="tri"></span>JUGAR
+            </button>
+          </div>
+        </article>
+        
+        <!-- más slides... -->
       </div>
-
+      <button class="banner-arrow prev" aria-label="Juego anterior">&#10094;</button>
+      <button class="banner-arrow next" aria-label="Juego siguiente">&#10095;</button>
+    </div>
+      
     </section>
+    
+    
+  
 
     <!-- Catálogo de juegos por categoría -->
     <main class="catalog" aria-label="Catálogo principal">
-      <!-- <section class="game-section" aria-labelledby="categoria-titulo" data-category = "categorias">
-          <h2>Categoría</h2>
-
-          <div class="game-row"></div>
-        </section> -->
-
       <section id="estrategia" class="game-section" data-category="strategy" aria-labelledby="estrategia-titulo">
         <h2>Estrategia</h2>
         <div class="game-row">
@@ -349,7 +383,6 @@
   </div>
   <script src="../BtnEventos.js"></script>
   <script src="../ConsumirApi.js"></script>
-  <script src="../JugarAnima.js"></script>
 </body>
 
 </html>

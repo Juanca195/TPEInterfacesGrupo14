@@ -82,3 +82,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
 });
+
+//btn-banner-jugar
+const btn_banner_jugar = document.getElementById('btnJugar');
+let navegando = false;
+
+// Saltito periódico: solo alterna una clase, el movimiento lo hace la transition
+const salto = setInterval(() => {
+  if (navegando || btn_banner_jugar.matches(':hover')) return;
+  btn_banner_jugar.classList.add('salto');
+  setTimeout(() => btn_banner_jugar.classList.remove('salto'), 250);
+}, 2500);
+
+// Al tocar: se desvanece y navega
+btn_banner_jugar.addEventListener('click', () => {
+  if (navegando) return;
+  navegando = true;
+  clearInterval(salto);
+  btn_banner_jugar.classList.add('saliendo');
+  setTimeout(() => {
+    window.location.href = 'Juego.html';
+  }, 350);
+});
+
+//flechas
+
+const track = document.querySelector('.banner-track');
+const prev = document.querySelector('.banner-arrow.prev');
+const next = document.querySelector('.banner-arrow.next');
+
+next.addEventListener('click', () => {
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+    track.scrollTo({
+        left: atEnd ? 0 : track.scrollLeft + track.clientWidth,
+        behavior: 'smooth'
+    });
+});
+
+prev.addEventListener('click', () => {
+    const atStart = track.scrollLeft <= 0;
+    track.scrollTo({
+        left: atStart ? track.scrollWidth : track.scrollLeft - track.clientWidth,
+        behavior: 'smooth'
+    });
+});
