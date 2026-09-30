@@ -50,224 +50,280 @@ button {
 
 /*      Inicio Nav  */
 header{
-    width: 100%;
-    background: #000;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
+  width: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
-  .nav {
-    width: 100%;
-    margin: 8px 12px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.nav {
+  width: 100%;
+  margin: 8px 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .content_nav_left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.content_nav_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  /* Boton */
-  .btn-burger {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s ease, opacity 0.2s ease;
-    z-index: 1000;
-  }
-  
-  .btn-burger:hover {
-    opacity: 0.7;
-  }
-  /*  Con estas clases gira solo la flecha  */
-  .icon-arrow {
-    transform-box: fill-box;
-    transform-origin: center;
-    transition: transform 0.3s ease;
-  }
+/* Boton */
+.btn-burger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  z-index: 1000;
+}
 
-  .btn-burger.active .icon-arrow {
-    transform: rotate(180deg);
-  }
+.btn-burger:hover {
+  opacity: 0.7;
+}
+/*  Con estas clases gira solo la flecha  */
+.icon-arrow {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.btn-burger.active .icon-arrow {
+  transform: rotate(180deg);
+}
 /* ---------- Overlay (se inyecta por JS) ---------- */
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 900;
-  }
-  
-  .overlay.active {
-    visibility: visible;
-  }
- 
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 900;
+}
+
+.overlay.active {
+  visibility: visible;
+}
+
 /* ---------- Menú desplegable ---------- */
-  .menu-hamburguesa {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh; 
-    width: 220px;
-    padding: 90px 20px 20px 20px;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 950;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .menu-hamburguesa.active {
-    transform: translateX(0);
-  }
+.menu-hamburguesa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; 
+  width: 220px;
+  padding: 90px 20px 20px 20px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 950;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.menu-hamburguesa.active {
+  transform: translateX(0);
+}
   
 /* ---------- Ítems del menú ---------- */
-  /* Ambos menús usan violeta en reposo y blanco sobre violeta al hover/activo. */
-  .menu-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
+/* Ambos menús usan violeta en reposo y blanco sobre violeta al hover/activo. */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
 
-  .menu-hamburguesa .menu-item:hover,
-  .menu-hamburguesa .menu-item.active,
-  .menu-perfil .menu-item:hover,
-  .menu-perfil .menu-item.active {
-      background: #9F4CDB;
-      transform: translateX(2px);
-  }
+.menu-hamburguesa .menu-item:hover,
+.menu-hamburguesa .menu-item.active,
+.menu-perfil .menu-item:hover,
+.menu-perfil .menu-item.active {
+    background: #9F4CDB;
+    transform: translateX(2px);
+}
 
-  .menu-hamburguesa .label,
-  .menu-hamburguesa .icon,
-  .menu-perfil .label,
-  .menu-perfil .icon {
-    color: #9F4CDB;
-  }
+.menu-hamburguesa .label,
+.menu-hamburguesa .icon,
+.menu-perfil .label,
+.menu-perfil .icon {
+  color: #9F4CDB;
+}
 
-  .menu-hamburguesa .menu-item:hover .label,
-  .menu-hamburguesa .menu-item:hover .icon,
-  .menu-hamburguesa .menu-item.active .label,
-  .menu-hamburguesa .menu-item.active .icon,
-  .menu-perfil .menu-item:hover .label,
-  .menu-perfil .menu-item:hover .icon,
-  .menu-perfil .menu-item.active .label,
-  .menu-perfil .menu-item.active .icon {
-    color: #fff;
-  }
+.menu-hamburguesa .menu-item:hover .label,
+.menu-hamburguesa .menu-item:hover .icon,
+.menu-hamburguesa .menu-item.active .label,
+.menu-hamburguesa .menu-item.active .icon,
+.menu-perfil .menu-item:hover .label,
+.menu-perfil .menu-item:hover .icon,
+.menu-perfil .menu-item.active .label,
+.menu-perfil .menu-item.active .icon {
+  color: #fff;
+}
 
-  .menu-hamburguesa .menu-item.active .label {
-    font-weight: 700;
-  }
+ .menu-hamburguesa .menu-item.active .label {
+  font-weight: 700;
+}
 
-  .icon {
-    width: 20px;
-    height: 20px;
-    color: var(--Secundario);
-    stroke: currentColor;
-    transition: color 0.2s ease;
-    flex-shrink: 0;
-  }
+ .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--Secundario);
+  stroke: currentColor;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+ .icon-inicio { height: 23px; }
+.icon-estrategia { height: 18px; }
+
+.label {
+  color: var(--Secundario);
+  font-size: 20px;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+   /* El menú oculto por defecto */
+.menu-perfil {
+  display: none; 
+  position: absolute;
+  top: 50px; 
+  right: 0;
+  height: auto;
+  background-color: #000; 
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 100; /* Asegura que quede por encima de otros elementos */
+  padding: 8px 0;
+}
+
+ /* ESTA ES LA CLAVE: la clase que JavaScript agregará para mostrar el menú */
+.menu-perfil.activo {
+  display: flex;
+  flex-direction: column;
+}
+
+ .content-nav-search-center{
+  display: flex;
+  max-width: 500px;
+  flex: 1;
+  gap: 12px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--secondary) 50%, transparent);    
+}
 
 
-  .icon-inicio { height: 23px; }
-  .icon-estrategia { height: 18px; }
-  
-  .label {
-    color: var(--Secundario);
-    font-size: 20px;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 400;
-    transition: color 0.2s ease;
-  }
+.content-nav-search-center input{
+ width: 100%;
+ background: transparent;
+ border: none;
+ outline: none;
+ color: var(--white);
+ font-size: 16px;  
+}
 
-    /* El menú oculto por defecto */
-  .menu-perfil {
-    display: none; 
-    position: absolute;
-    top: 50px; 
-    right: 0;
-    height: auto;
-    background-color: #000; 
-    min-width: 200px;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 100; /* Asegura que quede por encima de otros elementos */
-    padding: 8px 0;
-  }
 
-  /* ESTA ES LA CLAVE: la clase que JavaScript agregará para mostrar el menú */
-  .menu-perfil.activo {
-    display: flex;
-    flex-direction: column;
-  }
+.content-nav-search-center input::placeholder{
+ color: var(--white);
+ opacity: 1;
+}
 
-  .content-nav-search-center{
-    display: flex;
-    max-width: 500px;
-    flex: 1;
-    gap: 12px;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 10px;
-    background-color: color-mix(in srgb, var(--secondary) 50%, transparent);    
-  }
-  
+.content-nav-rigth {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ align-self: stretch;
+ gap: 10px;
+ text-decoration: none;
+ color: inherit;
+}
 
-  .content-nav-search-center input{
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--white);
-    font-size: 16px;  
+@property --p {
+ syntax: "<percentage>";
+ initial-value: 0%;
+ inherits: false;
+}
+
+.btn-subscription {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 10px;
+  border: none;
+  border-radius: 10px;
+  background:color-mix(var(--secondary) 50%, transparent);;
+  padding: 0 14px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 1s ease-in-out;
+}
+
+.btn-subscription::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;                /* grosor del trazo */
+  border-radius: inherit;
+  background: conic-gradient(var(--accent) var(--p), transparent 0);
+  mask: linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+  mask-composite: exclude;     /* deja solo el anillo */
+  transition: --p 0.8s ease-in-out;
+  pointer-events: none;
+}
+
+.btn-subscription:hover::before,
+.btn-subscription:focus-visible::before {
+    --p: 100%;                   /* borde completo */
     
-  }
+}
 
-  .content-nav-search-center input::placeholder{
-    color: var(--white);
+.btn-subscription:hover::before,
+.btn-subscription:focus-visible::before {
+    --angle: 360deg;             /* el tramo da una vuelta completa */
     opacity: 1;
-  }
+}
 
+.btn-subscription:hover,
+.btn-subscription:focus-visible {
+    background: var(--secondary-dark-2);
+}
 
-  .content-nav-rigth {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-self: stretch;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
-  }
+/* Corona (opcional): vibra al hacer hover */
+.premium-icon {
+    transform-origin: 50% 100%;
+}
 
-  .btn-subscription{
-    display: flex;
-    align-items: center;
-    align-self: stretch;
-    gap: 10px;
-    border-radius: 10px;
-    background: rgba(159, 76, 219, 0.50);
-    padding: 0px 14px 0px;
-    text-decoration: none;
-    color: inherit
-  }
+.btn-subscription:hover .premium-icon {
+    animation: crown-shake 0.6s ease-in-out;
+}
+
+@keyframes crown-shake {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(-12deg); }
+    40% { transform: rotate(10deg); }
+    60% { transform: rotate(-6deg); }
+    80% { transform: rotate(30deg); }
+}
 
   .content-perfil{
     width: 40px;
@@ -280,6 +336,7 @@ header{
     align-items: center;
     align-self: stretch;
   }
+  
 /*    Fin del nav   */
 
 
