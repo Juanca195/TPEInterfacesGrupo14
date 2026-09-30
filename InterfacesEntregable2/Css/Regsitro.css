@@ -165,6 +165,11 @@ small {
      font-size: 14px;
      font-weight: 400;
 }
+.content-small small{
+     display: flex;             
+     flex-direction: column;    
+     gap: 12px;
+}
 
 .field-with-help,
 .password-field {

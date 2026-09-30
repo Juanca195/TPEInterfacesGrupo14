@@ -64,15 +64,15 @@
             <form id="form" class="register-form">
                 <div class="field">
                     <span>Nombre</span>
-                    <input type="text" placeholder="Nombre">
+                    <input type="text" placeholder="Nombre" required>
                 </div>
                 <div class="field">
                     <span>Apellido</span>
-                    <input type="text" placeholder="Apellido">
+                    <input type="text" placeholder="Apellido" required>
                 </div>
                 <div class="field">
                     <span>Edad</span>
-                    <input type="text" placeholder="Edad">
+                    <input type="text" placeholder="Edad" required>
                 </div>
                 <div class="field field-with-help">
                     <span>Nombre de usuario</span>
@@ -81,12 +81,12 @@
                 </div>
                 <div class="field">
                     <span>Email</span>
-                    <input type="email" placeholder="tuemail@mail.com">
+                    <input type="email" placeholder="tuemail@mail.com" required>
                 </div>
                 <div class="field password-field">
                     <span>Contraseña</span>
                     <span class="password-input">
-                        <input type="password" placeholder="Contraseña">
+                        <input type="password" placeholder="Contraseña" required>
                         <button type="button" class="password-toggle" aria-label="Mostrar contraseña">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
                                 fill="none">
@@ -105,9 +105,11 @@
                             </svg>
                         </button>
                     </span>
-                    <small>Al menos 4 letras.</small>
-                    <small>Al menos 1 caracter.</small>
-                    <small>Al menos 1 número.</small>
+                    <div class="content-small">
+                        <small>Al menos 4 letras.</small>
+                        <small>Al menos 1 caracter.</small>
+                        <small>Al menos 1 número.</small>
+                    </div>
                 </div>
 
                 <div class="captcha" aria-label="reCAPTCHA simulado">

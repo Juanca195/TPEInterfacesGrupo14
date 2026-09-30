@@ -118,7 +118,7 @@ header{
     position: fixed;
     top: 0;
     left: 0;
-    height: auto;
+    height: 100vh; 
     width: 220px;
     padding: 90px 20px 20px 20px;
     background: #000;
@@ -338,21 +338,53 @@ header{
   font-size: 35px;
   font-weight: 700;
   color: var(--accent);
-}t
-
-/*Acomodar el boton*/
-.cta-button {
-  display: flex;
-  flex-direction: row;
-  align-self: flex-end;
-  padding: 10px 24px;
-  border: 0;
-  border-radius: 25px;
-  background: var(--blue);
-  color: var(--white);
-  font-size: 22px;
-  font-weight: 700;
 }
+/*  Animacion de btnJUgar */
+/* Se podria jugar con el tema de los colores*/
+.btn-jugar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: var(--secondary);
+  color:var(--primary-dark-2);
+  font-size: 18px;
+  font-weight: 500px;
+  cursor: pointer;
+  box-shadow: 0 6px 0;
+  transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s, opacity .35s; 
+}
+
+.btn-jugar .tri {
+  width: 0; height: 0;
+  border-left: 16px solid currentColor;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  transition: transform .25s;
+}
+
+.btn-jugar:hover  { 
+  transform: translateY(-4px) scale(1.05); 
+  box-shadow: 0 10px 0 var(--secondary-dark-1); 
+}
+.btn-jugar:hover .tri { 
+  transform: translateX(5px); 
+}
+.btn-jugar:active {
+   transform: translateY(4px) scale(.97);   
+   box-shadow: 0 2px 0 var(--secondary-dark-1); 
+  }
+
+.btn-jugar.salto    { 
+  transform: translateY(-12px); 
+}
+.btn-jugar.saliendo { 
+  transform: scale(1.15); 
+  opacity: 0; 
+  pointer-events: none;
+}
+
 
 .catalog {
   width: min(1841px, calc(100% - 40px));
@@ -378,7 +410,7 @@ header{
 
   margin: 10px;
   color: var(--white);
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 800;
 }
 /* Tatjeta de juegos */
@@ -518,23 +550,26 @@ section ul{
 
 /* Desarrollo Mobile */
 @media (max-width: 640px) {
-  .topbar {
-    height: auto;
-  }
-
-  /* La cabecera queda en dos filas para conservar logo y acciones sin desbordar. */
-  .header-inner {
+  /* Organiza el nav real en dos filas para evitar que sus elementos se desborden en mobile. */
+  .nav {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 6px;
-    padding: 6px 8px;
+    grid-template-areas:
+      "brand actions"
+      "search search";
+    align-items: center;
+    gap: 8px 10px;
+    width: 100%;
+    margin: 0;
+    padding: 8px 12px;
   }
 
-  .brand-group {
+  /* Mantiene el botón hamburguesa y el logo compactos en la primera fila. */
+  .content_nav_left {
+    grid-area: brand;
     min-width: 0;
     align-self: center;
-    gap: 4px;
-    padding: 4px 0;
+    gap: 6px;
   }
 
   .btn-burger svg {
@@ -542,36 +577,77 @@ section ul{
     height: auto;
   }
 
-  .brand-logo img {
-    width: 100px;
+  .content_nav_left > a img {
+    display: block;
+    width: 90px;
     height: auto;
   }
 
-  .search-box {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    order: 0;
+  /* Hace que el buscador use una fila completa y pueda encogerse sin desbordar. */
+  .content-nav-search-center {
+    grid-area: search;
     width: 100%;
-    height: 36px;
+    max-width: none;
+    min-width: 0;
+    min-height: 38px;
+    padding: 8px;
   }
 
-  .header-actions {
-    grid-column: 2;
-    grid-row: 1;
+  .content-nav-search-center input {
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  /* Agrupa premium y perfil arriba a la derecha, con tamaños táctiles compactos. */
+  .content-nav-rigth {
+    position: relative;
+    grid-area: actions;
+    justify-self: end;
+    align-self: center;
     gap: 6px;
     margin: 0;
   }
 
-  .content_nav_right {
-    gap: 5px;
+  .btn-subscription {
+    align-self: center;
+    gap: 4px;
     padding: 7px;
     font-size: 11px;
     white-space: nowrap;
   }
 
   .content-perfil {
+    flex: 0 0 36px;
     width: 36px;
     height: 36px;
+  }
+
+  /* El panel hamburguesa ocupa la pantalla disponible y permite scroll en móviles bajos. */
+  .menu-hamburguesa {
+    width: min(280px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+    padding: 76px 14px 20px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Amplía las opciones de ambos menús para que sean cómodas al tocar. */
+  .menu-hamburguesa .menu-item,
+  .menu-perfil .menu-item {
+    min-height: 44px;
+    padding: 12px;
+  }
+
+  /* Ancla el menú de perfil al grupo de acciones y limita su tamaño a la pantalla. */
+  .menu-perfil {
+    top: calc(100% + 8px);
+    right: 0;
+    width: min(260px, calc(100vw - 24px));
+    max-height: calc(100vh - 100px);
+    max-height: calc(100dvh - 100px);
+    overflow-y: auto;
+    z-index: 1100;
   }
 
   /* El banner mantiene la composicion de escritorio, con columnas proporcionales. */
@@ -679,7 +755,7 @@ section ul{
     }
 
     .cta-button:hover,
-    .content_nav_right:hover,
+    .btn-subscription:hover,
     .content-perfil:hover {
       filter: brightness(1.15);
       transform: translateY(-2px);
@@ -690,10 +766,11 @@ section ul{
       transform: scale(1.08);
     }
 
-     .game-card:active,
+    /* Sincroniza el efecto de pulsación con los controles reales del nav mobile. */
+    .game-card:active,
   .mini-cards img:active,
   .cta-button:active,
-  .content_nav_right:active,
+    .btn-subscription:active,
   .content-perfil:active,
   .btn-burger:active {
     transform: scale(0.97);
@@ -701,7 +778,7 @@ section ul{
 
   /* El contorno hace visibles los controles al navegar con teclado. */
   .cta-button:focus-visible,
-  .content_nav_right:focus-visible,
+  .btn-subscription:focus-visible,
   .content-perfil:focus-visible,
   .btn-burger:focus-visible,
   .game-card:focus-visible {
