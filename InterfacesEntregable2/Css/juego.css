@@ -26,7 +26,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
     margin: 0;
     font-family: var(--font-primary);
     background-color: var(--background-page);
@@ -63,7 +62,7 @@
   }
   /* P ajustado */
   .breadcrumb {
-    margin-top: 15px;
+    margin-top: 10px;
     width: 100%;
   }
 
@@ -161,7 +160,7 @@
 
   /* ===== Contenido principal ===== */
   main {
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100%;
     max-width: 1800px;
     padding: 0 40px;
@@ -194,7 +193,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(2.5px);
     box-shadow: 5px 5px 5px var(--negro);
   }
 
@@ -376,7 +374,7 @@
 
   .about__text {
     font-size: 18px;
-    font-family: 'Concert One', cursive;
+    font-family: var(--font-primary);
     line-height: 1.7;
   }
 
