@@ -248,11 +248,6 @@ h1 {
 
 /*-- Fin registro ----*/
 
-.separator {
-    width: 100%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.9);
-}
 
 .social-login {
     width: 100%;
@@ -273,6 +268,7 @@ h1 {
     gap: 12px;
     font-size: 1.125rem;
     cursor: pointer;
+     transition: box-shadow 0.3s ease;
 }
 
 .social-button.facebook {
@@ -283,6 +279,14 @@ h1 {
 .social-button.google {
     background: var(--white);
     color: #111;
+}
+.social-button.facebook:hover{
+    transform: translateY(-2px); /* Mueve el botón 2 píxeles hacia arriba */
+    box-shadow: 0 0 15px 3px rgba(59, 89, 152, 0.7);
+}
+.social-button.google:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px 3px rgba(59, 89, 152, 0.7);
 }
 
 .social-icon,

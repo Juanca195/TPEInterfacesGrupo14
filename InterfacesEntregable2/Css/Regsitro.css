@@ -386,6 +386,11 @@ small {
      justify-content: center;
      gap: 10px;
      font-weight: 400;
+     transition: box-shadow 0.3s ease;
+}
+.social-button:hover{
+     transform: translateY(-2px); /* Mueve el botón 2 píxeles hacia arriba */
+     box-shadow: 0 0 15px 3px rgba(59, 89, 152, 0.7);
 }
 
 .facebook {
