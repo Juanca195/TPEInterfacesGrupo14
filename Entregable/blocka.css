@@ -1,0 +1,32 @@
+ /* style.css */
+ body, html {
+     margin: 0;
+     padding: 0;
+     width: 100%;
+     height: 100%;
+     overflow: hidden; /* Evita que aparezcan barras de scroll */
+     background-color: white; /* Opcional: fondo negro */
+ }
+
+ body {
+     display: grid;
+     place-items: center;
+ }
+
+ canvas {
+     display: block;
+     width: 100vw;
+     height: 100vh;
+ }
+ .instrucciones{
+    width: 420px;
+    padding: 10px;
+    background: #11111f;
+    border: 2px solid #9336D7;
+    border-radius: 20px;
+
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    
+ }
