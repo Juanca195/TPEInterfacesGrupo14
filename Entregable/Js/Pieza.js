@@ -17,7 +17,7 @@ export class Pieza {
   }
 
   rotar(grados) {
-    this.rotacion = (this.rotacion + grados) % 360;
+     this.rotacion = (((this.rotacion + grados) % 360) + 360) % 360; //por si nos afecta para la ayudita
   }
 
   // ¿El punto (x, y) cae dentro de esta pieza?
@@ -44,4 +44,15 @@ export class Pieza {
 
     ctx.restore();                                 // evita que la rotación se acumule
   }
+
+  asignarRotacionAleatoria() {
+    const cantidadDeGiros = Math.floor(Math.random() * 4); // 0, 1, 2 o 3
+    this.rotacion = cantidadDeGiros * 90;
+  }
+
+  // Una pieza está bien puesta cuando no tiene rotación
+  estaEnPosicionCorrecta() {
+    return this.rotacion === 0;
+  }
+
 }

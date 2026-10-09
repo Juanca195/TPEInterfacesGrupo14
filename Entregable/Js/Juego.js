@@ -35,13 +35,7 @@ export class Juego {
   }
 
   iniciar() {
-    // this.img.onload = () => {
-    //   this.rompecabezas = new Rompecabezas(this.img);
-    //   new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
-    //   this.ajustarTamaño();
-    // };
-    // this.img.src = this.srcImagen;
-
+    
     window.addEventListener("resize", () => this.ajustarTamaño());
     this.ajustarTamaño();
 
@@ -53,6 +47,7 @@ export class Juego {
       const img = new Image();
       img.onload = () =>{
         this.rompecabezas = new Rompecabezas(img);
+        this.rompecabezas.mezclarPiezas();
         new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
         this.ajustarTamaño();
       }

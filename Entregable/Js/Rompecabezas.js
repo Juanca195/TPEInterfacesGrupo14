@@ -5,21 +5,24 @@ export class Rompecabezas {
   constructor(img, espacio = 20) {
     this.img = img; 
     this.espacio = espacio; 
-    this.piezas = this.#crearPiezas();
+    this.piezas = [];
+    this.#crearPiezas()
   }
 
   // Corta la imagen original en 4: arriba-izq, arriba-der, abajo-izq, abajo-der
   #crearPiezas() {
+  
     const mitadX = this.img.naturalWidth / 2;
     const mitadY = this.img.naturalHeight / 2;
-    const piezas = [];
+    
+
 
     for (let fila = 0; fila < 2; fila++) {
       for (let col = 0; col < 2; col++) {
-        piezas.push(new Pieza(col * mitadX, fila * mitadY, mitadX, mitadY));
+        this.piezas.push(new Pieza(col * mitadX, fila * mitadY, mitadX, mitadY));
       }
     }
-    return piezas;
+  
   }
 
   // Calcula tamaño y posición según el canvas. Se llama al cargar y al
@@ -60,4 +63,19 @@ export class Rompecabezas {
   buscarPieza(x, y) {
     return this.piezas.find((pieza) => pieza.contienePunto(x, y)) ?? null;
   }
+
+  // Le da una rotación al azar a cada pieza, y repite si quedó armada
+  mezclarPiezas() {
+    do {
+      for (const pieza of this.piezas) {
+        pieza.asignarRotacionAleatoria();
+      }
+    } while (this.estaResuelto());
+  }
+
+  // true si todas las piezas están en 0°
+  estaResuelto() {
+    return this.piezas.every((pieza) => pieza.estaEnPosicionCorrecta());
+  }
+
 }
