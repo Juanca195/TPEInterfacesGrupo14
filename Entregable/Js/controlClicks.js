@@ -1,51 +1,29 @@
+// Escucha los clicks del canvas y rota la pieza que corresponda.
+// Recibe el Rompecabezas (no el array de piezas), así siempre ve las piezas
+export class ControlClicks {
+  constructor(canvas, rompecabezas, alCambiar) {
+    this.canvas = canvas;
+    this.rompecabezas = rompecabezas;
+    this.alCambiar = alCambiar; 
 
+    this.canvas.addEventListener("mousedown", (e) => this.manejarClick(e));
 
-// Esta clase se supone que pueda controlar los clicks para girar las imagenes.
-export class controlClicks {
-    constructor(canvas, piezas, renderizar) {
-        this.canvas = canvas;
-        this.piezas = piezas;
-        this.renderizar = renderizar;
+    // Evita el menú del navegador con el click derecho
+    this.canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+  }
 
-        this.canvas.addEventListener("mousedown", (event) => {
-            this.manejarClick(event);
-        });
+  manejarClick(event) {
+    const pieza = this.rompecabezas.buscarPieza(event.offsetX, event.offsetY);
+    if (!pieza) return;
 
-        this.canvas.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-        });
+    if (event.button === 0) {
+      pieza.rotar(90);   // click izquierdo → derecha
+    } else if (event.button === 2) {
+      pieza.rotar(-90);  // click derecho → izquierda
+    } else {
+      return;
     }
 
-    manejarClick(event) {
-        let pieza = this.buscarPieza(event.offsetX, event.offsetY);
-
-        if (pieza == null) {
-            return;
-        }
-
-        if (event.button === 0) {
-            pieza.rotacion += 90;
-        } else if (event.button === 2) {
-            pieza.rotacion -= 90;
-        } else {
-            return;
-        }
-
-        this.renderizar();
-    }
-
-    buscarPieza(x, y) {
-        for (let pieza of this.piezas) {
-            if (
-                x >= pieza.destinoX &&
-                x <= pieza.destinoX + pieza.ancho &&
-                y >= pieza.destinoY &&
-                y <= pieza.destinoY + pieza.alto
-            ) {
-                return pieza;
-            }
-        }
-
-        return null;
-    }
+    this.alCambiar();
+  }
 }
