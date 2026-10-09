@@ -4,12 +4,12 @@ import { Filtros } from "./Filtros.js";
 
 // Clase "directora": conecta todas las demás y se ocupa del canvas.
 export class Juego {
-  constructor(idCanvas, srcImagen) {
+  constructor(idCanvas, imagenes) {
     this.canvas = document.getElementById(idCanvas);
     this.ctx = this.canvas.getContext("2d");
-    this.srcImagen = srcImagen;
+    
 
-    this.img = new Image();
+    this.imagenes = imagenes;
     this.rompecabezas = null;
 
     this.colorFondo = { r: 0, g: 0, b: 70, a: 255 };
@@ -35,15 +35,28 @@ export class Juego {
   }
 
   iniciar() {
-    this.img.onload = () => {
-      this.rompecabezas = new Rompecabezas(this.img);
-      new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
-      this.ajustarTamaño();
-    };
-    this.img.src = this.srcImagen;
+    // this.img.onload = () => {
+    //   this.rompecabezas = new Rompecabezas(this.img);
+    //   new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
+    //   this.ajustarTamaño();
+    // };
+    // this.img.src = this.srcImagen;
 
     window.addEventListener("resize", () => this.ajustarTamaño());
     this.ajustarTamaño();
+
+    const indiceImg = Math.floor(Math.random() * this.imagenes.length);
+    this.cargarImagen(this.imagenes[indiceImg]);
+  }
+
+  cargarImagen(src){
+      const img = new Image();
+      img.onload = () =>{
+        this.rompecabezas = new Rompecabezas(img);
+        new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
+        this.ajustarTamaño();
+      }
+      img.src = src;
   }
 
   // Adapta el canvas a la ventana. Al cambiar el tamaño se borra, hay que redibujar.

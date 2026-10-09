@@ -19,7 +19,7 @@ export class ControlClicks {
     if (event.button === 0) {
       pieza.rotar(90);   // click izquierdo → derecha
     } else if (event.button === 2) {
-      pieza.rotar(-90);  // click derecho → izquierda
+      pieza.rotar(90);  // click derecho → izquierda
     } else {
       return;
     }
