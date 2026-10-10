@@ -4,23 +4,28 @@ import { Filtros } from "./Filtros.js";
 
 // Clase "directora": conecta todas las demás y se ocupa del canvas.
 export class Juego {
-  constructor(idCanvas, imagenes) {
+  constructor(idCanvas, imagenes, niveles) {
     this.canvas = document.getElementById(idCanvas);
     this.ctx = this.canvas.getContext("2d");
-    
-
+  
     this.imagenes = imagenes;
     this.rompecabezas = null;
 
     this.colorFondo = { r: 0, g: 0, b: 70, a: 255 };
 
-    
     this.filtro = this.elegirFiltroAleatorio();
-
     // Canvas auxiliar: las piezas se dibujan acá, se filtran, y recién
     // después se copian al canvas real (así el filtro no afecta al fondo).
     this.canvasTemporal = document.createElement("canvas");
     this.ctxTemporal = this.canvasTemporal.getContext("2d");
+
+    //Manejo de niveles
+    this.niveles = niveles;
+    this.nivelActual = 0; 
+
+    this.textoNivel = document.getElementById("textoNivel");
+    this.btnSiguiente = document.getElementById("btnSiguiente");
+    this.btnSiguiente.addEventListener("click", () => this.siguienteNivel());
   }
 
   //elije un filtro aleatoriamente al refrescar la pagina
@@ -38,21 +43,77 @@ export class Juego {
     
     window.addEventListener("resize", () => this.ajustarTamaño());
     this.ajustarTamaño();
+    this.cargarNivel();
 
-    const indiceImg = Math.floor(Math.random() * this.imagenes.length);
-    this.cargarImagen(this.imagenes[indiceImg]);
   }
 
-  cargarImagen(src){
-      const img = new Image();
-      img.onload = () =>{
-        this.rompecabezas = new Rompecabezas(img);
-        this.rompecabezas.mezclarPiezas();
-        new ControlClicks(this.canvas, this.rompecabezas, () => this.renderizar());
-        this.ajustarTamaño();
+cargarNivel() {
+    const { filas, columnas } = this.niveles[this.nivelActual];
+
+    const indice = Math.floor(Math.random() * this.imagenes.length);
+    const img = new Image();
+
+    img.onload = () => {
+      this.rompecabezas = new Rompecabezas(img, filas, columnas);
+      this.rompecabezas.mezclarPiezas();   // si ya lo llamabas en otro lado, no lo dupliques
+
+      // ControlClicks se crea una sola vez; después solo se actualiza el rompecabezas
+      if (!this.controlClicks) {
+        this.controlClicks = new ControlClicks(
+          this.canvas, this.rompecabezas, () => this.alRotar()
+        );
+      } else {
+        this.controlClicks.rompecabezas = this.rompecabezas;
       }
-      img.src = src;
+
+      this.filtro = this.elegirFiltroAleatorio();   // opcional: filtro nuevo por nivel
+      this.actualizarHud(filas * columnas);
+      this.ajustarTamaño();
+    };
+    img.src = this.imagenes[indice];
+}
+
+  // cargarImagen(src){
+  //     const img = new Image();
+  //     img.onload = () =>{
+  //       this.rompecabezas = new Rompecabezas(img);
+  //       this.rompecabezas.mezclarPiezas();
+  //       new ControlClicks(this.canvas, this.rompecabezas, () => this.alRotar());
+  //       this.ajustarTamaño();
+  //     }
+  //     img.src = src;
+  // }
+
+  alRotar(){
+    this.rompecabezas.actualizarEspacio();
+    this.rompecabezas.acomodar(this.canvas.width, this.canvas.height);
+    this.renderizar();
+
+    if(this.rompecabezas.estaResuelto()) this.alResolver();
   }
+  alResolver() {
+    const hayOtro = this.nivelActual < this.niveles.length - 1;
+
+    this.textoNivel.textContent = hayOtro
+      ? "¡Nivel completado!"
+      : "¡Ganaste! Completaste todos los niveles";
+    this.btnSiguiente.textContent = hayOtro ? "Siguiente nivel" : "Jugar de nuevo";
+    this.btnSiguiente.hidden = false;
+  }
+
+  siguienteNivel() {
+    // El % hace que después del último nivel vuelva al primero
+    this.nivelActual = (this.nivelActual + 1) % this.niveles.length;
+    this.cargarNivel();
+  }
+
+  actualizarHud(cantidadPiezas) {
+    this.textoNivel.textContent =
+      `Nivel ${this.nivelActual + 1} de ${this.niveles.length} (${cantidadPiezas} piezas)`;
+    this.btnSiguiente.hidden = true;
+  }
+
+
 
   // Adapta el canvas a la ventana. Al cambiar el tamaño se borra, hay que redibujar.
   ajustarTamaño() {

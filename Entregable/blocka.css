@@ -28,5 +28,19 @@
     color: white;
     font-family: Arial, sans-serif;
     font-size: 14px;
-    
  }
+ #hud {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+#btnSiguiente{
+    background-color: blue;
+    border-radius: 30px;
+    box-shadow: #11111f;
+}

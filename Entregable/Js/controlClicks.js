@@ -13,6 +13,9 @@ export class ControlClicks {
   }
 
   manejarClick(event) {
+    //si esta resuelto no se permiten mas clicks
+    if(this.rompecabezas.estaResuelto())return;
+
     const pieza = this.rompecabezas.buscarPieza(event.offsetX, event.offsetY);
     if (!pieza) return;
 

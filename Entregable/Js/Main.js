@@ -6,7 +6,13 @@ const bancoJuegos = [
     "../Entregable/assets/fondo6.jpg",
     "../Entregable/assets/fondo7.jpg"
 ];
+
+const niveles = [
+    {filas: 2, columnas: 2},
+    {filas: 3, columnas: 2},
+    {filas: 3, columnas: 3}
+];
  
-const juego = new Juego("myCanvas", bancoJuegos);
+const juego = new Juego("myCanvas", bancoJuegos, niveles);
 juego.iniciar();
 

@@ -2,56 +2,71 @@ import { Pieza } from "./Pieza.js";
 
 // Maneja el CONJUNTO de piezas: las crea una sola vez 
 export class Rompecabezas {
-  constructor(img, espacio = 20) {
-    this.img = img; 
-    this.espacio = espacio; 
-    this.piezas = [];
-    this.#crearPiezas()
+  constructor(img,filas = 3, column = 3, espacio = 20) {
+    this.img = img;
+    this.filas = filas;
+    this.column = column; 
+    this.espacio = espacio;
+    this.espacioActual = espacio;
+    
+  // Lado (en px de la imagen original) del cuadrado más grande que entra en la grilla
+  this.ladoOrigen = Math.min(
+    img.naturalWidth / column,
+    img.naturalHeight / filas
+    );
+    
+    this.piezas = this.crearPiezas();
   }
 
   // Corta la imagen original en 4: arriba-izq, arriba-der, abajo-izq, abajo-der
-  #crearPiezas() {
-  
-    const mitadX = this.img.naturalWidth / 2;
-    const mitadY = this.img.naturalHeight / 2;
-    
+  crearPiezas() {
+  const lado = this.ladoOrigen;
 
+  // Se usa una zona de la imagen centrada, de (lado × columnas) por (lado × filas)
+  const inicioX = (this.img.naturalWidth - lado * this.column) / 2;
+  const inicioY = (this.img.naturalHeight - lado * this.filas) / 2;
 
-    for (let fila = 0; fila < 2; fila++) {
-      for (let col = 0; col < 2; col++) {
-        this.piezas.push(new Pieza(col * mitadX, fila * mitadY, mitadX, mitadY));
-      }
+  const piezas = [];
+  for (let fila = 0; fila < this.filas; fila++) {
+    for (let col = 0; col < this.column; col++) {
+      piezas.push(
+        new Pieza(inicioX + col * lado, inicioY + fila * lado, lado, lado)
+      );
     }
-  
   }
+  return piezas;
+}
 
   // Calcula tamaño y posición según el canvas. Se llama al cargar y al
   // redimensionar.
   acomodar(canvasAncho, canvasAlto) {
-    const escala = Math.min(
-      (canvasAncho * 0.5) / this.img.naturalWidth,
-      (canvasAlto * 0.5) / this.img.naturalHeight
-    );
+  // Tamaño de la zona usada de la imagen (no de la imagen completa)
+  const zonaAncho = this.ladoOrigen * this.column;
+  const zonaAlto = this.ladoOrigen * this.filas;
 
-    const ancho = this.img.naturalWidth * escala;
-    const alto = this.img.naturalHeight * escala;
-    const mitadAncho = ancho / 2;
-    const mitadAlto = alto / 2;
+  const escala = Math.min(
+    (canvasAncho * 0.6) / zonaAncho,
+    (canvasAlto * 0.6) / zonaAlto
+  );
 
-    // Punto de inicio para centrar el conjunto (incluyendo el espacio)
-    const inicioX = (canvasAncho - ancho - this.espacio) / 2;
-    const inicioY = (canvasAlto - alto - this.espacio) / 2;
+  const lado = this.ladoOrigen * escala; // lado de cada pieza en el canvas
 
-    this.piezas.forEach((pieza, i) => {
-      const col = i % 2;
-      const fila = Math.floor(i / 2);
+  const anchoTotal = lado * this.column + this.espacioActual * (this.column - 1);
+  const altoTotal = lado * this.filas + this.espacioActual * (this.filas - 1);
 
-      pieza.ancho = mitadAncho;
-      pieza.alto = mitadAlto;
-      pieza.destinoX = inicioX + col * (mitadAncho + this.espacio);
-      pieza.destinoY = inicioY + fila * (mitadAlto + this.espacio);
-    });
-  }
+  const inicioX = (canvasAncho - anchoTotal) / 2;
+  const inicioY = (canvasAlto - altoTotal) / 2;
+
+  this.piezas.forEach((pieza, i) => {
+    const col = i % this.column;
+    const fila = Math.floor(i / this.column);
+
+    pieza.ancho = lado;
+    pieza.alto = lado;
+    pieza.destinoX = inicioX + col * (lado + this.espacioActual);
+    pieza.destinoY = inicioY + fila * (lado + this.espacioActual);
+  });
+}
 
   dibujar(ctx) {
     for (const pieza of this.piezas) {
@@ -76,6 +91,10 @@ export class Rompecabezas {
   // true si todas las piezas están en 0°
   estaResuelto() {
     return this.piezas.every((pieza) => pieza.estaEnPosicionCorrecta());
+  }
+  //Actualiza el espacio mostrando la imagen completa una ves resuelta.
+  actualizarEspacio(){
+    this.espacioActual = this.estaResuelto() ? 0 : this.espacio;
   }
 
 }
