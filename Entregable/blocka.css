@@ -166,3 +166,148 @@ canvas {
 .selection-game-overlaty [hidden]{
     display: none;
 }
+
+
+/* Parte de la planilla de seleccion */
+/* ===== Agregar al final de blocka.css ===== */
+
+/* Plantilla de carga: tapa todo el juego hasta que termina el sorteo */
+#pantallaCarga {
+  position: fixed;
+  inset: 0;
+  z-index: 100;               /* por encima del canvas y del HUD */
+  background: #00005A;        /* el mismo azul del fondo del juego */
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: safe center;   /* si no entra en pantallas bajas, permite scroll */
+  gap: 20px;
+  padding: 24px 16px;
+  overflow-x: hidden;
+  transition: opacity 0.5s;       /* aparece suave al pasar de nivel */
+}
+
+#pantallaCarga.oculta {
+  opacity: 0;
+  visibility: hidden;             /* deja de bloquear los clicks al terminar */
+  transition: opacity 0.5s, visibility 0s 0.5s;
+}
+
+#pantallaCarga p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* El atributo hidden pierde contra display:flex/grid, así que se refuerza */
+.spinner[hidden],
+.ruleta[hidden] {
+  display: none;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: girar 0.9s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Ruleta de miniaturas ---------- */
+.ruleta {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.ruleta-titulo {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.ruleta-titulo strong { font-size: 1.5rem; }
+.ruleta-titulo span   { font-size: 0.95rem; color: rgba(255, 255, 255, 0.65); }
+
+.miniaturas {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.mini {
+  flex: 1 1 0;              /* todas comparten el ancho disponible por igual */
+  min-width: 0;             /* permite que se achiquen; sin esto desbordan */
+  max-width: 170px;         /* con pocas imágenes no se agrandan de más */
+  margin: 0;
+  opacity: 0.45;
+  transition: opacity 0.08s, transform 0.08s;
+}
+
+.mini img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;          /* recorta si la imagen no es 3:2 */
+  border-radius: 6px;
+}
+
+.mini figcaption {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* La miniatura por la que "pasa" el recorrido y la que queda elegida */
+.mini.activa,
+.mini.elegida {
+  opacity: 1;
+  transform: scale(1.07);
+}
+
+.mini.activa img,
+.mini.elegida img {
+  outline: 3px solid #F2C94C;
+  outline-offset: 2px;
+}
+
+.mini.elegida {
+  transition-duration: 0.25s;
+}
+
+.mini.elegida figcaption {
+  color: white;
+  font-weight: 600;
+}
+
+.mini.descartada {
+  opacity: 0.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    background: rgba(255, 255, 255, 0.35);
+  }
+  #pantallaCarga,
+  #pantallaCarga.oculta,
+  .mini {
+    transition: none;
+  }
+}
