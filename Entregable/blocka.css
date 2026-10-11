@@ -76,7 +76,8 @@ body, html {
     user-select: none; /* Evita seleccionar el texto al hacer clics rápidos */
 }
 
-#btnSiguiente {
+#btnSiguiente,
+#btnReintentar {
     padding: 8px 18px;
     background-color: var(--color-boton);
     color: var(--color-texto);
@@ -88,8 +89,12 @@ body, html {
     cursor: pointer;
 }
 
-#btnSiguiente:hover {
+#btnSiguiente:hover, 
+#btnReintentar:hover {
     filter: brightness(1.2);
+}
+.btn-reintentar {
+    margin-top: 12px;
 }
 
 /* ---------- PANEL DE INSTRUCCIONES ---------- */
@@ -319,4 +324,34 @@ canvas {
   .mini {
     transition: none;
   }
+}
+
+/*Cronometro */
+.cronometro-caja {
+    margin-top: auto;               /* lo empuja al fondo del panel */
+    padding-top: 16px;
+    border-top: 1px solid var(--color-borde);
+    text-align: center;
+}
+
+.cronometro-etiqueta {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.cronometro {
+    font-size: 40px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;   /* los números no "bailan" */
+}
+
+.cronometro.poco-tiempo {
+    color: #ff5a5a;
+}
+
+.mensaje-tiempo {
+    margin: 8px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff5a5a;
 }

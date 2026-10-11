@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Blocka</title>
     <link rel="stylesheet" href="blocka.css">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +29,15 @@
             <p class="texto-panel">El juego consiste en completar el rompecabezas.</p>
             <p class="texto-panel">Al hacer click derecho la pieza gira hacia la derecha.</p>
             <p class="texto-panel">Al hacer click izquierdo la pieza gira hacia la izquierda.</p>
+
+            <div class="cronometro-caja">
+                <span class="cronometro-etiqueta">Tiempo restante</span>
+                <div id="cronometro" class="cronometro">--:--</div>
+                <p id="mensajeTiempo" class="mensaje-tiempo" hidden></p>
+                <button id="btnReintentar" class="btn-reintentar" type="button" hidden>Reintentar nivel</button>
+            </div>
         </aside>
+        
 
         <main class="zona-canvas">
             <canvas id="myCanvas">

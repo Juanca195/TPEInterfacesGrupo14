@@ -1,6 +1,7 @@
 import { Rompecabezas } from "./Rompecabezas.js";
 import { ControlClicks } from "./ControlClicks.js";
 import { Filtros } from "./Filtros.js";
+import { Cronometro } from "./Cronometro.js";
 
 // Si el sistema pide menos animaciones, la ruleta salta directo al resultado
 const reducirMovimiento = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -38,11 +39,19 @@ export class Juego {
     this.textoCarga = document.getElementById("textoCarga");
     this.spinner = document.getElementById("spinner");
     this.ruleta = document.getElementById("ruleta");
+
+    //Cronometro 
+    this.perdio = false;
+    this.cronometro = new Cronometro(document.getElementById("cronometro"), () => this.alPerder());
+    this.mensajeTiempo = document.getElementById("mensajeTiempo");
+
+    //btn 
+    this.btnReintentar = document.getElementById("btnReintentar");
+    this.btnReintentar.addEventListener("click", () => this.reintentarNivel());
   }
 
-  // ------------------------------------------------------------------
   //  Arranque: precarga el banco y muestra la ruleta para el nivel 1
-  // ------------------------------------------------------------------
+ 
   async iniciar() {
     new ResizeObserver(() => this.ajustarTamaño()).observe(this.canvas.parentElement);
     // window.addEventListener("resize", () => this.ajustarTamaño());
@@ -207,6 +216,12 @@ export class Juego {
     this.actualizarHud(filas * columnas);
     this.canvas.style.cursor = "pointer";
     this.ajustarTamaño();
+
+    //Parte del cronometro;
+    this.canvas.style.pointerEvents= "auto";
+    this.cronometro.iniciar(this.niveles[this.nivelActual].tiempo);
+    this.mensajeTiempo.hidden = true;
+    this.btnReintentar.hidden = true;
   }
 
   alRotar() {
@@ -218,6 +233,7 @@ export class Juego {
   }
 
   alResolver() {
+    this.cronometro.detener();
     const hayOtro = this.nivelActual < this.niveles.length - 1;
 
     this.textoNivel.textContent = hayOtro
@@ -227,13 +243,28 @@ export class Juego {
     this.btnSiguiente.hidden = false;
     this.canvas.style.cursor = "default";
   }
+  //metodo el cual desplega el cronometro al terminar el tiempo  
+  alPerder() {
+    console.log("alPerder se ejecuto");
+    this.perdio = true;
+    this.canvas.style.pointerEvents = "none";   // ya no se puede jugar
+    this.mensajeTiempo.textContent = "¡Se acabó el tiempo! Perdiste el nivel";
+    this.mensajeTiempo.hidden = false;
+    this.btnReintentar.hidden = false;
+  }
+  reintentarNivel() {
+    this.btnReintentar.hidden = true;
+    this.mensajeTiempo.hidden = true;
+    this.presentarNivel();   // mismo nivel, ruleta de nuevo
+  }
 
   siguienteNivel() {
     this.btnSiguiente.hidden = true;
     // El % hace que después del último nivel vuelva al primero
-    this.nivelActual = (this.nivelActual + 1) % this.niveles.length;
+    this.nivelActual = (this.nivelActual + 1) % this.niveles.length;    
     this.presentarNivel();   // vuelve la plantilla y sortea la imagen de este nivel
   }
+
 
   actualizarHud(cantidadPiezas) {
     this.textoNivel.textContent =
@@ -245,24 +276,19 @@ export class Juego {
   //  Canvas
   ajustarTamaño() {
     const zona = this.canvas.parentElement;      // <main class="zona-canvas">
-    this.canvas.width = zona.clientWidth;
-    this.canvas.height = zona.clientHeight;
-    this.canvasTemporal.width = this.canvas.width;
-    this.canvasTemporal.height = this.canvas.height;
+    const ancho = zona.clientWidth;
+    const alto  = zona.clientHeight;
 
-    this.rompecabezas?.acomodar(this.canvas.width, this.canvas.height);
+    if(!ancho || !alto)return;
+
+    this.canvas.width = ancho;
+    this.canvas.height = alto;
+    this.canvasTemporal.width = ancho;
+    this.canvasTemporal.height = alto;
+
+    this.rompecabezas?.acomodar(ancho, alto);
     this.renderizar();
   }
-
-  // ajustarTamaño() {
-  //   this.canvas.width = window.innerWidth;
-  //   this.canvas.height = window.innerHeight;
-  //   this.canvasTemporal.width = this.canvas.width;
-  //   this.canvasTemporal.height = this.canvas.height;
-
-  //   this.rompecabezas?.acomodar(this.canvas.width, this.canvas.height);
-  //   this.renderizar();
-  // }
 
   renderizar() {
     this.dibujarFondo();
