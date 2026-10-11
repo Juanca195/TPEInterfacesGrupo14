@@ -1,4 +1,4 @@
-/* blocka.css */
+  /* blocka.css */
 
 /* Colores en un solo lugar: cambiás uno acá y cambia en toda la página */
 :root {
@@ -173,9 +173,9 @@ canvas {
 
 /* Plantilla de carga: tapa todo el juego hasta que termina el sorteo */
 #pantallaCarga {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 100;               /* por encima del canvas y del HUD */
+  z-index: 10;               /* por encima del canvas y del HUD */
   background: #00005A;        /* el mismo azul del fondo del juego */
   color: white;
   font-family: sans-serif;
@@ -186,7 +186,7 @@ canvas {
   justify-content: safe center;   /* si no entra en pantallas bajas, permite scroll */
   gap: 20px;
   padding: 24px 16px;
-  overflow-x: hidden;
+  overflow-x: auto;
   transition: opacity 0.5s;       /* aparece suave al pasar de nivel */
 }
 
@@ -263,11 +263,11 @@ canvas {
   object-fit: cover;          /* recorta si la imagen no es 3:2 */
   border-radius: 6px;
 }
-
+/* titulo de la img */
 .mini figcaption {
   margin-top: 4px;
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(243, 240, 240, 0.65);
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -289,6 +289,15 @@ canvas {
 
 .mini.elegida {
   transition-duration: 0.25s;
+  animation: parpadeo 1s ease;
+}
+
+@keyframes parpadeo {
+  0%  {scale: .6;}
+  25% {scale: .9;}
+  50% {scale: .6;}
+  75%{scale: .9;}
+  100%{scale: 1;}
 }
 
 .mini.elegida figcaption {

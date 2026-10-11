@@ -157,7 +157,7 @@ export class Juego {
       }
 
       const cantidad = figuras.length;
-      const vueltas = 2 + Math.floor(Math.random() * 2);   // 2 o 3 vueltas completas
+      const vueltas = 2 + Math.floor(Math.random() * 3);   // 2 o 3 vueltas completas
       const total = vueltas * cantidad + objetivo;         // termina justo en la elegida
       let k = 0;
 
