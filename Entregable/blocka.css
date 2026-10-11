@@ -1,46 +1,168 @@
- /* style.css */
- body, html {
-     margin: 0;
-     padding: 0;
-     width: 100%;
-     height: 100%;
-     overflow: hidden; /* Evita que aparezcan barras de scroll */
-     background-color: white; /* Opcional: fondo negro */
- }
+/* blocka.css */
 
- body {
-     display: grid;
-     place-items: center;
- }
-
- canvas {
-     display: block;
-     width: 100vw;
-     height: 100vh;
- }
- .instrucciones{
-    width: 420px;
-    padding: 10px;
-    background: #11111f;
-    border: 2px solid #9336D7;
-    border-radius: 20px;
-
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
- }
- #hud {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  color: white;
-  font-family: sans-serif;
-  display: flex;
-  gap: 12px;
-  align-items: center;
+/* Colores en un solo lugar: cambiás uno acá y cambia en toda la página */
+:root {
+    --background-page: #111114;
+    --color-panel: #11111f;
+    --color-borde: #004080;
+    --color-texto: white;
+    --color-boton: blue;
+    --font: 'Exo 2';
 }
-#btnSiguiente{
-    background-color: blue;
+
+/* El borde y el padding cuentan DENTRO del ancho y alto de cada caja */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-page);
+    color: var(--color-texto);
+    font-family:var(--font);
+}
+
+/* Un elemento con el atributo hidden siempre tiene que quedar oculto */
+[hidden] {
+    display: none !important;
+}
+
+/* ---------- LA GRILLA: reparte la pantalla en zonas ---------- */
+.juego {
+    display: grid;
+
+    /* 2 columnas: panel de instrucciones de 260px y el resto para el juego */
+    grid-template-columns: 260px minmax(0, 1fr);
+
+    /* 2 filas: encabezado de 70px y el resto de la altura para el juego */
+    grid-template-rows: 70px minmax(0, 1fr);
+
+    /* Dibujo de cómo se acomodan las zonas */
+    grid-template-areas:
+        "encabezado     encabezado"
+        "instrucciones  canvas";
+
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+}
+
+/* ---------- ENCABEZADO: título a la izquierda y HUD a la derecha ---------- */
+.encabezado {
+    grid-area: encabezado;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: var(--color-panel);
+    border: 2px solid var(--color-borde);
+    border-radius: 20px;
+}
+
+.titulo {
+    margin: 0;
+    font-size: 28px;
+}
+
+#hud {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    user-select: none; /* Evita seleccionar el texto al hacer clics rápidos */
+}
+
+#btnSiguiente {
+    padding: 8px 18px;
+    background-color: var(--color-boton);
+    color: var(--color-texto);
+    border: none;
     border-radius: 30px;
-    box-shadow: #11111f;
+    box-shadow: 0 4px 10px var(--color-panel);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#btnSiguiente:hover {
+    filter: brightness(1.2);
+}
+
+/* ---------- PANEL DE INSTRUCCIONES ---------- */
+.panel-instrucciones {
+    grid-area: instrucciones;
+    padding: 16px;
+    background: var(--color-panel);
+    border: 2px solid var(--color-borde);
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+.subtitulo {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.texto-panel {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ---------- LA ZONA DEL CANVAS ---------- */
+.zona-canvas {
+    grid-area: canvas;
+
+    /* position: relative hace que el canvas de adentro se mida contra esta caja */
+    position: relative;
+
+    /* Recorta lo que se salga de la caja y respeta las esquinas redondeadas */
+    overflow: hidden;
+
+    border: 2px solid var(--color-borde);
+    border-radius: 20px;
+    background: var(--color-fondo-canvas);
+}
+
+/* El canvas llena exactamente la zona. Juego.js lee este tamaño con ResizeObserver
+   y lo copia al tamaño de dibujo.
+   NO le pongas border ni padding al canvas: ponelos en .zona-canvas,
+   porque si no los clics (offsetX y offsetY) quedan corridos. */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+    touch-action: manipulation; /* Evita el zoom por doble toque en celulares */
+}
+
+/* ---------- CELULARES Y PANTALLAS CHICAS: todo en una columna ---------- */
+@media (max-width: 900px) {
+    .juego {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto 60vh;
+        grid-template-areas:
+            "encabezado"
+            "instrucciones"
+            "canvas";
+        height: auto;
+        min-height: 100%;
+    }
+
+    .encabezado {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 24px;
+    }
+}
+
+
+.selection-game-overlaty [hidden]{
+    display: none;
 }

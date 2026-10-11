@@ -11,7 +11,7 @@ export class Juego {
     this.imagenes = imagenes;
     this.rompecabezas = null;
 
-    this.colorFondo = { r: 0, g: 0, b: 70, a: 255 };
+    this.colorFondo = { r: 0, g: 64, b: 128, a: 255 };
 
     this.filtro = this.elegirFiltroAleatorio();
     // Canvas auxiliar: las piezas se dibujan acá, se filtran, y recién
@@ -41,7 +41,8 @@ export class Juego {
 
   iniciar() {
     
-    window.addEventListener("resize", () => this.ajustarTamaño());
+    const observadorDeTamaño = new ResizeObserver(() => this.ajustarTamaño());
+    observadorDeTamaño.observe(this.canvas);
     this.ajustarTamaño();
     this.cargarNivel();
 
@@ -117,11 +118,16 @@ cargarNivel() {
 
   // Adapta el canvas a la ventana. Al cambiar el tamaño se borra, hay que redibujar.
   ajustarTamaño() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.canvasTemporal.width = this.canvas.width;
-    this.canvasTemporal.height = this.canvas.height;
-
+     const anchoVisible = this.canvas.clientWidth;
+    const altoVisible = this.canvas.clientHeight;
+ 
+    // Si el canvas está oculto o todavía no tiene tamaño, no hay nada que dibujar
+    if (anchoVisible === 0 || altoVisible === 0) return;
+ 
+    this.canvas.width = anchoVisible;
+    this.canvas.height = altoVisible;
+    this.canvasTemporal.width = anchoVisible;
+    this.canvasTemporal.height = altoVisible;
     this.rompecabezas?.acomodar(this.canvas.width, this.canvas.height);
     this.renderizar();
   }

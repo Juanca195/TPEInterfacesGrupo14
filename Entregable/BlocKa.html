@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-     <link rel="stylesheet" href="blocka.css">
+    <link rel="stylesheet" href="blocka.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
+
 <body>
 
-      <!-- <div class="instrucciones">
-            <p class="p-instruc">¿Como jugar?</p>
-            <p>El juego consiste en poder completar el rompe cabezas. Al hacer Clik derecho la imagen gira hcaia la derecha, Al hacer Click Izquiero la imagen gira hacia la izquierda.</p>
-        </div> -->
-    <canvas  id="myCanvas"></canvas>
+    <div class="juego">
 
-    <div id="hud">
-        <span id="textoNivel"></span>
-        <button id="btnSiguiente" hidden>Siguiente nivel</button>
+        <header class="encabezado">
+            <h1 class="titulo">Blocka</h1>
+
+            <div id="hud">
+                <span id="textoNivel" aria-live="polite"></span>
+                <button id="btnSiguiente" type="button" hidden>Siguiente nivel</button>
+            </div>
+        </header>
+
+        <aside class="panel-instrucciones">
+            <h2 class="subtitulo">¿Cómo jugar?</h2>
+            <p class="texto-panel">El juego consiste en completar el rompecabezas.</p>
+            <p class="texto-panel">Al hacer click derecho la pieza gira hacia la derecha.</p>
+            <p class="texto-panel">Al hacer click izquierdo la pieza gira hacia la izquierda.</p>
+        </aside>
+
+        <main class="zona-canvas">
+            <canvas id="myCanvas">
+                Tu navegador no soporta canvas.
+            </canvas>
+        </main>
+
     </div>
-    
-    <!----- Aca iria al filtro de eleccion de la imagen----->>      
-
+    <div class="selection-game-overlay" id="selection-game-overlay" hidden>
+        <div class="selector">
+            <!-- <img class="img-background-transition" src="../Img/game_png_1.png" alt="" width="450" height="80"> -->
+            <div class="selection-row">
+                <!-- <p class="persent">0%</p> -->
+                <div class="progress-bar">
+                    <!-- <div class="progress"></div> -->
+                </div>
+            </div>
+            <!--  <p class="loading-text"> Preparando la diversión </p> -->
+        </div>
+        <!----- Aca iria al filtro de eleccion de la imagen----->>
+    </div>
     <script type="module" src="Js/Main.js"></script>
-    
+
 </body>
+
 </html>
