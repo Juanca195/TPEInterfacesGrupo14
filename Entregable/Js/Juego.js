@@ -23,7 +23,8 @@ export class Juego {
     this.rompecabezas = null;
     this.controlClicks = null;
     this.filtro = null;
-    this.colorFondo = { r: 0, g: 0, b: 90, a: 255 };
+    //77, 166, 255
+    this.colorFondo = { r: 77, g: 0, b: 153, a: 255 };
 
     // Canvas auxiliar: las piezas se dibujan acá, se filtran, y después
     // se copian al canvas real (así el filtro no afecta al fondo).
@@ -73,7 +74,7 @@ export class Juego {
  
   async iniciar() {
     new ResizeObserver(() => this.ajustarTamaño()).observe(this.canvas.parentElement);
-    // window.addEventListener("resize", () => this.ajustarTamaño());
+    
     this.ajustarTamaño();
 
     try {
@@ -122,12 +123,12 @@ export class Juego {
     this.ultimaImagen = indice;
 
     this.pantallaCarga.classList.remove("oculta");
+    await this.esperar(1000)
     this.spinner.hidden = true;
     this.textoCarga.textContent = `Eligiendo la imagen del nivel ${this.nivelActual + 1}…`;
 
     const figuras = this.construirRuleta();
     this.ruleta.hidden = false;
-
     await this.correrRuleta(figuras, indice);
 
     this.textoCarga.textContent = "¡Listo!";
@@ -209,7 +210,7 @@ export class Juego {
   elegirFiltroAleatorio() {
     const filtros = [
       (ctx, canvas) => Filtros.grises(ctx, canvas),
-      (ctx, canvas) => Filtros.brillo(ctx, canvas, 50),
+      (ctx, canvas) => Filtros.brillo(ctx, canvas, 30),
       (ctx, canvas) => Filtros.negativo(ctx, canvas),
     ];
     return filtros[Math.floor(Math.random() * filtros.length)];

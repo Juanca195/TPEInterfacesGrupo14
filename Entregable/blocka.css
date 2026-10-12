@@ -1,124 +1,582 @@
   /* blocka.css */
 
-/* Colores en un solo lugar: cambiás uno acá y cambia en toda la página */
-:root {
-    --background-page: #111114;
+  /* Colores en un solo lugar: cambiás uno acá y cambia en toda la página */
+  :root {
     --color-panel: #11111f;
     --color-borde: #004080;
     --color-texto: white;
     --color-boton: blue;
+    --secondary-dark-2: #26004D;
+    --secondary-dark-1: rgb(77, 0, 153);
+    --secondary: #9f4cdb;
+    --secondary-light-1: #B366FF;
+    --secondary-light-2: #E6CCFF;
+    --primary-dark-2: #002040;
+    --primary-dark-1: rgb(0, 64, 128);
+    --primary: #0000FF;
+    --primary-light-1: rgb(77, 166, 255);
+    --primary-light-2: #CCE6FF;
+    --accent: #FFD700;
+    --muted: #c1c1c1;
+    --background-page: #111114;
+    --white: #FFFFFF;
+    --black: #000000;
     --font: 'Exo 2';
-}
+    --font-secondary: 'Roboto', 'sans serif';
+  }
 
-/* El borde y el padding cuentan DENTRO del ancho y alto de cada caja */
-* {
+  /* El borde y el padding cuentan DENTRO del ancho y alto de cada caja */
+  * {
     box-sizing: border-box;
-}
+  }
 
-body, html {
+  body,
+  html {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     background-color: var(--background-page);
     color: var(--color-texto);
-    font-family:var(--font);
-}
+    font-family: var(--font);
+  }
 
-/* Un elemento con el atributo hidden siempre tiene que quedar oculto */
-[hidden] {
+  /* Un elemento con el atributo hidden siempre tiene que quedar oculto */
+  [hidden] {
     display: none !important;
+  }
+
+  /* ---------- NAV ---------- */
+.encabezado{
+  grid-area: encabezado;
+  width: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ---------- LA GRILLA: reparte la pantalla en zonas ---------- */
-.juego {
+.nav {
+  width: 100%;
+  margin: 8px 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content_nav_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Boton */
+.btn-burger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.btn-burger:hover {
+  opacity: 0.7;
+}
+/*  Con estas clases gira solo la flecha  */
+.icon-arrow {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.btn-burger.active .icon-arrow {
+  transform: rotate(180deg);
+}
+/* ---------- Overlay (se inyecta por JS) ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 900;
+}
+
+.overlay.active {
+  visibility: visible;
+}
+
+/* ---------- Menú desplegable ---------- */
+.menu-hamburguesa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; 
+  width: 220px;
+  padding: 90px 20px 20px 20px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 950;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.menu-hamburguesa.active {
+  transform: translateX(0);
+}
+  
+/* ---------- Ítems del menú ---------- */
+/* Ambos menús usan violeta en reposo y blanco sobre violeta al hover/activo. */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.menu-hamburguesa .menu-item:hover,
+.menu-hamburguesa .menu-item.active,
+.menu-perfil .menu-item:hover,
+.menu-perfil .menu-item.active {
+    background: #9F4CDB;
+    transform: translateX(2px);
+}
+
+.menu-hamburguesa .label,
+.menu-hamburguesa .icon,
+.menu-perfil .label,
+.menu-perfil .icon {
+  color: #9F4CDB;
+}
+
+.menu-hamburguesa .menu-item:hover .label,
+.menu-hamburguesa .menu-item:hover .icon,
+.menu-hamburguesa .menu-item.active .label,
+.menu-hamburguesa .menu-item.active .icon,
+.menu-perfil .menu-item:hover .label,
+.menu-perfil .menu-item:hover .icon,
+.menu-perfil .menu-item.active .label,
+.menu-perfil .menu-item.active .icon {
+  color: #fff;
+}
+
+ .menu-hamburguesa .menu-item.active .label {
+  font-weight: 700;
+}
+
+ .icon {
+  width: 20px;
+  height: 20px;
+  color: var(--Secundario);
+  stroke: currentColor;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+ .icon-inicio { height: 23px; }
+.icon-estrategia { height: 18px; }
+
+.label {
+  color: var(--Secundario);
+  font-size: 20px;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+   /* El menú oculto por defecto */
+.menu-perfil {
+  display: none; 
+  position: absolute;
+  top: 50px; 
+  right: 0;
+  height: auto;
+  background-color: #000; 
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 100; /* Asegura que quede por encima de otros elementos */
+  padding: 8px 0;
+}
+
+ /* ESTA ES LA CLAVE: la clase que JavaScript agregará para mostrar el menú */
+.menu-perfil.activo {
+  display: flex;
+  flex-direction: column;
+}
+
+ .content-nav-search-center{
+  display: flex;
+  max-width: 500px;
+  flex: 1;
+  gap: 12px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: color-mix(in srgb, var(--secondary) 50%, transparent);    
+}
+
+
+.content-nav-search-center input{
+ width: 100%;
+ background: transparent;
+ border: none;
+ outline: none;
+ color: var(--white);
+ font-size: 16px;  
+}
+
+
+.content-nav-search-center input::placeholder{
+ color: var(--white);
+ opacity: 1;
+}
+
+
+
+.content-nav-rigth {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ align-self: stretch;
+ gap: 10px;
+ text-decoration: none;
+ color: inherit;
+}
+
+@property --p {
+ syntax: "<percentage>";
+ initial-value: 0%;
+ inherits: false;
+}
+
+.btn-subscription {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 10px;
+  border: none;
+  border-radius: 10px;
+  background:color-mix(var(--secondary) 50%, transparent);;
+  padding: 0 14px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 1s ease-in-out;
+}
+
+.btn-subscription::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;                /* grosor del trazo */
+  border-radius: inherit;
+  background: conic-gradient(var(--accent) var(--p), transparent 0);
+  mask: linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+  mask-composite: exclude;     /* deja solo el anillo */
+  transition: --p 0.8s ease-in-out;
+  pointer-events: none;
+}
+
+.btn-subscription:hover::before,
+.btn-subscription:focus-visible::before {
+    --p: 100%;                   /* borde completo */
+    
+}
+
+.btn-subscription:hover::before,
+.btn-subscription:focus-visible::before {
+    --angle: 360deg;             /* el tramo da una vuelta completa */
+    opacity: 1;
+}
+
+.btn-subscription:hover,
+.btn-subscription:focus-visible {
+    background: var(--secondary-dark-2);
+}
+
+/* Corona (opcional): vibra al hacer hover */
+.premium-icon {
+    transform-origin: 50% 100%;
+}
+
+.btn-subscription:hover .premium-icon {
+    animation: crown-shake 0.6s ease-in-out;
+}
+
+@keyframes crown-shake {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(-12deg); }
+    40% { transform: rotate(10deg); }
+    60% { transform: rotate(-6deg); }
+    80% { transform: rotate(30deg); }
+}
+
+  .content-perfil{
+    width: 40px;
+    height: auto;
+    box-sizing: border-box;
+    background: rgba(159, 76, 219, 0.50);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border: none;
+  }
+  
+
+
+
+
+
+
+  /* ---------- LA GRILLA: reparte la pantalla en zonas ---------- */
+  .juego {
     display: grid;
 
     /* 2 columnas: panel de instrucciones de 260px y el resto para el juego */
-    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 500px;
 
     /* 2 filas: encabezado de 70px y el resto de la altura para el juego */
     grid-template-rows: 70px minmax(0, 1fr);
 
     /* Dibujo de cómo se acomodan las zonas */
     grid-template-areas:
-        "encabezado     encabezado"
-        "instrucciones  canvas";
+      "encabezado     encabezado"
+      "canvas         instrucciones"
+      "canvas         hud";
 
-    gap: 16px;
+    gap: 10px;
     width: 100%;
     height: 100%;
-    padding: 16px;
-}
+  
+  }
 
-/* ---------- ENCABEZADO: título a la izquierda y HUD a la derecha ---------- */
-.encabezado {
-    grid-area: encabezado;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    background: var(--color-panel);
-    border: 2px solid var(--color-borde);
-    border-radius: 20px;
-}
-
-.titulo {
+  .titulo {
     margin: 0;
     font-size: 28px;
-}
+  }
 
-#hud {
+  
+  
+  /* ---------- PANEL DE INSTRUCCIONES ---------- */
+  .panel-derecho {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    user-select: none; /* Evita seleccionar el texto al hacer clics rápidos */
-}
-
-#btnSiguiente,
-#btnReintentar {
-    padding: 8px 18px;
-    background-color: var(--color-boton);
-    color: var(--color-texto);
-    border: none;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px var(--color-panel);
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#btnSiguiente:hover, 
-#btnReintentar:hover {
-    filter: brightness(1.2);
-}
-.btn-reintentar {
-    margin-top: 12px;
-}
-
-/* ---------- PANEL DE INSTRUCCIONES ---------- */
-.panel-instrucciones {
+    flex-direction: column;
+    background-color: var(--secondary-dark-1);
+    border-radius: 20px;
+    padding: 10px;
+    gap: 20px;
+    height: max-content;
+    align-items: stretch;
+    align-self: center;
+    margin: 0px 30px;
+  }
+  
+  .instrucciones {
     grid-area: instrucciones;
     padding: 16px;
-    background: var(--color-panel);
-    border: 2px solid var(--color-borde);
+    background: var(--secondary-dark-2);
+    border: 2px solid var(--secondary-light-1);
     border-radius: 20px;
     overflow-y: auto;
-}
-
-.subtitulo {
+    text-align: center;
+  }
+  
+  .content-clicks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .instrucciones-click {
+    display: flex;
+    margin: 0px;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .instrucciones-click svg {
+    display: block;
+    background-color: var(--secondary-dark-1);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: content-box;
+    box-shadow: 0 0px 10px var(--secondary-light-1);
+    width: 40px;
+    /* mismo valor para ambos */
+    height: 40px;
+    /* mismo valor para ambos */
+  }
+  
+  
+  .subtitulo {
     margin-top: 0;
     font-size: 20px;
-}
-
-.texto-panel {
+  }
+  
+  .texto-panel {
     font-size: 14px;
     line-height: 1.5;
-}
+  }
+  
+  /*Cronometro */
+  .cronometro-caja {
+    grid-area: hud;
+    text-align: center;
+    background-color: var(--secondary-dark-2);
+    border: 2px solid var(--secondary-light-1);
+    padding: 10px;
+    border-radius: 20px;
+    overflow-y: auto;
+  }
+  
+  .info-crono {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cronometro-etiqueta {
+    font-size: 20px;
+    
+  }
+  
+  .cronometro {
+    font-size: 40px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    /* los números no "bailan" */
+  }
+  
+  .cronometro.poco-tiempo {
+    color: #ff5a5a;
+  }
+  
+  .mensaje-tiempo {
+    margin: 8px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff5a5a;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 10px 0;
+    list-style: none;
+    align-items: center;
+  }
+  
+  .texto-record {
+    margin: 4px 0 0;
+    font-size: 18px;
+    
+  }
+  
+  .hud {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 16px;
+    user-select: none;
+    /* Evita seleccionar el texto al hacer clics rápidos */
+  }
 
-/* ---------- LA ZONA DEL CANVAS ---------- */
-.zona-canvas {
+
+  .btn-siguiente,
+  .btn-reintentar {
+    width: auto;
+    height: auto;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-family: var(--font-secondary), sans-serif;
+    font-weight: 400;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    overflow: hidden; 
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0),
+      7px 7px 20px 0px rgba(0, 0, 0, .1),
+      4px 4px 5px 0px rgba(0, 0, 0, .1);
+    outline: none;
+    animation: aparecer-boton 0.4s ease-out;
+  }
+
+
+  .btn-siguiente,
+  .btn-reintentar {
+    background: var(--secondary-dark-2);
+    border: 2px solid var(--secondary-light-1);
+    z-index: 1;
+  }
+
+  .btn-siguiente:after,
+  .btn-reintentar:after{
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background-color: var(--secondary);
+    border-radius: 20px;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0),
+      7px 7px 20px 0px rgba(0, 0, 0, .1),
+      4px 4px 5px 0px rgba(0, 0, 0, .1);
+    transition: all 0.3s ease;
+  }
+
+  .btn-siguiente:hover,
+  .btn-reintentar:hover {
+    color: #fff;
+  }
+
+  .btn-siguiente:hover:after,
+  .btn-reintentar:hover:after{
+    left: 0;
+    width: 100%;
+  }
+
+  .btn-siguiente:active,
+  .btn-reintentar:active  {
+    top: 2px;
+  }
+
+  @keyframes aparecer-boton {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+  }
+  
+  
+  
+  
+  /* ---------- LA ZONA DEL CANVAS ---------- */
+  .zona-canvas {
     grid-area: canvas;
 
     /* position: relative hace que el canvas de adentro se mida contra esta caja */
@@ -127,16 +585,17 @@ body, html {
     /* Recorta lo que se salga de la caja y respeta las esquinas redondeadas */
     overflow: hidden;
 
-    border: 2px solid var(--color-borde);
+    border: 2px solid var(--secondary-light-1);
     border-radius: 20px;
-    background: var(--color-fondo-canvas);
-}
+    background: var(--secondary-light-1);
+    margin: 30px 50px;
+  }
 
-/* El canvas llena exactamente la zona. Juego.js lee este tamaño con ResizeObserver
+  /* El canvas llena exactamente la zona. Juego.js lee este tamaño con ResizeObserver
    y lo copia al tamaño de dibujo.
    NO le pongas border ni padding al canvas: ponelos en .zona-canvas,
    porque si no los clics (offsetX y offsetY) quedan corridos. */
-canvas {
+  canvas {
     position: absolute;
     top: 0;
     left: 0;
@@ -144,226 +603,218 @@ canvas {
     height: 100%;
     display: block;
     user-select: none;
-    touch-action: manipulation; /* Evita el zoom por doble toque en celulares */
-}
+    touch-action: manipulation;
+    /* Evita el zoom por doble toque en celulares */
+  }
 
-/* ---------- CELULARES Y PANTALLAS CHICAS: todo en una columna ---------- */
-@media (max-width: 900px) {
+  /* ---------- CELULARES Y PANTALLAS CHICAS: todo en una columna ---------- */
+  @media (max-width: 900px) {
     .juego {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: auto auto 60vh;
-        grid-template-areas:
-            "encabezado"
-            "instrucciones"
-            "canvas";
-        height: auto;
-        min-height: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto 60vh;
+      grid-template-areas:
+        "encabezado"
+        "instrucciones"
+        "canvas";
+      height: auto;
+      min-height: 100%;
     }
 
     .encabezado {
-        flex-direction: column;
-        gap: 8px;
-        padding: 12px 24px;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 24px;
     }
-}
+  }
 
 
-.selection-game-overlaty [hidden]{
+  .selection-game-overlaty [hidden] {
     display: none;
-}
+  }
 
 
-/* Parte de la planilla de seleccion */
-/* ===== Agregar al final de blocka.css ===== */
+  /* Parte de la planilla de seleccion */
+  /* ===== Agregar al final de blocka.css ===== */
 
-/* Plantilla de carga: tapa todo el juego hasta que termina el sorteo */
-#pantallaCarga {
-  position: absolute;
-  inset: 0;
-  z-index: 10;               /* por encima del canvas y del HUD */
-  background: #00005A;        /* el mismo azul del fondo del juego */
-  color: white;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  justify-content: safe center;   /* si no entra en pantallas bajas, permite scroll */
-  gap: 20px;
-  padding: 24px 16px;
-  overflow-x: auto;
-  transition: opacity 0.5s;       /* aparece suave al pasar de nivel */
-}
+  /* Plantilla de carga: tapa todo el juego hasta que termina el sorteo */
+  .pantallaCarga {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    /* por encima del canvas y del HUD */
+    background: var(--primary-dark-1);
+    /* el mismo azul del fondo del juego */
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: safe center;
+    /* si no entra en pantallas bajas, permite scroll */
+    gap: 20px;
+    padding: 24px 16px;
+    overflow-x: auto;
+    transition: opacity 0.5s;
+    /* aparece suave al pasar de nivel */
+  }
 
-#pantallaCarga.oculta {
-  opacity: 0;
-  visibility: hidden;             /* deja de bloquear los clicks al terminar */
-  transition: opacity 0.5s, visibility 0s 0.5s;
-}
+  .pantallaCarga.oculta {
+    opacity: 0;
+    visibility: hidden;
+    /* deja de bloquear los clicks al terminar */
+    transition: opacity 0.5s, visibility 0s 0.5s;
+  }
 
-#pantallaCarga p {
-  margin: 0;
-  font-size: 1.1rem;
-}
+  .pantallaCarga p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
 
-/* El atributo hidden pierde contra display:flex/grid, así que se refuerza */
-.spinner[hidden],
-.ruleta[hidden] {
-  display: none;
-}
+  /* El atributo hidden pierde contra display:flex/grid, así que se refuerza */
+  .spinner[hidden],
+  .ruleta[hidden] {
+    display: none;
+  }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: girar 0.9s linear infinite;
-}
-
-@keyframes girar {
-  to { transform: rotate(360deg); }
-}
-
-/* ---------- Ruleta de miniaturas ---------- */
-.ruleta {
-  display: grid;
-  justify-items: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 1000px;
-}
-
-.ruleta-titulo {
-  display: grid;
-  justify-items: center;
-  text-align: center;
-  line-height: 1.3;
-}
-
-.ruleta-titulo strong { font-size: 1.5rem; }
-.ruleta-titulo span   { font-size: 0.95rem; color: rgba(255, 255, 255, 0.65); }
-
-.miniaturas {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  width: 100%;
-  padding: 10px;
-}
-
-.mini {
-  flex: 1 1 0;              /* todas comparten el ancho disponible por igual */
-  min-width: 0;             /* permite que se achiquen; sin esto desbordan */
-  max-width: 170px;         /* con pocas imágenes no se agrandan de más */
-  margin: 0;
-  opacity: 0.45;
-  transition: opacity 0.08s, transform 0.08s;
-}
-
-.mini img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;          /* recorta si la imagen no es 3:2 */
-  border-radius: 6px;
-}
-/* titulo de la img */
-.mini figcaption {
-  margin-top: 4px;
-  font-size: 0.82rem;
-  color: rgba(243, 240, 240, 0.65);
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* La miniatura por la que "pasa" el recorrido y la que queda elegida */
-.mini.activa,
-.mini.elegida {
-  opacity: 1;
-  transform: scale(1.07);
-}
-
-.mini.activa img,
-.mini.elegida img {
-  outline: 3px solid #F2C94C;
-  outline-offset: 2px;
-}
-
-.mini.elegida {
-  transition-duration: 0.25s;
-  animation: parpadeo 1s ease;
-}
-
-@keyframes parpadeo {
-  0%  {scale: .6;}
-  25% {scale: .9;}
-  50% {scale: .6;}
-  75%{scale: .9;}
-  100%{scale: 1;}
-}
-
-.mini.elegida figcaption {
-  color: white;
-  font-weight: 600;
-}
-
-.mini.descartada {
-  opacity: 0.2;
-}
-
-@media (prefers-reduced-motion: reduce) {
   .spinner {
-    animation: none;
-    background: rgba(255, 255, 255, 0.35);
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: girar 0.9s linear infinite;
   }
-  #pantallaCarga,
-  #pantallaCarga.oculta,
-  .mini {
-    transition: none;
-  }
-}
 
-/*Cronometro */
-.cronometro-caja {
-    margin-top: auto;               /* lo empuja al fondo del panel */
-    padding-top: 16px;
-    border-top: 1px solid var(--color-borde);
+  @keyframes girar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ---------- Ruleta de miniaturas ---------- */
+  .ruleta {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .ruleta-titulo {
+    display: grid;
+    justify-items: center;
     text-align: center;
-    
-}
+    line-height: 1.3;
+  }
 
-.cronometro-etiqueta {
-    font-size: 14px;
-    opacity: 0.7;
-}
+  .ruleta-titulo strong {
+    font-size: 1.5rem;
+  }
 
-.cronometro {
-    font-size: 40px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;   /* los números no "bailan" */
-}
+  .ruleta-titulo span {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
 
-.cronometro.poco-tiempo {
-    color: #ff5a5a;
-}
+  .miniaturas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+  }
 
-.mensaje-tiempo {
-    margin: 8px 0 0;
-    font-size: 16px;
+  .mini {
+    flex: 1 1 0;
+    /* todas comparten el ancho disponible por igual */
+    min-width: 0;
+    /* permite que se achiquen; sin esto desbordan */
+    max-width: 170px;
+    /* con pocas imágenes no se agrandan de más */
+    margin: 0;
+    opacity: 0.45;
+    transition: opacity 0.08s, transform 0.08s;
+  }
+
+  .mini img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    /* recorta si la imagen no es 3:2 */
+    border-radius: 6px;
+  }
+
+  /* titulo de la img */
+  .mini figcaption {
+    margin-top: 4px;
+    font-size: 0.82rem;
+    color: rgba(243, 240, 240, 0.65);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* La miniatura por la que "pasa" el recorrido y la que queda elegida */
+  .mini.activa,
+  .mini.elegida {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+
+  .mini.activa img,
+  .mini.elegida img {
+    outline: 3px solid #F2C94C;
+    outline-offset: 2px;
+  }
+
+  .mini.elegida {
+    transition-duration: 0.25s;
+    animation: parpadeo 1s ease;
+  }
+
+  @keyframes parpadeo {
+    0% {
+      scale: .6;
+    }
+
+    25% {
+      scale: .9;
+    }
+
+    50% {
+      scale: .6;
+    }
+
+    75% {
+      scale: .9;
+    }
+
+    100% {
+      scale: 1;
+    }
+  }
+
+  .mini.elegida figcaption {
+    color: white;
     font-weight: 600;
-    color: #ff5a5a;
-}
-ul{
-  margin-top: auto;
-  padding-top: 16px;
-  list-style: none;
-  align-items: center;
-}
-.texto-record {
-    margin: 4px 0 0;
-    font-size: 18px;
-    opacity: 0.8;
-}
+  }
+
+  .mini.descartada {
+    opacity: 0.2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner {
+      animation: none;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    #pantallaCarga,
+    #pantallaCarga.oculta,
+    .mini {
+      transition: none;
+    }
+  }
