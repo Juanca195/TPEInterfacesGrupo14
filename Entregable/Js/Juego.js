@@ -2,6 +2,7 @@ import { Rompecabezas } from "./Rompecabezas.js";
 import { ControlClicks } from "./ControlClicks.js";
 import { Filtros } from "./Filtros.js";
 import { Cronometro } from "./Cronometro.js";
+import { Records } from "./Records.js";
 
 // Si el sistema pide menos animaciones, la ruleta salta directo al resultado
 const reducirMovimiento = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,6 +49,24 @@ export class Juego {
     //btn 
     this.btnReintentar = document.getElementById("btnReintentar");
     this.btnReintentar.addEventListener("click", () => this.reintentarNivel());
+
+    //record de tiempo
+    this.records = new Records();
+    this.textoRecord = document.getElementById("textoRecord");
+  }
+
+
+  // Identifica al nivel por su grilla ("2x2", "2x3"...), no por su posición
+  claveNivel() {
+    const { filas, columnas } = this.niveles[this.nivelActual];
+    return `${filas}x${columnas}`;
+  }
+
+  mostrarRecord() {
+    const mejor = this.records.obtener(this.claveNivel());
+    this.textoRecord.textContent = mejor === null
+      ? "Récord: sin marca"
+      : "Récord: " + Cronometro.formatear(mejor);
   }
 
   //  Arranque: precarga el banco y muestra la ruleta para el nivel 1
@@ -198,6 +217,7 @@ export class Juego {
 
   // Arma el nivel actual con la imagen que eligió la ruleta (ya cargada)
   cargarNivel() {
+    this.mostrarRecord();
     const { filas, columnas } = this.niveles[this.nivelActual];
 
     this.rompecabezas = new Rompecabezas(this.imagenActual, filas, columnas);
@@ -222,6 +242,8 @@ export class Juego {
     this.cronometro.iniciar(this.niveles[this.nivelActual].tiempo);
     this.mensajeTiempo.hidden = true;
     this.btnReintentar.hidden = true;
+
+    
   }
 
   alRotar() {
@@ -234,11 +256,18 @@ export class Juego {
 
   alResolver() {
     this.cronometro.detener();
-    const hayOtro = this.nivelActual < this.niveles.length - 1;
+    const usados = this.cronometro.segundosUsados;
+    const esRecord = this.records.guardar(this.claveNivel(), usados);
+    this.mostrarRecord();
 
-    this.textoNivel.textContent = hayOtro
-      ? "¡Nivel completado!"
-      : "¡Ganaste! Completaste todos los niveles";
+    const hayOtro = this.nivelActual < this.niveles.length - 1;
+    const tiempo = Cronometro.formatear(usados);
+    const aviso = esRecord ? " ¡Nuevo récord!" : "";
+
+    this.textoNivel.textContent = (hayOtro
+      ? `¡Nivel completado en ${tiempo}!`
+      : `¡Ganaste! Terminaste el último nivel en ${tiempo}.`) + aviso;
+
     this.btnSiguiente.textContent = hayOtro ? "Siguiente nivel" : "Jugar de nuevo";
     this.btnSiguiente.hidden = false;
     this.canvas.style.cursor = "default";
@@ -297,7 +326,10 @@ export class Juego {
     this.ctxTemporal.clearRect(0, 0, this.canvasTemporal.width, this.canvasTemporal.height);
     this.rompecabezas.dibujar(this.ctxTemporal);
 
-    if (this.filtro) this.filtro(this.ctxTemporal, this.canvasTemporal);
+    // El filtro solo se aplica mientras el rompecabezas NO está resuelto
+    if (this.filtro && !this.rompecabezas.estaResuelto()) {
+      this.filtro(this.ctxTemporal, this.canvasTemporal);
+    }
 
     this.ctx.drawImage(this.canvasTemporal, 0, 0);
   }

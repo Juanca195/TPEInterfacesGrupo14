@@ -332,6 +332,7 @@ canvas {
     padding-top: 16px;
     border-top: 1px solid var(--color-borde);
     text-align: center;
+    
 }
 
 .cronometro-etiqueta {
@@ -354,4 +355,15 @@ canvas {
     font-size: 16px;
     font-weight: 600;
     color: #ff5a5a;
+}
+ul{
+  margin-top: auto;
+  padding-top: 16px;
+  list-style: none;
+  align-items: center;
+}
+.texto-record {
+    margin: 4px 0 0;
+    font-size: 18px;
+    opacity: 0.8;
 }
