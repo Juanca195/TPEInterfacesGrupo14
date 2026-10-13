@@ -18,6 +18,17 @@ export class Rompecabezas {
     this.piezas = this.crearPiezas();
   }
 
+   mostrarAyuda(){
+    for(const pieza of this.piezas){
+      if(!pieza.estaResuelto()){
+        pieza.rotar();
+      }else{
+        return pieza;
+      }
+    }
+      
+   }
+
   // Corta la imagen original en 4: arriba-izq, arriba-der, abajo-izq, abajo-der
   crearPiezas() {
   const lado = this.ladoOrigen;

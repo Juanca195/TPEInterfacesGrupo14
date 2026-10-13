@@ -37,6 +37,21 @@ static formatear(segundos) {
       }
     }, 1000);
   }
+  restar(segundos) {
+    if (this.intervalo === null) return;
+
+    this.segundosRestantes -= segundos;
+
+    if (this.segundosRestantes <= 0) {
+      this.segundosRestantes = 0;
+      this.mostrar();
+      this.detener();
+      this.alTerminar();
+      return;
+    }
+
+    this.mostrar();
+  }
 
   detener() {
     clearInterval(this.intervalo);

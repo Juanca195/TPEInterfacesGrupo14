@@ -54,8 +54,18 @@ export class Juego {
     //record de tiempo
     this.records = new Records();
     this.textoRecord = document.getElementById("textoRecord");
+
+    //btn ayuda
+    this.btnAyuda = document.getElementById("ayuda");
+    this.btnAyuda.addEventListener("click", () => this.usarAyuda());
+
+    //si queremos que sea una sola ayuda por nivel
+//     this.ayudaUsada = false;
+//     this.btnAyuda.disabled = false;
+
   }
 
+  
 
   // Identifica al nivel por su grilla ("2x2", "2x3"...), no por su posición
   claveNivel() {
@@ -223,6 +233,7 @@ export class Juego {
 
     this.rompecabezas = new Rompecabezas(this.imagenActual, filas, columnas);
     this.rompecabezas.mezclarPiezas();
+    this.perdio = false;
 
     // ControlClicks se crea UNA sola vez; después solo se le actualiza el rompecabezas
     if (!this.controlClicks) {
@@ -246,6 +257,25 @@ export class Juego {
 
     
   }
+  // usarAyuda():
+  usarAyuda() {
+    //agregar aca un this.ayudaUsada
+    if (!this.rompecabezas || this.perdio) return;
+
+    const pieza = this.rompecabezas.piezas.find(
+      (piezaActual) => !piezaActual.estaEnPosicionCorrecta()
+    );
+    if(!pieza)return;
+
+    this.cronometro.restar(5);
+    if (this.perdio) return;
+
+  // this.ayudaUsada = true;
+  // this.btnAyuda.disabled = true;
+
+    pieza.rotar(360 - pieza.rotacion);
+    this.alRotar();
+  } 
 
   alRotar() {
     this.rompecabezas.actualizarEspacio();
@@ -291,8 +321,10 @@ export class Juego {
   siguienteNivel() {
     this.btnSiguiente.hidden = true;
     // El % hace que después del último nivel vuelva al primero
-    this.nivelActual = (this.nivelActual + 1) % this.niveles.length;    
-    this.presentarNivel();   // vuelve la plantilla y sortea la imagen de este nivel
+    this.nivelActual = (this.nivelActual + 1) % this.niveles.length; 
+//     this.ayudaUsada = false;
+// this.btnAyuda.disabled = false;   
+    this.presentarNivel(); 
   }
 
 
@@ -305,7 +337,7 @@ export class Juego {
   
   //  Canvas
   ajustarTamaño() {
-    const zona = this.canvas.parentElement;      // <main class="zona-canvas">
+    const zona = this.canvas.parentElement;      
     const ancho = zona.clientWidth;
     const alto  = zona.clientHeight;
 

@@ -448,7 +448,8 @@
   
   .info-crono {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 10px;
   }
   
@@ -571,10 +572,49 @@
         transform: scale(1);
     }
   }
-  
-  
-  
-  
+  #ayuda {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 2px solid var(--secondary-light-1);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--secondary-dark-2), var(--secondary-dark-1));
+  color: var(--white);
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(159, 76, 219, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+#ayuda svg {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+#ayuda:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-light-1));
+  box-shadow: 0 6px 18px rgba(159, 76, 219, 0.45);
+}
+
+#ayuda:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+#ayuda:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+#ayuda:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
   /* ---------- LA ZONA DEL CANVAS ---------- */
   .zona-canvas {
     grid-area: canvas;
