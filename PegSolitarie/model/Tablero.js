@@ -103,10 +103,56 @@ export class Tablero {
         // desde un pozo dado. Esto es lo que vas a usar
         // para dibujar los hints animados (flechas) cuando el jugador
         // selecciona una ficha
+        const posibles = [];
+
+        for(const movimiento of this.movimientos){
+            //con esto voy verificando el cambio de fila y columna
+            const cambioFila = movimiento[0];
+            const cambioColumna = movimiento[1];
+
+            const filaDestino = fila + cambioFila;
+            const columnaDestino = columna + cambioColumna;
+
+            //valido si son movimientos posibles y se los agrego a posible
+            // para luego devolverlos
+            const esValido = this.esMovimientoValido(fila, columna, filaDestino, columnaDestino);
+
+            if(esValido){
+                //guarda el objeto con las coordenadas del destino
+                // por ejemplo si el calculo resultante es fila 3 y columna 5
+                // quedaria 
+                //[
+                //  {filaDestino: 3, columnDestino: 5}
+                //]
+                posibles.push(
+                    {filaDestino: filaDestino,
+                     columnDestino: columnaDestino
+                })
+            }
+
+        }
+        
+        return posibles;
+
     }
 
     moverFicha(filaOrigen, colOrigen, filaDestino, colDestino) {
-        // Vacía origen, come la ficha intermedia, ocupa destino
+        // calculo la fila y columna, sus respectivas diferencias
+        const difFila = filaDestino - filaOrigen;
+        const difColumna = colDestino - colOrigen;
+
+        //Ahora calculo la fila que se encuentra al medio y la columna
+        const filaIntermedia = filaOrigen + difFila/2;
+        const colIntermedia = colOrigen + difColumna/2;
+
+        //acomodamos para que se pueda ver el movimento de la fila, 
+        //en la primera queda vacio, ya que se movio la ficha
+        //en la segunda marca vacio ya que para llegar a destino tiene que ser vacio
+        //en la ultima colocamos la fila movida
+        this.matriz[filaOrigen][colOrigen] = 2;  
+        this.matriz[filaIntermedia][colIntermedia] = 2;
+        this.matriz[filaDestino][filaDestino] = 1;
+
     }
 
     hayMovimientosDisponibles() {
