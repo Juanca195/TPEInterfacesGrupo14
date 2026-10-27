@@ -158,13 +158,66 @@ export class Tablero {
     hayMovimientosDisponibles() {
         // Recorre toda la matriz buscando si existe
         // al menos un movimiento válido en algún pozo ocupado
+         for (let fila = 0; fila < this.matriz.length; fila++) {
+                for (let columna = 0; columna < this.matriz[fila].length; columna++) {
+
+                const pozoOcupado = this.matriz[fila][columna] === 1;
+                if (!pozoOcupado) {
+                continue;
+                }
+
+                const movimientosPosibles = this.obtenerMovimientosPosiblesDesde(fila, columna);
+                const tieneAlgunMovimiento = movimientosPosibles.length > 0;
+
+                if (tieneAlgunMovimiento) {
+                return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     contarFichasRestantes() {
         // Cuenta los pozos en estado "ocupado"
+        let cont = 0;
+        //
+        for(const fila of this.matriz){
+            //va contado por fila los pozos
+            for(const pozo of fila){
+                //verificamos que este ocupada
+                if(pozo == 1){
+                    cont++;
+                }
+            }
+        }
+        return cont;
     }
 
     obtenerEstadoDelJuego() {
         // "EN_JUEGO", "GANASTE", "GANASTE_PERFECTO" o "PERDISTE"
+        const hayMovientos = this.hayMovimientosDisponibles();
+
+        //Si hay movimentos, indicamos que el estado Sea En_JUEGO
+        if(hayMovientos){
+            return "EN_JUEGO";
+        }
+
+        const ficchasRestantes = this.contarFichasRestantes();
+
+        const unicaFicha = ficchasRestantes ===1; 
+        //Si quedas mas de una ficha Perdiste
+        if(!unicaFicha){
+            return "PERDISTE";
+        }
+
+        //guardamos la posicion del centro, para devolver que gano perfecto
+        const fichaEnelCentro = this.matriz[this.filaCentro][this.columnaCentro] ===1;
+        if(fichaEnelCentro){
+            return "GENASTE_PERFECTO";
+        }
+        
+        return "GANASTE";
+
     }
 }
