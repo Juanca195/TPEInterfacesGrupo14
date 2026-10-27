@@ -61,7 +61,7 @@ export class Tablero {
             return false;
 
         // El destino debe estar vacio, de lo contrario es mov invalido
-        if(this.obtenerEstadoPozo[filaDestino][colDestino] != 2)
+        if(this.obtenerEstadoPozo (filaDestino, colDestino) != 2)
             return false;
 
 
@@ -151,7 +151,7 @@ export class Tablero {
         //en la ultima colocamos la fila movida
         this.matriz[filaOrigen][colOrigen] = 2;  
         this.matriz[filaIntermedia][colIntermedia] = 2;
-        this.matriz[filaDestino][filaDestino] = 1;
+        this.matriz[filaDestino][colDestino] = 1;
 
     }
 

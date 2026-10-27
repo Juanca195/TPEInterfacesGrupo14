@@ -10,7 +10,7 @@ export class VistaTablero {
   // calcular el ancho y alto? o ya viene en anchoCelda y altoCelda?
   dibujarFondo() {
     // Dibuja la imagen de fondo del tablero (tablero vacío)
-    this.ctx.cleanRect(0, 0, this.canvas.anchoCelda, this.altoCelda);
+    this.ctx.clearRect(0, 0, this.canvas.anchoCelda, this.altoCelda);
 
     this.ctx.drawImage(
       this.imagenFondo, 0, 0, this.canvas.anchoCelda, this.canvas.altoCelda
