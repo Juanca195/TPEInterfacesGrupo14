@@ -18,9 +18,32 @@ export class VistaTablero {
   }
 
   dibujarTableroCompleto(tablero, fichaElegida, pozoEnArrastre) {
-    // Dibuja el fondo primero, luego recorre la matriz
-    // y dibuja una ficha (con imagen, no color) en cada pozo ocupado,
-    // salvo en el pozo que se está arrastrando actualmente (si corresponde)
+  //     Dibujar el fondo del tablero.
+      this.dibujarFondo();
+  // Recorrer la matriz y dibujar una ficha en cada pozo ocupado.
+      for(let fila = 0; fila < tablero.matriz.length; fila++){
+        for(let columna = 0; columna< tablero.matriz[fila].length; columna++){
+          if(tablero.matriz[fila][columna] !==1);
+
+          const esPozoArrastrado = pozoEnArrastre && pozoEnArrastre.fila === fila
+          && pozoEnArrastre.columna === columna;
+
+          if(esPozoArrastrado) continue;
+          const {x, y} = this.convertirFilaColumnaAPosicion(fila, columna);
+          this.dibujarFicha(fichaElegida.imagenCargada, x, y);
+        }
+      }
+  // Si se está arrastrando una ficha, no dibujarla en su pozo de origen.
+    if(pozoEnArrastre){
+    // Dibujar la ficha arrastrada en la posición actual del mouse, encima de todo.
+      this.dibujarFichaSiguiendoElMouse(
+        fichaElegida.imagenCargada, 
+        pozoEnArrastre.x,
+        pozoEnArrastre.y
+      );
+    }
+    // falta terminar
+  // Dibujar los indicadores de movimientos posibles.
   }
 
   dibujarFicha(imagen, posX, posY) {
