@@ -27,13 +27,14 @@ export class Tablero {
         // 0 = inexistente
         // 1 = ocupado
         this.matriz = [
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 2, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
+          // 0  1  2  3  4  5  6  
+            [0, 0, 1, 1, 1, 0, 0], // 0
+            [0, 0, 1, 1, 1, 0, 0], // 1
+            [1, 1, 1, 1, 1, 1, 1], // 2
+            [1, 1, 1, 2, 1, 1, 1], // 3
+            [1, 1, 1, 1, 1, 1, 1], // 4
+            [0, 0, 1, 1, 1, 0, 0], // 5
+            [0, 0, 1, 1, 1, 0, 0], // 6
         ];
 
     }
@@ -97,14 +98,10 @@ export class Tablero {
         return true;
     }
 
+    // devuelve una lista de { filaDestino, colDestino } válidos desde un pozo dado.
     obtenerMovimientosPosiblesDesde(fila, columna) {
-        // NUEVO respecto a la versión anterior:
-        // devuelve una lista de { filaDestino, colDestino } válidos
-        // desde un pozo dado. Esto es lo que vas a usar
-        // para dibujar los hints animados (flechas) cuando el jugador
-        // selecciona una ficha
         const posibles = [];
-
+        
         for(const movimiento of this.movimientos){
             //con esto voy verificando el cambio de fila y columna
             const cambioFila = movimiento[0];
@@ -113,7 +110,7 @@ export class Tablero {
             const filaDestino = fila + cambioFila;
             const columnaDestino = columna + cambioColumna;
 
-            //valido si son movimientos posibles y se los agrego a posible
+            // valido si son movimientos posibles y se los agrego a posible
             // para luego devolverlos
             const esValido = this.esMovimientoValido(fila, columna, filaDestino, columnaDestino);
 
@@ -194,8 +191,8 @@ export class Tablero {
         return cont;
     }
 
+    // "EN_JUEGO", "GANASTE", "GANASTE_PERFECTO" o "PERDISTE"
     obtenerEstadoDelJuego() {
-        // "EN_JUEGO", "GANASTE", "GANASTE_PERFECTO" o "PERDISTE"
         const hayMovientos = this.hayMovimientosDisponibles();
 
         //Si hay movimentos, indicamos que el estado Sea En_JUEGO
