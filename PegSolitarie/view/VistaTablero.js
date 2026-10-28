@@ -15,14 +15,17 @@ export class VistaTablero {
       this.imagenFondo, 0, 0, this.canvas.width, this.canvas.height
     );
   }
- // Acomodarrr
-  dibujarTableroCompleto(tablero, fichaElegida, pozoEnArrastre) {
+ // posicionMouse, debe traer las cordenadas actuales del cursor
+  dibujarTableroCompleto(tablero, fichaElegida, pozoEnArrastre, posicionMouse, movimientosPosibles = [], timestampAnimacion) {
   //     Dibujar el fondo del tablero.
       this.dibujarFondo();
   // Recorrer la matriz y dibujar una ficha en cada pozo ocupado.
       for(let fila = 0; fila < tablero.matriz.length; fila++){
         for(let columna = 0; columna< tablero.matriz[fila].length; columna++){
-          if(tablero.matriz[fila][columna] !==1);
+          //dibujar solo los poszos ocupados 
+          if(tablero.matriz[fila][columna] !==1){
+            continue;
+          }
 
           const esPozoArrastrado = pozoEnArrastre && pozoEnArrastre.fila === fila
           && pozoEnArrastre.columna === columna;
@@ -32,8 +35,13 @@ export class VistaTablero {
           this.dibujarFicha(fichaElegida.imagenCargada, x, y);
         }
       }
+
+      //los indicadores se dibujan encima del tablero.
+      if(movimientosPosibles.length > 0){
+        this.dibujarHintsAnimados(movimientosPosibles, timestampAnimacion);
+      }
   // Si se está arrastrando una ficha, no dibujarla en su pozo de origen.
-    if(pozoEnArrastre){
+    if(pozoEnArrastre && posicionMouse){
     // Dibujar la ficha arrastrada en la posición actual del mouse, encima de todo.
       this.dibujarFichaSiguiendoElMouse(
         fichaElegida.imagenCargada, 
@@ -41,8 +49,6 @@ export class VistaTablero {
         pozoEnArrastre.y
       );
     }
-    // falta terminar
-  // Dibujar los indicadores de movimientos posibles.
   }
 
   dibujarFicha(imagen, posX, posY) {
