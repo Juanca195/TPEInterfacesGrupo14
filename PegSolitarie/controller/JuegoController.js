@@ -23,13 +23,50 @@ export class Juego {
   }
 
   iniciar() {
-    // Muestra el menú de selección de ficha e instrucciones
+    this.estadoDelJuego = "SELECCIONANDO_FICHA";
+
+    this.vistaMenu.mostrarSelectorDeFicha((ficha) => {
+      this.elegirFicha(ficha).catch((error) => {
+        console.error("No se pudo iniciar la partida:", error);
+      });
+    });
+
+    this.vistaMenu.mostrarInstrucciones();
   }
 
-  elegirFicha(ficha) {
-    // Guarda la ficha, la carga, oculta el menú,
-    // inicializa el tablero, arranca el temporizador,
-    // cambia el estado a "EN_PARTIDA"
+  async elegirFicha(ficha) {
+    this.fichaElegida = ficha;
+
+    const imagenFondo = this.vistaTablero.imagenFondo;
+    const fondoCargado = new Promise((resolve, reject) => {
+      if (imagenFondo.complete) {
+        if (imagenFondo.naturalWidth > 0) {
+          resolve();
+        } else {
+          reject(new Error("No se pudo cargar la imagen de fondo."));
+        }
+        return;
+      }
+
+      imagenFondo.addEventListener("load", resolve, { once: true });
+      imagenFondo.addEventListener(
+        "error",
+        () => reject(new Error("No se pudo cargar la imagen de fondo.")),
+        { once: true }
+      );
+    });
+
+    await Promise.all([ficha.cargarImagen(), fondoCargado]);
+
+    this.tablero.inicializar();
+    this.estadoDelJuego = "EN_PARTIDA";
+
+    this.vistaTablero.dibujarTableroCompleto(
+      this.tablero,
+      this.fichaElegida,
+      null,
+      null
+    );
   }
 
   manejarMouseDown(posXClic, posYClic) {

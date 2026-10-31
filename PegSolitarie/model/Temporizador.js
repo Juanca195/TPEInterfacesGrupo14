@@ -1,4 +1,4 @@
-import { Tablero } from "./Tablero";
+import { Tablero } from "../model/Tablero.js";
 
 export class Temporizador {
   constructor(duracionTotalEnSegundos) {

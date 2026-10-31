@@ -1,10 +1,10 @@
-import { Tablero } from "./Tablero.js";
-import { Ficha } from "./Ficha.js";
-import { Temporizador } from "./Temporizador.js";
-import { VistaTablero } from "./VistaTablero.js";
-import { VistaMenu } from "./VistaMenu.js";
-import { VistaTemporizador } from "./VistaTemporizador.js";
-import { Juego } from "./Juego.js";
+import { Tablero } from "../model/Tablero.js";
+import { Ficha } from "../model/Ficha.js";
+import { Temporizador } from "../model/Temporizador.js";
+import { VistaTablero } from "../view/VistaTablero.js";
+import { VistaMenu } from "../view/VistaMenu.js";
+import { VistaTemporizador } from "../view/VistaTemporizador.js";
+import { Juego } from "../controller/JuegoController.js";
 
 // ===================================================
 // 1. Referencias a elementos del HTML
@@ -13,22 +13,20 @@ const elementoCanvas = document.getElementById("canvas");
 const elementoContenedorMenu = document.getElementById("contenedorMenu");
 const elementoTemporizador = document.getElementById("temporizador");
 
-// ===================================================
+
 // 2. Definir las fichas disponibles (temática DBZ)
 // Cada una es una instancia de Ficha, con nombre + ruta de imagen
-// ===================================================
-const fichaGoku = new Ficha("Goku", "../InterfacesEntregable2/Img/ficha-goku.png");
-const fichaVegeta = new Ficha("Vegeta", "../InterfacesEntregable2/Img/ficha-vegeta.png");
-const fichaBulma = new Ficha("Bulma", "../InterfacesEntregable2/Img/ficha-bulma.png");
-const fichaDragonBall = new Ficha("Dragon Ball", "../InterfacesEntregable2/Img/ficha-dragonball.png");
 
-const listaDeFichasDisponibles = [fichaGoku, fichaVegeta, fichaBulma, fichaDragonBall];
+const fichaDragon = new Ficha("Dragon", new URL("../assets/ficha_dragon.png", import.meta.url).href);
+const fichaEsfera = new Ficha("Esfera",new URL("../assets/ficha_esfera.png", import.meta.url).href);
+
+const listaDeFichasDisponibles = [fichaDragon, fichaEsfera];
 
 // ===================================================
 // 3. Imagen de fondo del tablero vacío
 // ===================================================
 const imagenFondoTablero = new Image();
-imagenFondoTablero.src = "../InterfacesEntregable2/Img/fondo-tablero-dbz.png";
+imagenFondoTablero.src = new URL("../assets/fondoPeg.jpg", import.meta.url).href;
 
 // ===================================================
 // 4. Configuración de tamaño y tiempo
@@ -107,3 +105,59 @@ botonReiniciar.addEventListener("click", function () {
 // 11. Arrancar el juego (muestra el menú de selección de ficha)
 // ===================================================
 juego.iniciar();
+
+
+
+
+
+
+//Codigo de prueba para ver como se ve
+// const canvas = document.getElementById("canvas");
+//
+// if (!canvas) {
+//   throw new Error("No se encontró el canvas.");
+// }
+//
+// const tablero = new Tablero();
+// tablero.inicializar();
+//
+// const fichaDragon = new Ficha(
+//   "Dragón",
+//   new URL("../assets/ficha_dragon.png", import.meta.url).href
+// );
+//
+// const imagenFondo = new Image();
+// const rutaFondo = new URL("../assets/fondoPeg.jpg", import.meta.url).href;
+//
+// const fondoCargado = new Promise((resolve, reject) => {
+//   imagenFondo.onload = resolve;
+//   imagenFondo.onerror = () => {
+//     reject(new Error(`No se pudo cargar el fondo: ${rutaFondo}`));
+//   };
+//   imagenFondo.src = rutaFondo;
+// });
+//
+// async function mostrarTablero() {
+//   await Promise.all([
+//     fichaDragon.cargarImagen(),
+//     fondoCargado,
+//   ]);
+//
+//   const vistaTablero = new VistaTablero(
+//     canvas,
+//     70,
+//     74,
+//     imagenFondo
+//   );
+//
+//   vistaTablero.dibujarTableroCompleto(
+//     tablero,
+//     fichaDragon,
+//     null,
+//     null
+//   );
+// }
+//
+// mostrarTablero().catch((error) => {
+//   console.error("No se pudo mostrar el tablero:", error);
+// });

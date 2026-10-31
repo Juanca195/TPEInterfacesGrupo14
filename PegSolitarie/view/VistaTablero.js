@@ -60,7 +60,7 @@ export class VistaTablero {
     const centroY = posY + this.altoCelda /2;
 
     // Recortar un cuadro centrado de la imagen para no deformarla.
-    const ladoFuente = Maht.min(imagen.naturalWidth, imagen.naturalHeight);
+    const ladoFuente = Math.min(imagen.naturalWidth, imagen.naturalHeight);
     const fuenteX = (imagen.naturalWidth - ladoFuente) / 2;
     const fuenteY = (imagen.naturalHeight - ladoFuente)/2;
     
