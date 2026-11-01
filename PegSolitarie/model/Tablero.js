@@ -42,13 +42,13 @@ export class Tablero {
     obtenerEstadoPozo(fila, columna) {
         // Si la fila es menor que 0, la posición está antes del inicio de la matriz.
         // Si la fila es mayor o igual a matriz.length, la posicion esta fuera de la matriz
-        if (fila < 0 && fila >= this.matriz.length) {
+        if ( this.matriz === null || fila < 0 || fila >= this.matriz.length) {
             return 0;
         }
 
         // Si la columna es menor que 0, la posición está antes del inicio de esa fila.
         // Si la columna es mayor o igual esta fuera de la matriz
-        if (columna < 0 && columna >= this.matriz[fila].length) {
+        if (columna < 0 || columna >= this.matriz[fila].length) {
             return 0;
         }
      
@@ -58,8 +58,10 @@ export class Tablero {
 
     esMovimientoValido(filaOrigen, colOrigen, filaDestino, colDestino) {
         // El origen debe existir y ser una ficha, de lo contrario es mov invalido
-        if(this.obtenerEstadoPozo[filaOrigen][colOrigen] == 0 || this.obtenerEstadoPozo[filaOrigen][colOrigen] == 2)
-            return false;
+        if (this.obtenerEstadoPozo(filaOrigen, colOrigen) !== 1)
+        return false;
+
+
 
         // El destino debe estar vacio, de lo contrario es mov invalido
         if(this.obtenerEstadoPozo (filaDestino, colDestino) != 2)
@@ -84,7 +86,7 @@ export class Tablero {
         const saltoHorizontal = distanciaColumna === 2 && distanciaFila === 0;
         const saltoVertical = distanciaFila === 2 && distanciaColumna === 0;
 
-        if(!saltoHorizontal || !saltoVertical)
+        if(!saltoHorizontal && !saltoVertical)
             return false;
         
         // Calculamos la ubicacion de la ficha intermedia (esta en la mitad del recorrido)

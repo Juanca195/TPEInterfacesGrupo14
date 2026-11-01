@@ -15,11 +15,81 @@ export class VistaTablero {
       this.imagenFondo, 0, 0, this.canvas.width, this.canvas.height
     );
   }
+ // Dibuja la base del peg 
+  dibujarBaseTablero(tablero) {
+  const anchoTablero = tablero.matriz[0].length * this.anchoCelda;
+  const altoTablero = tablero.matriz.length * this.altoCelda;
+  const radioPuntas = 18;
+
+  this.ctx.fillStyle = "#8b5a2b";
+
+  // Brazo vertical: redondea las puntas superior e inferior.
+  this.ctx.beginPath();
+  this.ctx.roundRect(
+    2 * this.anchoCelda,
+    0,
+    3 * this.anchoCelda,
+    altoTablero,
+    radioPuntas
+  );
+  this.ctx.fill();
+
+  // Brazo horizontal: redondea las puntas izquierda y derecha.
+  this.ctx.beginPath();
+  this.ctx.roundRect(
+    0,
+    2 * this.altoCelda,
+    anchoTablero,
+    3 * this.altoCelda,
+    radioPuntas
+  );
+  this.ctx.fill();
+
+  // Dibuja los huecos encima de la base.
+  for (let fila = 0; fila < tablero.matriz.length; fila++) {
+    for (let columna = 0; columna < tablero.matriz[fila].length; columna++) {
+      if (tablero.matriz[fila][columna] === 0) {
+        continue;
+      }
+
+      const { x, y } = this.convertirFilaColumnaAPosicion(fila, columna);
+      const centroX = x + this.anchoCelda / 2;
+      const centroY = y + this.altoCelda / 2;
+      const radioPozo = Math.min(this.anchoCelda, this.altoCelda) * 0.32;
+
+      // Hueco donde va la ficha.
+      this.ctx.beginPath();
+      this.ctx.arc(centroX, centroY, radioPozo, 0, Math.PI * 2);
+      this.ctx.fillStyle = "#392719";
+      this.ctx.fill();
+
+      this.ctx.strokeStyle = "#5c3b24";
+      this.ctx.stroke();
+    }
+  }
+}
+
+
+
  // posicionMouse, debe traer las cordenadas actuales del cursor
   dibujarTableroCompleto(tablero, fichaElegida, pozoEnArrastre, posicionMouse, movimientosPosibles = [], timestampAnimacion) {
   //     Dibujar el fondo del tablero.
       this.dibujarFondo();
-  // Recorrer la matriz y dibujar una ficha en cada pozo ocupado.
+      //calculamos y aplicamos el centrado del tablero dentro del camvas
+      //Primero calculamos cuanto ocupa la grilla 
+      //despues calculamos el espacio que sobra en camvas y lo dividimos en 2 asi centarmos el tablero 
+      const anchoTablero = tablero.matriz[0].length * this.anchoCelda;
+      const altoTablero = tablero.matriz.length * this.altoCelda;
+      const desplazamientoX = (this.canvas.width - anchoTablero) / 2;
+      const desplazamientoY = (this.canvas.height - altoTablero) / 2;
+
+      //guardamos el contexto antes de modificarlo 
+      this.ctx.save();
+      this.ctx.translate(desplazamientoX, desplazamientoY);
+
+
+      this.dibujarBaseTablero(tablero)
+    // Recorrer la matriz y dibujar una ficha en cada pozo ocupado.
       for(let fila = 0; fila < tablero.matriz.length; fila++){
         for(let columna = 0; columna< tablero.matriz[fila].length; columna++){
           //dibujar solo los poszos ocupados 
@@ -40,7 +110,7 @@ export class VistaTablero {
       if(movimientosPosibles.length > 0){
         this.dibujarHintsAnimados(movimientosPosibles, timestampAnimacion);
       }
-  // Si se está arrastrando una ficha, no dibujarla en su pozo de origen.
+    // Si se está arrastrando una ficha, no dibujarla en su pozo de origen.
     if(pozoEnArrastre && posicionMouse){
     // Dibujar la ficha arrastrada en la posición actual del mouse, encima de todo.
       this.dibujarFichaSiguiendoElMouse(
@@ -49,6 +119,7 @@ export class VistaTablero {
         pozoEnArrastre.y
       );
     }
+    this.ctx.restore();
   }
 
   dibujarFicha(imagen, posX, posY) {
