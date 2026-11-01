@@ -231,6 +231,7 @@ manejarMouseUp(posXSoltar, posYSoltar) {
         columnaDestino
       );
     }
+    this.verificarFinDeJuego();
   }
 
   // Limpiamos el estado del arrastre, tanto si el movimiento fue válido como si no.
@@ -246,30 +247,19 @@ manejarMouseUp(posXSoltar, posYSoltar) {
     null
   );
 }
-
-  // manejarMouseMove(posXActualMouse, posYActualMouse) {
-  //   // Si estaArrastrando es true, actualiza
-  //   // posicionActualMouseX/Y y vuelve a dibujar todo
-  //   // (tablero + hints + la ficha siguiendo al mouse)
-  // }
-
-  // manejarMouseUp(posXSoltar, posYSoltar) {
-  //   // Si estaArrastrando es true:
-  //   //   convierte la posición de suelta a fila/columna
-  //   //   si tablero.esMovimientoValido(...) es true:
-  //   //     ejecuta tablero.moverFicha(...)
-  //   //   si no es válido: no pasa nada, la ficha "vuelve" a su lugar
-  //   //     (simplemente se redibuja el tablero sin aplicar el cambio)
-  //   //   limpia pozoEnArrastre, estaArrastrando, movimientosPosiblesActuales
-  //   //   redibuja
-  //   //   llama a verificarFinDeJuego() (req. 5: se chequea después de cada movimiento)
-  // }
-
   verificarFinDeJuego() {
     // Consulta tablero.obtenerEstadoDelJuego()
     // Si no es "EN_JUEGO": detiene el temporizador,
     //   cambia estadoDelJuego a "FINALIZADO",
     //   muestra el mensaje correspondiente
+    const estado = this.tablero.obtenerEstadoDelJuego();
+    if(estado === "EN_JUEGO"){
+      return;
+    }
+    this.estadoDelJuego = "FINALIZADO";
+    this.temporizador.delete();
+    this.vistaTablero.mostrarMensajeFinDeJuego(estado);
+
   }
 
   alAgotarseElTiempo() {

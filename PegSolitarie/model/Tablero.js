@@ -213,7 +213,7 @@ export class Tablero {
         //guardamos la posicion del centro, para devolver que gano perfecto
         const fichaEnelCentro = this.matriz[this.filaCentro][this.columnaCentro] ===1;
         if(fichaEnelCentro){
-            return "GENASTE_PERFECTO";
+            return "GANASTE_PERFECTO";
         }
         
         return "GANASTE";
