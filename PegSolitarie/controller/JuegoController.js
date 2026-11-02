@@ -123,6 +123,11 @@ export class Juego {
     this.movimientosPosiblesActuales =
     this.tablero.obtenerMovimientosPosiblesDesde(fila, columna);
     
+    console.log({
+      origen: { fila, columna },
+      movimientos: this.movimientosPosiblesActuales
+    });
+
     this.vistaTablero.dibujarTableroCompleto(
       this.tablero,
       this.fichaElegida,

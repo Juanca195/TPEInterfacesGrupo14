@@ -27,7 +27,7 @@ export class Tablero {
         // 0 = inexistente
         // 1 = ocupado
         this.matriz = [
-          // 0  1  2  3  4  5  6  
+            // 0  1  2  3  4  5  6  
             [0, 0, 1, 1, 1, 0, 0], // 0
             [0, 0, 1, 1, 1, 0, 0], // 1
             [1, 1, 1, 1, 1, 1, 1], // 2
@@ -42,7 +42,7 @@ export class Tablero {
     obtenerEstadoPozo(fila, columna) {
         // Si la fila es menor que 0, la posición está antes del inicio de la matriz.
         // Si la fila es mayor o igual a matriz.length, la posicion esta fuera de la matriz
-        if ( this.matriz === null || fila < 0 || fila >= this.matriz.length) {
+        if (this.matriz === null || fila < 0 || fila >= this.matriz.length) {
             return 0;
         }
 
@@ -51,7 +51,7 @@ export class Tablero {
         if (columna < 0 || columna >= this.matriz[fila].length) {
             return 0;
         }
-     
+
         // La fila y la columna existen, devuelve el valor de esa posición.
         return this.matriz[fila][columna];
     }
@@ -59,20 +59,20 @@ export class Tablero {
     esMovimientoValido(filaOrigen, colOrigen, filaDestino, colDestino) {
         // El origen debe existir y ser una ficha, de lo contrario es mov invalido
         if (this.obtenerEstadoPozo(filaOrigen, colOrigen) !== 1)
-        return false;
+            return false;
 
 
 
         // El destino debe estar vacio, de lo contrario es mov invalido
-        if(this.obtenerEstadoPozo (filaDestino, colDestino) != 2)
+        if (this.obtenerEstadoPozo(filaDestino, colDestino) != 2)
             return false;
 
 
         // Calcula el salto en vertical
-        const diferenciaFila = filaOrigen - filaDestino; 
+        const diferenciaFila = filaOrigen - filaDestino;
         // Calcula el salto en horizontal
         const diferenciaColumna = colOrigen - colDestino;
-        
+
         // Math.abs nos da el valor positivo 
         const distanciaFila = Math.abs(diferenciaFila);
         const distanciaColumna = Math.abs(diferenciaColumna);
@@ -86,25 +86,25 @@ export class Tablero {
         const saltoHorizontal = distanciaColumna === 2 && distanciaFila === 0;
         const saltoVertical = distanciaFila === 2 && distanciaColumna === 0;
 
-        if(!saltoHorizontal && !saltoVertical)
+        if (!saltoHorizontal && !saltoVertical)
             return false;
-        
+
         // Calculamos la ubicacion de la ficha intermedia (esta en la mitad del recorrido)
-        const fichaIntermediaFila = filaOrigen + Math.floor(diferenciaFila/2);
-        const fichaIntermediaColumna = colOrigen + Math.floor(diferenciaColumna/2);
-        
+        const fichaIntermediaFila = (filaOrigen + filaDestino) / 2;
+        const fichaIntermediaColumna = (colOrigen + colDestino) / 2;
+
         // Comprobamos que tiene que haber una ficha existente de por medio
-        if(this.obtenerEstadoPozo(fichaIntermediaFila,fichaIntermediaColumna) != 1)
+        if (this.obtenerEstadoPozo(fichaIntermediaFila, fichaIntermediaColumna) != 1)
             return false;
-        
+
         return true;
     }
 
     // devuelve una lista de { filaDestino, colDestino } válidos desde un pozo dado.
     obtenerMovimientosPosiblesDesde(fila, columna) {
         const posibles = [];
-        
-        for(const movimiento of this.movimientos){
+
+        for (const movimiento of this.movimientos) {
             //con esto voy verificando el cambio de fila y columna
             const cambioFila = movimiento[0];
             const cambioColumna = movimiento[1];
@@ -116,7 +116,7 @@ export class Tablero {
             // para luego devolverlos
             const esValido = this.esMovimientoValido(fila, columna, filaDestino, columnaDestino);
 
-            if(esValido){
+            if (esValido) {
                 //guarda el objeto con las coordenadas del destino
                 // por ejemplo si el calculo resultante es fila 3 y columna 5
                 // quedaria 
@@ -130,7 +130,7 @@ export class Tablero {
             }
 
         }
-        
+
         return posibles;
 
     }
@@ -141,14 +141,14 @@ export class Tablero {
         const difColumna = colDestino - colOrigen;
 
         //Ahora calculo la fila que se encuentra al medio y la columna
-        const filaIntermedia = filaOrigen + difFila/2;
-        const colIntermedia = colOrigen + difColumna/2;
+        const filaIntermedia = filaOrigen + difFila / 2;
+        const colIntermedia = colOrigen + difColumna / 2;
 
         //acomodamos para que se pueda ver el movimento de la fila, 
         //en la primera queda vacio, ya que se movio la ficha
         //en la segunda marca vacio ya que para llegar a destino tiene que ser vacio
         //en la ultima colocamos la fila movida
-        this.matriz[filaOrigen][colOrigen] = 2;  
+        this.matriz[filaOrigen][colOrigen] = 2;
         this.matriz[filaIntermedia][colIntermedia] = 2;
         this.matriz[filaDestino][colDestino] = 1;
 
@@ -157,19 +157,19 @@ export class Tablero {
     hayMovimientosDisponibles() {
         // Recorre toda la matriz buscando si existe
         // al menos un movimiento válido en algún pozo ocupado
-         for (let fila = 0; fila < this.matriz.length; fila++) {
-                for (let columna = 0; columna < this.matriz[fila].length; columna++) {
+        for (let fila = 0; fila < this.matriz.length; fila++) {
+            for (let columna = 0; columna < this.matriz[fila].length; columna++) {
 
                 const pozoOcupado = this.matriz[fila][columna] === 1;
                 if (!pozoOcupado) {
-                continue;
+                    continue;
                 }
 
                 const movimientosPosibles = this.obtenerMovimientosPosiblesDesde(fila, columna);
                 const tieneAlgunMovimiento = movimientosPosibles.length > 0;
 
                 if (tieneAlgunMovimiento) {
-                return true;
+                    return true;
                 }
             }
         }
@@ -181,11 +181,11 @@ export class Tablero {
         // Cuenta los pozos en estado "ocupado"
         let cont = 0;
         //
-        for(const fila of this.matriz){
+        for (const fila of this.matriz) {
             //va contado por fila los pozos
-            for(const pozo of fila){
+            for (const pozo of fila) {
                 //verificamos que este ocupada
-                if(pozo == 1){
+                if (pozo == 1) {
                     cont++;
                 }
             }
@@ -198,24 +198,24 @@ export class Tablero {
         const hayMovientos = this.hayMovimientosDisponibles();
 
         //Si hay movimentos, indicamos que el estado Sea En_JUEGO
-        if(hayMovientos){
+        if (hayMovientos) {
             return "EN_JUEGO";
         }
 
         const ficchasRestantes = this.contarFichasRestantes();
 
-        const unicaFicha = ficchasRestantes ===1; 
+        const unicaFicha = ficchasRestantes === 1;
         //Si quedas mas de una ficha Perdiste
-        if(!unicaFicha){
+        if (!unicaFicha) {
             return "PERDISTE";
         }
 
         //guardamos la posicion del centro, para devolver que gano perfecto
-        const fichaEnelCentro = this.matriz[this.filaCentro][this.columnaCentro] ===1;
-        if(fichaEnelCentro){
+        const fichaEnelCentro = this.matriz[this.filaCentro][this.columnaCentro] === 1;
+        if (fichaEnelCentro) {
             return "GANASTE_PERFECTO";
         }
-        
+
         return "GANASTE";
 
     }
