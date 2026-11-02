@@ -123,9 +123,9 @@ export class Tablero {
                 //[
                 //  {filaDestino: 3, columnDestino: 5}
                 //]
-                posibles.push(
-                    {filaDestino: filaDestino,
-                     columnDestino: columnaDestino
+                posibles.push({
+                    filaDestino: filaDestino,
+                    columnaDestino: columnaDestino
                 })
             }
 

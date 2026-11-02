@@ -39,7 +39,8 @@ const DURACION_DEL_JUEGO_EN_SEGUNDOS = 300; // 5 minutos, por ejemplo
 // 5. Instanciar el Model
 // ===================================================
 const tablero = new Tablero();
-const temporizador = new Temporizador(DURACION_DEL_JUEGO_EN_SEGUNDOS);
+const temporizador = new Temporizador(elementoTemporizador);
+
 
 // ===================================================
 // 6. Instanciar la View

@@ -76,7 +76,7 @@ export class Juego {
     //   y calcula movimientosPosiblesActuales con tablero.obtenerMovimientosPosiblesDesde()
     //   para mostrar los hints animados
     if (this.estadoDelJuego !== "EN_PARTIDA") {
-    return;
+      return;
     }
 
     const canvas = this.vistaTablero.canvas;
@@ -121,8 +121,8 @@ export class Juego {
     this.posicionActualMouseX = xTablero;
     this.posicionActualMouseY = yTablero;
     this.movimientosPosiblesActuales =
-      this.tablero.obtenerMovimientosPosiblesDesde(fila, columna);
-
+    this.tablero.obtenerMovimientosPosiblesDesde(fila, columna);
+    
     this.vistaTablero.dibujarTableroCompleto(
       this.tablero,
       this.fichaElegida,
@@ -131,129 +131,138 @@ export class Juego {
       this.movimientosPosiblesActuales,
       performance.now()
     );
+
+
+    // Permite los hints animados mientras se mantiene arrastrada la ficha.
+    if (this.movimientosPosiblesActuales.length > 0) {
+      requestAnimationFrame((timestamp) => this.bucleDeAnimacion(timestamp));
+    }
   }
 
   manejarMouseMove(posXActualMouse, posYActualMouse) {
-  // Si no estamos arrastrando una ficha, no hay nada que actualizar.
-  if (!this.estaArrastrando || !this.pozoEnArrastre) {
-    return;
-  }
-
-  const canvas = this.vistaTablero.canvas;
-  const rect = canvas.getBoundingClientRect();
-
-  // Ajustamos la posición del mouse al tamaño interno del canvas.
-  const xCanvas = posXActualMouse * (canvas.width / rect.width);
-  const yCanvas = posYActualMouse * (canvas.height / rect.height);
-
-  const anchoTablero =
-    this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
-  const altoTablero =
-    this.tablero.matriz.length * this.vistaTablero.altoCelda;
-
-  // Quitamos el espacio que se agregó al centrar el tablero.
-  const desplazamientoX = (canvas.width - anchoTablero) / 2;
-  const desplazamientoY = (canvas.height - altoTablero) / 2;
-
-  // Guardamos la posición del mouse relativa al tablero.
-  this.posicionActualMouseX = xCanvas - desplazamientoX;
-  this.posicionActualMouseY = yCanvas - desplazamientoY;
-
-  // La vista usa estas coordenadas para dibujar la ficha debajo del mouse.
-  this.pozoEnArrastre.x = this.posicionActualMouseX;
-  this.pozoEnArrastre.y = this.posicionActualMouseY;
-
-  // Redibujamos el tablero y las pistas de movimiento.
-  this.vistaTablero.dibujarTableroCompleto(
-    this.tablero,
-    this.fichaElegida,
-    this.pozoEnArrastre,
-    { x: this.posicionActualMouseX, y: this.posicionActualMouseY },
-    this.movimientosPosiblesActuales,
-    performance.now()
-  );
-}
-
-manejarMouseUp(posXSoltar, posYSoltar) {
-  // Si no había una ficha en arrastre, no hay movimiento que procesar.
-  if (!this.estaArrastrando || !this.pozoEnArrastre) {
-    return;
-  }
-
-  const canvas = this.vistaTablero.canvas;
-  const rect = canvas.getBoundingClientRect();
-
-  // Convertimos el punto de suelta al tamaño interno del canvas.
-  const xCanvas = posXSoltar * (canvas.width / rect.width);
-  const yCanvas = posYSoltar * (canvas.height / rect.height);
-
-  const anchoTablero =
-    this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
-  const altoTablero =
-    this.tablero.matriz.length * this.vistaTablero.altoCelda;
-
-  // Quitamos el desplazamiento del centrado para calcular fila y columna.
-  const desplazamientoX = (canvas.width - anchoTablero) / 2;
-  const desplazamientoY = (canvas.height - altoTablero) / 2;
-  const xTablero = xCanvas - desplazamientoX;
-  const yTablero = yCanvas - desplazamientoY;
-
-  // Si se soltó fuera de los límites de la grilla, no aplicamos el movimiento.
-  if (
-    xTablero >= 0 &&
-    yTablero >= 0 &&
-    xTablero < anchoTablero &&
-    yTablero < altoTablero
-  ) {
-    const columnaDestino = Math.floor(
-      xTablero / this.vistaTablero.anchoCelda
-    );
-    const filaDestino = Math.floor(
-      yTablero / this.vistaTablero.altoCelda
-    );
-
-    const filaOrigen = this.pozoEnArrastre.fila;
-    const columnaOrigen = this.pozoEnArrastre.columna;
-
-    // Solo movemos la ficha si el modelo valida el salto.
-    if (
-      this.tablero.esMovimientoValido(
-        filaOrigen,
-        columnaOrigen,
-        filaDestino,
-        columnaDestino
-      )
-    ) {
-      this.tablero.moverFicha(
-        filaOrigen,
-        columnaOrigen,
-        filaDestino,
-        columnaDestino
-      );
+    // Si no estamos arrastrando una ficha, no hay nada que actualizar.
+    if (!this.estaArrastrando || !this.pozoEnArrastre) {
+      return;
     }
-    this.verificarFinDeJuego();
+
+    
+    const canvas = this.vistaTablero.canvas;
+    const rect = canvas.getBoundingClientRect();
+    
+    // Ajustamos la posición del mouse al tamaño interno del canvas.
+    const xCanvas = posXActualMouse * (canvas.width / rect.width);
+    const yCanvas = posYActualMouse * (canvas.height / rect.height);
+    
+    const anchoTablero =
+    this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
+    const altoTablero =
+    this.tablero.matriz.length * this.vistaTablero.altoCelda;
+    
+    // Quitamos el espacio que se agregó al centrar el tablero.
+    const desplazamientoX = (canvas.width - anchoTablero) / 2;
+    const desplazamientoY = (canvas.height - altoTablero) / 2;
+    
+    // Guardamos la posición del mouse relativa al tablero.
+    this.posicionActualMouseX = xCanvas - desplazamientoX;
+    this.posicionActualMouseY = yCanvas - desplazamientoY;
+    
+    // La vista usa estas coordenadas para dibujar la ficha debajo del mouse.
+    this.pozoEnArrastre.x = this.posicionActualMouseX;
+    this.pozoEnArrastre.y = this.posicionActualMouseY;
+    
+    // Redibujamos el tablero y las pistas de movimiento.
+    this.vistaTablero.dibujarTableroCompleto(
+      this.tablero,
+      this.fichaElegida,
+      this.pozoEnArrastre,
+      { x: this.posicionActualMouseX, y: this.posicionActualMouseY },
+      this.movimientosPosiblesActuales,
+      performance.now()
+    );
+
+    
   }
+  
+  manejarMouseUp(posXSoltar, posYSoltar) {
+    // Si no había una ficha en arrastre, no hay movimiento que procesar.
+    if (!this.estaArrastrando || !this.pozoEnArrastre) {
+      return;
+    }
 
-  // Limpiamos el estado del arrastre, tanto si el movimiento fue válido como si no.
-  this.pozoEnArrastre = null;
-  this.estaArrastrando = false;
-  this.movimientosPosiblesActuales = [];
+    const canvas = this.vistaTablero.canvas;
+    const rect = canvas.getBoundingClientRect();
 
-  // Redibujamos: si el movimiento no fue válido, la ficha vuelve a su lugar.
-  this.vistaTablero.dibujarTableroCompleto(
-    this.tablero,
-    this.fichaElegida,
-    null,
-    null
-  );
-}
+    // Convertimos el punto de suelta al tamaño interno del canvas.
+    const xCanvas = posXSoltar * (canvas.width / rect.width);
+    const yCanvas = posYSoltar * (canvas.height / rect.height);
+
+    const anchoTablero =
+      this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
+    const altoTablero =
+      this.tablero.matriz.length * this.vistaTablero.altoCelda;
+
+    // Quitamos el desplazamiento del centrado para calcular fila y columna.
+    const desplazamientoX = (canvas.width - anchoTablero) / 2;
+    const desplazamientoY = (canvas.height - altoTablero) / 2;
+    const xTablero = xCanvas - desplazamientoX;
+    const yTablero = yCanvas - desplazamientoY;
+
+    // Si se soltó fuera de los límites de la grilla, no aplicamos el movimiento.
+    if (
+      xTablero >= 0 &&
+      yTablero >= 0 &&
+      xTablero < anchoTablero &&
+      yTablero < altoTablero
+    ) {
+      const columnaDestino = Math.floor(
+        xTablero / this.vistaTablero.anchoCelda
+      );
+      const filaDestino = Math.floor(
+        yTablero / this.vistaTablero.altoCelda
+      );
+
+      const filaOrigen = this.pozoEnArrastre.fila;
+      const columnaOrigen = this.pozoEnArrastre.columna;
+
+      // Solo movemos la ficha si el modelo valida el salto.
+      if (
+        this.tablero.esMovimientoValido(
+          filaOrigen,
+          columnaOrigen,
+          filaDestino,
+          columnaDestino
+        )
+      ) {
+        this.tablero.moverFicha(
+          filaOrigen,
+          columnaOrigen,
+          filaDestino,
+          columnaDestino
+        );
+      }
+      this.verificarFinDeJuego();
+    }
+
+    // Limpiamos el estado del arrastre, tanto si el movimiento fue válido como si no.
+    this.pozoEnArrastre = null;
+    this.estaArrastrando = false;
+    this.movimientosPosiblesActuales = [];
+
+    // Redibujamos: si el movimiento no fue válido, la ficha vuelve a su lugar.
+    this.vistaTablero.dibujarTableroCompleto(
+      this.tablero,
+      this.fichaElegida,
+      null,
+      null
+    );
+  }
   verificarFinDeJuego() {
     // Consulta tablero.obtenerEstadoDelJuego()
     // Si no es "EN_JUEGO": detiene el temporizador,
     //   cambia estadoDelJuego a "FINALIZADO",
     //   muestra el mensaje correspondiente
     const estado = this.tablero.obtenerEstadoDelJuego();
-    if(estado === "EN_JUEGO"){
+    if (estado === "EN_JUEGO") {
       return;
     }
     this.estadoDelJuego = "FINALIZADO";
@@ -275,11 +284,24 @@ manejarMouseUp(posXSoltar, posYSoltar) {
     // muestra de nuevo el menú de selección de ficha
   }
 
-  bucleDeAnimacion(timestamp) {
-    // Usado con requestAnimationFrame para animar los hints
-    // (las flechas moviéndose/parpadeando) mientras hay
-    // movimientosPosiblesActuales visibles.
-    // Se vuelve a llamar a sí mismo con requestAnimationFrame
-    // mientras estaArrastrando sea true
+  // Bucle de animación para los hints de movimientos posibles
+  // Se le pasa el timestamp que da requestAnimationFrame y se llama asi misma mientras se este arrastrando una ficha y haya movimientos posibles
+   bucleDeAnimacion(timestamp) {
+    if (!this.estaArrastrando || this.movimientosPosiblesActuales.length === 0) {
+      return;
+    }
+
+    this.vistaTablero.dibujarTableroCompleto(
+      this.tablero,
+      this.fichaElegida,
+      this.pozoEnArrastre,
+      { x: this.posicionActualMouseX, y: this.posicionActualMouseY },
+      this.movimientosPosiblesActuales,
+      timestamp
+    );
+
+    requestAnimationFrame((nuevoTimestamp) =>
+      this.bucleDeAnimacion(nuevoTimestamp)
+    );
   }
 }
