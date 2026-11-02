@@ -31,10 +31,10 @@ export class Juego {
       });
     });
 
-    this.vistaMenu.mostrarInstrucciones();
   }
 
   async elegirFicha(ficha) {
+    this.vistaMenu.ocultar();
     this.fichaElegida = ficha;
 
     const imagenFondo = this.vistaTablero.imagenFondo;
@@ -58,7 +58,9 @@ export class Juego {
 
     await Promise.all([ficha.cargarImagen(), fondoCargado]);
 
-    this.tablero.inicializar();
+    // Para mostrar que gano perfectamente
+    //this.tablero.prepararVictoriaPerfecta();
+    this.tablero.inicializar();    
     this.estadoDelJuego = "EN_PARTIDA";
 
     this.vistaTemporizador.actualizar(this.temporizador.segundosRestantes);
@@ -288,10 +290,20 @@ export class Juego {
   }
 
   reiniciarPartida() {
-    // Detiene el temporizador, lo reinicia,
-    // vuelve estadoDelJuego a "SELECCIONANDO_FICHA",
-    // limpia toda la selección/arrastre,
-    // muestra de nuevo el menú de selección de ficha
+    this.temporizador.detener();
+    this.temporizador.reiniciar();
+
+    this.estadoDelJuego = "SELECCIONANDO_FICHA";
+    this.fichaElegida = null;
+    this.pozoEnArrastre = null;
+    this.estaArrastrando = false;
+    this.movimientosPosiblesActuales = [];
+
+    this.vistaMenu.mostrarSelectorDeFicha((ficha) => {
+      this.elegirFicha(ficha).catch((error) => {
+        console.error("No se pudo iniciar la partida:", error);
+      });
+    });
   }
 
   // Bucle de animación para los hints de movimientos posibles

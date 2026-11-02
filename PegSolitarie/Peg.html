@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PegSolitarie</title>
     <link rel="stylesheet" href="./css/Peg.css">
 </head>
+
 <body>
 
-<div class="peg-solitaire">
-  <div id="temporizador"></div>
-  <canvas id="canvas" width="700" height="600"></canvas>
-  <button id="botonReiniciar" type="button">Reiniciar</button>
-</div>
+    <main class="peg-solitaire">
+        <canvas id="canvas" width="700" height="600"></canvas>
 
-<!-- Las instrucciones son estaticas, vistaMenu se encarga 
+        <aside class="panel-lateral">
+            <section class="pantallaSeleccion" id="pantallaSeleccion">
+                <h2>Elegí una ficha</h2>
+                <div id="selectorFichas"></div>
+            </section>
+
+            <section class="controlesJuego" id="controlesJuego" hidden>
+                <div id="temporizador"></div>
+                <button id="botonReiniciar" type="button">Reiniciar</button>
+                <button id="botonCambiarFicha" type="button">Cambiar ficha</button>
+            </section>
+        </aside>
+    </main>
+
+    <!-- Las instrucciones son estaticas, vistaMenu se encarga 
  de seleccionar las fichas, mostrar temporizador y acciones de juego  -->
 
-<div id="contenedorMenu">
-  <div id="selectorFichas"></div>
+    <div id="contenedorMenu">
+        <div id="selectorFichas"></div>
 
-  <section class="instrucciones">
-    <h2>Cómo jugar</h2>
+        <section class="instrucciones">
+            <h2>Cómo jugar</h2>
 
-    <article class="instrucciones-paso">
-      <h3>Saltá sobre una ficha</h3>
-      <img src="./assets/instrucciones/salto.svg"
-           alt="Una ficha salta sobre otra hacia un pozo vacío."
-           class="instrucciones-imagen">
-      <p>Mové una ficha en línea recta sobre otra ficha hasta un pozo vacío. La ficha saltada se retira del tablero.</p>
-    </article>
+            <article class="instrucciones-paso">
+                <h3>Saltá sobre una ficha</h3>
+                <img src="./assets/instrucciones/salto.svg" alt="Una ficha salta sobre otra hacia un pozo vacío."
+                    class="instrucciones-imagen">
+                <p>Mové una ficha en línea recta sobre otra ficha hasta un pozo vacío. La ficha saltada se retira del
+                    tablero.</p>
+            </article>
 
-    <article class="instrucciones-paso">
-      <h3>Intentá dejar una sola ficha</h3>
-      <img src="./assets/instrucciones/objetivo.svg"
-           alt="Tablero con una sola ficha restante."
-           class="instrucciones-imagen">
-      <p>Seguí haciendo movimientos válidos. El objetivo es terminar con una sola ficha en el tablero.</p>
-    </article>
-  </section>
-</div>
+            <article class="instrucciones-paso">
+                <h3>Intentá dejar una sola ficha</h3>
+                <img src="./assets/instrucciones/objetivo.svg" alt="Tablero con una sola ficha restante."
+                    class="instrucciones-imagen">
+                <p>Seguí haciendo movimientos válidos. El objetivo es terminar con una sola ficha en el tablero.</p>
+            </article>
+        </section>
+    </div>
 
     <script type="module" src="./js/Main.js"></script>
 </body>
+
 </html>

@@ -219,4 +219,17 @@ export class Tablero {
         return "GANASTE";
 
     }
+
+prepararVictoriaPerfecta() {
+  this.inicializar();
+
+  // Vacía todos los pozos existentes y conserva los espacios inexistentes.
+  this.matriz = this.matriz.map((fila) =>
+    fila.map((estado) => (estado === 0 ? 0 : 2))
+  );
+
+  // Origen y ficha que se salta.
+  this.matriz[3][1] = 1;
+  this.matriz[3][2] = 1;
+}
 }

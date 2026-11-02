@@ -12,8 +12,8 @@ import { Juego } from "../controller/JuegoController.js";
 const elementoCanvas = document.getElementById("canvas");
 const elementoContenedorMenu = document.getElementById("selectorFichas");
 const elementoTemporizador = document.getElementById("temporizador");
-
-
+const elementoPantallaSeleccion = document.getElementById("pantallaSeleccion");
+const elementoControlesJuego = document.getElementById("controlesJuego");
 // 2. Definir las fichas disponibles (temática DBZ)
 // Cada una es una instancia de Ficha, con nombre + ruta de imagen
 
@@ -46,7 +46,7 @@ const temporizador = new Temporizador(DURACION_DEL_JUEGO_EN_SEGUNDOS);
 // 6. Instanciar la View
 // ===================================================
 const vistaTablero = new VistaTablero(elementoCanvas, ANCHO_CELDA, ALTO_CELDA, imagenFondoTablero);
-const vistaMenu = new VistaMenu(elementoContenedorMenu, listaDeFichasDisponibles);
+const vistaMenu = new VistaMenu(elementoContenedorMenu, listaDeFichasDisponibles,elementoPantallaSeleccion,elementoControlesJuego);
 const vistaTemporizador = new VistaTemporizador(elementoTemporizador);
 
 // ===================================================
@@ -99,6 +99,11 @@ elementoCanvas.addEventListener("mouseup", function (eventoMouse) {
 // ===================================================
 const botonReiniciar = document.getElementById("botonReiniciar");
 botonReiniciar.addEventListener("click", function () {
+  juego.reiniciarPartida();
+});
+
+const botonCambiarFicha = document.getElementById("botonCambiarFicha");
+botonCambiarFicha.addEventListener("click", function () {
   juego.reiniciarPartida();
 });
 
