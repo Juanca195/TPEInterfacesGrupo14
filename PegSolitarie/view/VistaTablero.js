@@ -226,7 +226,8 @@ export class VistaTablero {
     const mensajes = {
       GANASTE: "¡Ganaste!",
       GANASTE_PERFECTO: "¡Ganaste perfecto!",
-      PERDISTE: "No quedan movimientos posibles"
+      PERDISTE: "No quedan movimientos posibles",
+      TIMEOUT: "Se acabó el tiempo"
     };
 
     const mensaje = mensajes[estadoDelJuego];

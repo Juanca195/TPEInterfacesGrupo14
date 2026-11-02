@@ -61,6 +61,9 @@ export class Juego {
     this.tablero.inicializar();
     this.estadoDelJuego = "EN_PARTIDA";
 
+    this.vistaTemporizador.actualizar(this.temporizador.segundosRestantes);
+    this.temporizador.iniciar();
+
     this.vistaTablero.dibujarTableroCompleto(
       this.tablero,
       this.fichaElegida,
@@ -121,12 +124,8 @@ export class Juego {
     this.posicionActualMouseX = xTablero;
     this.posicionActualMouseY = yTablero;
     this.movimientosPosiblesActuales =
-    this.tablero.obtenerMovimientosPosiblesDesde(fila, columna);
-    
-    console.log({
-      origen: { fila, columna },
-      movimientos: this.movimientosPosiblesActuales
-    });
+      this.tablero.obtenerMovimientosPosiblesDesde(fila, columna);
+
 
     this.vistaTablero.dibujarTableroCompleto(
       this.tablero,
@@ -150,31 +149,31 @@ export class Juego {
       return;
     }
 
-    
+
     const canvas = this.vistaTablero.canvas;
     const rect = canvas.getBoundingClientRect();
-    
+
     // Ajustamos la posición del mouse al tamaño interno del canvas.
     const xCanvas = posXActualMouse * (canvas.width / rect.width);
     const yCanvas = posYActualMouse * (canvas.height / rect.height);
-    
+
     const anchoTablero =
-    this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
+      this.tablero.matriz[0].length * this.vistaTablero.anchoCelda;
     const altoTablero =
-    this.tablero.matriz.length * this.vistaTablero.altoCelda;
-    
+      this.tablero.matriz.length * this.vistaTablero.altoCelda;
+
     // Quitamos el espacio que se agregó al centrar el tablero.
     const desplazamientoX = (canvas.width - anchoTablero) / 2;
     const desplazamientoY = (canvas.height - altoTablero) / 2;
-    
+
     // Guardamos la posición del mouse relativa al tablero.
     this.posicionActualMouseX = xCanvas - desplazamientoX;
     this.posicionActualMouseY = yCanvas - desplazamientoY;
-    
+
     // La vista usa estas coordenadas para dibujar la ficha debajo del mouse.
     this.pozoEnArrastre.x = this.posicionActualMouseX;
     this.pozoEnArrastre.y = this.posicionActualMouseY;
-    
+
     // Redibujamos el tablero y las pistas de movimiento.
     this.vistaTablero.dibujarTableroCompleto(
       this.tablero,
@@ -185,9 +184,9 @@ export class Juego {
       performance.now()
     );
 
-    
+
   }
-  
+
   manejarMouseUp(posXSoltar, posYSoltar) {
     // Si no había una ficha en arrastre, no hay movimiento que procesar.
     if (!this.estaArrastrando || !this.pozoEnArrastre) {
@@ -211,6 +210,9 @@ export class Juego {
     const desplazamientoY = (canvas.height - altoTablero) / 2;
     const xTablero = xCanvas - desplazamientoX;
     const yTablero = yCanvas - desplazamientoY;
+
+    // Me permite controlar si se realizo un movimiento valido o no, para verificar si el juego termino
+    let movimientoRealizado = false;
 
     // Si se soltó fuera de los límites de la grilla, no aplicamos el movimiento.
     if (
@@ -238,14 +240,10 @@ export class Juego {
           columnaDestino
         )
       ) {
-        this.tablero.moverFicha(
-          filaOrigen,
-          columnaOrigen,
-          filaDestino,
-          columnaDestino
-        );
+        this.tablero.moverFicha(filaOrigen, columnaOrigen, filaDestino, columnaDestino);
+        movimientoRealizado = true; // Hubo movimiento valido.
       }
-      this.verificarFinDeJuego();
+
     }
 
     // Limpiamos el estado del arrastre, tanto si el movimiento fue válido como si no.
@@ -260,7 +258,14 @@ export class Juego {
       null,
       null
     );
+
+    if (movimientoRealizado) { // Avisamos si no hay más movimientos posibles, para que el juego termine.
+      this.verificarFinDeJuego();
+    }
+
   }
+
+
   verificarFinDeJuego() {
     // Consulta tablero.obtenerEstadoDelJuego()
     // Si no es "EN_JUEGO": detiene el temporizador,
@@ -271,7 +276,7 @@ export class Juego {
       return;
     }
     this.estadoDelJuego = "FINALIZADO";
-    this.temporizador.delete();
+    this.temporizador.detener();
     this.vistaTablero.mostrarMensajeFinDeJuego(estado);
 
   }
@@ -291,7 +296,7 @@ export class Juego {
 
   // Bucle de animación para los hints de movimientos posibles
   // Se le pasa el timestamp que da requestAnimationFrame y se llama asi misma mientras se este arrastrando una ficha y haya movimientos posibles
-   bucleDeAnimacion(timestamp) {
+  bucleDeAnimacion(timestamp) {
     if (!this.estaArrastrando || this.movimientosPosiblesActuales.length === 0) {
       return;
     }

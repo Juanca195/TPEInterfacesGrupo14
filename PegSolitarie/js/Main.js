@@ -10,7 +10,7 @@ import { Juego } from "../controller/JuegoController.js";
 // 1. Referencias a elementos del HTML
 // ===================================================
 const elementoCanvas = document.getElementById("canvas");
-const elementoContenedorMenu = document.getElementById("contenedorMenu");
+const elementoContenedorMenu = document.getElementById("selectorFichas");
 const elementoTemporizador = document.getElementById("temporizador");
 
 
@@ -39,7 +39,7 @@ const DURACION_DEL_JUEGO_EN_SEGUNDOS = 300; // 5 minutos, por ejemplo
 // 5. Instanciar el Model
 // ===================================================
 const tablero = new Tablero();
-const temporizador = new Temporizador(elementoTemporizador);
+const temporizador = new Temporizador(DURACION_DEL_JUEGO_EN_SEGUNDOS);
 
 
 // ===================================================
