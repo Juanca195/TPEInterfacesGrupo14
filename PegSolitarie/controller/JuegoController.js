@@ -310,9 +310,13 @@ export class Juego {
   }
 
   alAgotarseElTiempo() {
-    // Callback que le pasamos al Temporizador:
-    // termina el juego por tiempo agotado, sin importar
-    // si había movimientos disponibles o no
+     if (this.estadoDelJuego !== "EN_PARTIDA") {
+      return;
+      }
+
+      this.estadoDelJuego = "FINALIZADO";
+      this.temporizador.detener();
+      this.vistaTablero.mostrarMensajeFinDeJuego("TIMEOUT");
   }
 
   reiniciarPartida() {
