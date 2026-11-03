@@ -63,7 +63,7 @@ export class VistaTablero {
       this.ctx.fillStyle = "#392719";
       this.ctx.fill();
 
-      this.ctx.strokeStyle = "#5c3b24";
+      this.ctx.strokeStyle = "#000000";
       this.ctx.stroke();
     }
   }
@@ -227,7 +227,8 @@ export class VistaTablero {
       GANASTE: "¡Ganaste!",
       GANASTE_PERFECTO: "¡Ganaste perfecto!",
       PERDISTE: "No quedan movimientos posibles",
-      TIMEOUT: "Se acabó el tiempo"
+      TIMEOUT: "Se acabó el tiempo",
+      SELECCION_DE_FICHA: "Seleccioná una ficha para comenzar el juego.",
     };
 
     const mensaje = mensajes[estadoDelJuego];
@@ -247,4 +248,6 @@ export class VistaTablero {
     this.ctx.fillText(mensaje, this.canvas.width / 2, this.canvas.height / 2);
     this.ctx.restore();
   }
+
+ 
 }

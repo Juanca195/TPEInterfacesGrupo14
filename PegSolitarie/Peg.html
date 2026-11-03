@@ -6,52 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PegSolitarie</title>
     <link rel="stylesheet" href="./css/Peg.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
-
     <main class="peg-solitaire">
-        <canvas id="canvas" width="700" height="600"></canvas>
-
-        <aside class="panel-lateral">
-            <section class="pantallaSeleccion" id="pantallaSeleccion">
-                <h2>Elegí una ficha</h2>
-                <div id="selectorFichas"></div>
+        <div class="zona-juego">
+            <section class="area-tablero">
+                <div class="barra-superior">
+                    
+                    <section class="controles-juego" id="controlesJuego">
+                        <div id="temporizador"></div>
+                        <div class="acciones-juego">
+                            <button id="botonReiniciar" type="button">Reiniciar</button>
+                            <button id="botonCambiarFicha" type="button">Cambiar ficha</button>
+                        </div>
+                    </section>
+                </div>
+                
+                <canvas id="canvas" width="700" height="600"></canvas>
             </section>
+            
+            <aside class="panel-lateral">
+                <section id="pantallaSeleccion">
+                    <h2>Seleccionar ficha</h2>
+                    <p>Selecciona una ficha para comenzar el juego.</p>
+                    <div id="selectorFichas"></div>
+                </section>
 
-            <section class="controlesJuego" id="controlesJuego" hidden>
-                <div id="temporizador"></div>
-                <button id="botonReiniciar" type="button">Reiniciar</button>
-                <button id="botonCambiarFicha" type="button">Cambiar ficha</button>
-            </section>
-        </aside>
+                <section class="instrucciones" id="instrucciones">
+                    <h2>Cómo jugar</h2>
+
+                    <article class="instrucciones-paso">
+                        <h3>Saltá sobre una ficha</h3>
+                        <img src="./assets/imagen_ilustrativa_de_juego.png"
+                            alt="Una ficha salta sobre otra hacia un pozo vacío." class="instrucciones-imagen">
+                        <p>Mové una ficha en línea recta sobre otra ficha hasta un pozo vacío. La ficha saltada se
+                            retira del
+                            tablero.</p>
+                    </article>
+
+                    <article class="instrucciones-paso">
+                        <h3>Intentá dejar una sola ficha</h3>
+                        <img src="./assets/ejemplo_ganador.png" alt="Tablero con una sola ficha restante."
+                            class="instrucciones-imagen">
+                        <p>Seguí haciendo movimientos válidos. El objetivo es terminar con una sola ficha en el tablero.
+                        </p>
+                    </article>
+                </section>
+
+            </aside>
+        </div>
+        </div>
     </main>
-
-    <!-- Las instrucciones son estaticas, vistaMenu se encarga 
- de seleccionar las fichas, mostrar temporizador y acciones de juego  -->
-
-    <div id="contenedorMenu">
-        <div id="selectorFichas"></div>
-
-        <section class="instrucciones">
-            <h2>Cómo jugar</h2>
-
-            <article class="instrucciones-paso">
-                <h3>Saltá sobre una ficha</h3>
-                <img src="./assets/instrucciones/salto.svg" alt="Una ficha salta sobre otra hacia un pozo vacío."
-                    class="instrucciones-imagen">
-                <p>Mové una ficha en línea recta sobre otra ficha hasta un pozo vacío. La ficha saltada se retira del
-                    tablero.</p>
-            </article>
-
-            <article class="instrucciones-paso">
-                <h3>Intentá dejar una sola ficha</h3>
-                <img src="./assets/instrucciones/objetivo.svg" alt="Tablero con una sola ficha restante."
-                    class="instrucciones-imagen">
-                <p>Seguí haciendo movimientos válidos. El objetivo es terminar con una sola ficha en el tablero.</p>
-            </article>
-        </section>
-    </div>
 
     <script type="module" src="./js/Main.js"></script>
 </body>

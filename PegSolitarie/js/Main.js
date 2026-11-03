@@ -14,6 +14,9 @@ const elementoContenedorMenu = document.getElementById("selectorFichas");
 const elementoTemporizador = document.getElementById("temporizador");
 const elementoPantallaSeleccion = document.getElementById("pantallaSeleccion");
 const elementoControlesJuego = document.getElementById("controlesJuego");
+const elementoInstrucciones = document.getElementById("instrucciones");
+
+
 // 2. Definir las fichas disponibles (temática DBZ)
 // Cada una es una instancia de Ficha, con nombre + ruta de imagen
 
@@ -46,7 +49,11 @@ const temporizador = new Temporizador(DURACION_DEL_JUEGO_EN_SEGUNDOS);
 // 6. Instanciar la View
 // ===================================================
 const vistaTablero = new VistaTablero(elementoCanvas, ANCHO_CELDA, ALTO_CELDA, imagenFondoTablero);
-const vistaMenu = new VistaMenu(elementoContenedorMenu, listaDeFichasDisponibles,elementoPantallaSeleccion,elementoControlesJuego);
+const vistaMenu = new VistaMenu(elementoContenedorMenu,
+  listaDeFichasDisponibles,
+  elementoPantallaSeleccion,
+  elementoControlesJuego,
+  elementoInstrucciones);
 const vistaTemporizador = new VistaTemporizador(elementoTemporizador);
 
 // ===================================================

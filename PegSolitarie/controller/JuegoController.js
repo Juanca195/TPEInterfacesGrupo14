@@ -25,12 +25,16 @@ export class Juego {
   iniciar() {
     this.estadoDelJuego = "SELECCIONANDO_FICHA";
 
+
     this.vistaMenu.mostrarSelectorDeFicha((ficha) => {
       this.elegirFicha(ficha).catch((error) => {
         console.error("No se pudo iniciar la partida:", error);
       });
     });
 
+    this.mostrarMensajeSeleccion().catch((error) => {
+      console.error("No se pudo mostrar la selección de ficha:", error);
+    });
   }
 
   async elegirFicha(ficha) {
@@ -59,8 +63,8 @@ export class Juego {
     await Promise.all([ficha.cargarImagen(), fondoCargado]);
 
     // Para mostrar que gano perfectamente
-    //this.tablero.prepararVictoriaPerfecta();
-    this.tablero.inicializar();    
+    //  this.tablero.prepararVictoriaPerfecta();
+    this.tablero.inicializar();
     this.estadoDelJuego = "EN_PARTIDA";
 
     this.vistaTemporizador.actualizar(this.temporizador.segundosRestantes);
@@ -72,6 +76,28 @@ export class Juego {
       null,
       null
     );
+  }
+
+  async mostrarMensajeSeleccion(SELECCION_DE_FICHA) {
+    const imagenFondo = this.vistaTablero.imagenFondo;
+
+    if (!imagenFondo.complete) {
+      await new Promise((resolve, reject) => {
+        imagenFondo.addEventListener("load", resolve, { once: true });
+        imagenFondo.addEventListener(
+          "error",
+          () => reject(new Error("No se pudo cargar la imagen de fondo.")),
+          { once: true }
+        );
+      });
+    }
+
+    if (imagenFondo.naturalWidth === 0) {
+      throw new Error("No se pudo cargar la imagen de fondo.");
+    }
+
+    this.vistaTablero.dibujarFondo();
+    this.vistaTablero.mostrarMensajeFinDeJuego("SELECCION_DE_FICHA");
   }
 
   manejarMouseDown(posXClic, posYClic) {
@@ -303,6 +329,10 @@ export class Juego {
       this.elegirFicha(ficha).catch((error) => {
         console.error("No se pudo iniciar la partida:", error);
       });
+    });
+
+    this.mostrarMensajeSeleccion().catch((error) => {
+      console.error("No se pudo mostrar la selección de ficha:", error);
     });
   }
 

@@ -1,26 +1,244 @@
-.peg-solitaire {
-  display: grid;
-  grid-template-columns: 700px 240px;
-  gap: 20px;
-  width: max-content;
-  margin: 24px auto;
-  padding: 16px;
-  background: #0d1e43;
-  color: white;
-}
-
-.peg-solitaire [hidden] {
-  display: none !important;
+* {
+  box-sizing: border-box;
+  font-family: "Exo 2", sans-serif;
 }
 
 #canvas {
-  display: block;
   width: 700px;
   height: 600px;
+  align-self: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 2px solid #000000;
 }
 
-.panel-control {
+
+.peg-solitaire {
+  width: max-content;
+  margin: 24px auto;
+  color: white;
+
+}
+
+.zona-juego {
+  display: grid;
+  grid-template-columns: 700px 250px;
+  gap: 16px;
+  align-items: start;
+  width: max-content;
+  padding: 16px;
+  background: #ff7b00;
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+}
+
+.area-tablero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.area-tablero::after {
+  content: "";
+  height: 64px;
+  flex: 0 0 64px;
+}
+
+.barra-superior {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.panel-lateral {
+  position: static;
+  width: 250px;
+  min-height: 100%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  text-align: left;
+  background: #723c09;
+  border-radius: 8px;
+}
+
+
+.instrucciones-imagen {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 8px;
+}
+
+#selectorFichas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.opcion-ficha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #d99a54;
+  border-radius: 12px;
+  background: #8b5a2b;
+  color: white;
+  font: 600 1rem "Exo 2", sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease,
+    border-color 160ms ease;
+}
+
+.opcion-ficha:hover {
+  background: #a56a32;
+  border-color: #ffd27a;
+  transform: translateY(-2px);
+}
+
+.opcion-ficha:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.opcion-ficha img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.controles-juego {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #d99a54;
+  border-radius: 12px;
+  background: #613308;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease,
+    visibility 0s linear 300ms;
+}
+
+.controles-juego.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease,
+    visibility 0s;
+}
+
+#temporizador {
+  margin-bottom: 12px;
+  color: #ffe0a3;
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.acciones-juego {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acciones-juego button {
+  flex: 1 1 90px;
+  padding: 10px;
+  border: 2px solid #d99a54;
+  border-radius: 10px;
+  background: #8b5a2b;
+  color: white;
+  font: 600 1rem "Exo 2", sans-serif;
+  cursor: pointer;
+}
+
+.acciones-juego button:hover {
+  background: #a56a32;
+  border-color: #ffd27a;
+}
+
+@media (max-width: 800px) {
+  .peg-solitaire {
+    width: 100%;
+    margin: 12px auto;
+    padding: 0 10px;
+  }
+
+  .zona-juego {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .area-tablero {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #canvas {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    aspect-ratio: 7 / 6;
+    justify-self: center;
+  }
+
+  .barra-superior {
+    width: 100%;
+  }
+
+  .panel-lateral {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .instrucciones-imagen {
+    max-width: 100%;
+  }
+
+  .controles-juego {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .zona-juego {
+    padding: 8px;
+    border-radius: 16px;
+  }
+
+  .panel-lateral {
+    padding: 12px;
+  }
+
+  .acciones-juego {
+    width: 100%;
+  }
+
+  .acciones-juego button {
+    flex: 1 1 100%;
+  }
+
+  .opcion-ficha {
+    min-height: 64px;
+  }
 }

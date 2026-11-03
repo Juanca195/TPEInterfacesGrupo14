@@ -1,15 +1,21 @@
 export class VistaMenu {
-  constructor(contenedorHTML, listaDeFichasDisponibles, pantallaSeleccion, controlesJuego) {
+  constructor( contenedorHTML,
+  listaDeFichasDisponibles,
+  pantallaSeleccion,
+  controlesJuego,
+  instrucciones) {
     this.contenedorHTML = contenedorHTML;
     this.listaDeFichasDisponibles = listaDeFichasDisponibles; // varios tipos de ficha (req. 9)
     this.pantallaSeleccion = pantallaSeleccion;
     this.controlesJuego = controlesJuego;
+    this.instrucciones = instrucciones;
   }
 
 
   mostrarSelectorDeFicha(alElegirFicha) {
     this.pantallaSeleccion.hidden = false;
-    this.controlesJuego.hidden = true;
+    this.controlesJuego.classList.remove("visible");
+    this.instrucciones.hidden = true;
     //limpia el contenedor pos si llama mas de una vez 
     this.contenedorHTML.replaceChildren();
 
@@ -23,7 +29,7 @@ export class VistaMenu {
       const imagen = document.createElement("img");
       imagen.src = ficha.rutaImagen;
       imagen.alt = "";
-      imagen.classList.add("opciion-ficha");
+      imagen.classList.add("opcion-ficha");
 
       const nombre = document.createElement("samp");
       nombre.textContent = ficha.nombreFicha;
@@ -41,7 +47,8 @@ export class VistaMenu {
 
   ocultar() {
     this.pantallaSeleccion.hidden = true;
-    this.controlesJuego.hidden = false;
+    this.controlesJuego.classList.add("visible");
+    this.instrucciones.hidden = false;
   }
 
 }
