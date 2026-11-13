@@ -14,10 +14,23 @@ export class Tablero {
         // direcciones a las cuales puedo ir
         // cada una representa [desplazamientoDeFila, desplazamientoDeCol]
         this.movimientos = [
-            [-2, 0], //atras
-            [2, 0], //adelante
-            [0, -2], // abajo
-            [0, 2]  // arriba
+            // Las distancias de 2 permiten saltar una ficha; las de 3, dos fichas consecutivas.
+            [-2, -2], // Permite saltar una ficha en diagonal hacia arriba y a la izquierda.
+            [-2, 2], // Permite saltar una ficha en diagonal hacia arriba y a la derecha.
+            [2, -2], // Permite saltar una ficha en diagonal hacia abajo y a la izquierda.
+            [2, 2], // Permite saltar una ficha en diagonal hacia abajo y a la derecha.
+            [-2, 0], // Permite saltar una ficha hacia arriba.
+            [2, 0], // Permite saltar una ficha hacia abajo.
+            [0, -2], // Permite saltar una ficha hacia la izquierda.
+            [0, 2], // Permite saltar una ficha hacia la derecha.
+            [-3, -3], // Permite saltar dos fichas en diagonal hacia arriba y a la izquierda.
+            [-3, 0], // Permite saltar dos fichas hacia arriba.
+            [-3, 3], // Permite saltar dos fichas en diagonal hacia arriba y a la derecha.
+            [0, -3], // Permite saltar dos fichas hacia la izquierda.
+            [0, 3], // Permite saltar dos fichas hacia la derecha.
+            [3, -3], // Permite saltar dos fichas en diagonal hacia abajo y a la izquierda.
+            [3, 0], // Permite saltar dos fichas hacia abajo.
+            [3, 3] // Permite saltar dos fichas en diagonal hacia abajo y a la derecha.
         ]
     }
 
@@ -57,46 +70,58 @@ export class Tablero {
     }
 
     esMovimientoValido(filaOrigen, colOrigen, filaDestino, colDestino) {
-        // El origen debe existir y ser una ficha, de lo contrario es mov invalido
-        if (this.obtenerEstadoPozo(filaOrigen, colOrigen) !== 1)
+        // El origen debe contener una ficha para que pueda comenzar el salto.
+        if (this.obtenerEstadoPozo(filaOrigen, colOrigen) !== 1) {
             return false;
+        }
 
-
-
-        // El destino debe estar vacio, de lo contrario es mov invalido
-        if (this.obtenerEstadoPozo(filaDestino, colDestino) != 2)
+        // El destino debe ser un pozo vacío.
+        if (this.obtenerEstadoPozo(filaDestino, colDestino) !== 2) {
             return false;
+        }
 
-
-        // Calcula el salto en vertical
+        // Calcula cuántas filas separan el origen del destino.
         const diferenciaFila = filaOrigen - filaDestino;
-        // Calcula el salto en horizontal
+        // Calcula cuántas columnas separan el origen del destino.
         const diferenciaColumna = colOrigen - colDestino;
 
-        // Math.abs nos da el valor positivo 
+        // Obtiene la distancia vertical sin importar la dirección del movimiento.
         const distanciaFila = Math.abs(diferenciaFila);
+        // Obtiene la distancia horizontal sin importar la dirección del movimiento.
         const distanciaColumna = Math.abs(diferenciaColumna);
 
-        // Comprobamos que el salto sea extrictamente 2 posiciones hacia cualquiera de los lados
-        // Ej: distanciaColumna = 1 y distanciaFila = 0 (es decir que me movi 1 solo lugar hacia la derecha)
-        // saltoHorizontal = distanciaColumna === 2 -> false && distanciaFila === 0 -> true 
-        // AND nos restringe a que ambos tengan el mismo valor de verdad.
-        // Cuando llegue a if(!saltoHorizontal || !saltoVertical) como saltoHorizontal dio false, el movimiento sera invalido
-        // OR necesita que al menos un valor se cumpla, y como saltoHorizontal = false -> !saltoHorizontal se cumple.
-        const saltoHorizontal = distanciaColumna === 2 && distanciaFila === 0;
-        const saltoVertical = distanciaFila === 2 && distanciaColumna === 0;
+        // Usa la distancia mayor como cantidad de pasos del salto.
+        const distanciaSalto = Math.max(distanciaFila, distanciaColumna);
+        // Solo permite saltos de 2 o 3 casillas: sobre una ficha o sobre dos.
+        const distanciaPermitida = distanciaSalto === 2 || distanciaSalto === 3;
+        // El movimiento debe ser horizontal, vertical o diagonal, sin cambiar de línea.
+        const movimientoEnLinea = distanciaFila === 0 || // Comprueba un salto horizontal.
+            distanciaColumna === 0 || // Comprueba un salto vertical.
+            distanciaFila === distanciaColumna; // Comprueba un salto diagonal.
 
-        if (!saltoHorizontal && !saltoVertical)
+        // Rechaza distancias y trayectorias que no correspondan a un salto recto permitido.
+        if (!distanciaPermitida || !movimientoEnLinea) {
             return false;
+        }
 
-        // Calculamos la ubicacion de la ficha intermedia (esta en la mitad del recorrido)
-        const fichaIntermediaFila = (filaOrigen + filaDestino) / 2;
-        const fichaIntermediaColumna = (colOrigen + colDestino) / 2;
+        // Divide el desplazamiento para avanzar una casilla por cada paso del salto.
+        const pasoFila = (filaDestino - filaOrigen) / distanciaSalto;
+        // Calcula el avance horizontal de cada paso del salto.
+        const pasoColumna = (colDestino - colOrigen) / distanciaSalto;
 
-        // Comprobamos que tiene que haber una ficha existente de por medio
-        if (this.obtenerEstadoPozo(fichaIntermediaFila, fichaIntermediaColumna) != 1)
-            return false;
+        // Revisa cada pozo entre el origen y el destino.
+        for (let paso = 1; paso < distanciaSalto; paso++) {
+            // Calcula la fila de la ficha intermedia actual.
+            const filaIntermedia = filaOrigen + pasoFila * paso;
+            // Calcula la columna de la ficha intermedia actual.
+            const columnaIntermedia = colOrigen + pasoColumna * paso;
+            // Cada pozo intermedio debe tener una ficha para poder ser saltado.
+            if (this.obtenerEstadoPozo(filaIntermedia, columnaIntermedia) !== 1) {
+                return false;
+            }
+        }
 
+        // El movimiento es válido si el destino está vacío y todos los intermedios tienen fichas.
         return true;
     }
 
@@ -140,16 +165,28 @@ export class Tablero {
         const difFila = filaDestino - filaOrigen;
         const difColumna = colDestino - colOrigen;
 
-        //Ahora calculo la fila que se encuentra al medio y la columna
-        const filaIntermedia = filaOrigen + difFila / 2;
-        const colIntermedia = colOrigen + difColumna / 2;
+        // Calcula la cantidad de casillas que recorre la ficha.
+        // Calcula cuántas casillas tiene el recorrido recto.
+        const distanciaSalto = Math.max(Math.abs(difFila), Math.abs(difColumna));
+        // Calcula el avance vertical de cada paso del recorrido.
+        const pasoFila = difFila / distanciaSalto;
+        // Calcula el avance horizontal de cada paso del recorrido.
+        const pasoColumna = difColumna / distanciaSalto;
 
         //acomodamos para que se pueda ver el movimento de la fila, 
         //en la primera queda vacio, ya que se movio la ficha
-        //en la segunda marca vacio ya que para llegar a destino tiene que ser vacio
+        // Vacía las casillas intermedias, retirando una o dos fichas según el salto.
         //en la ultima colocamos la fila movida
         this.matriz[filaOrigen][colOrigen] = 2;
-        this.matriz[filaIntermedia][colIntermedia] = 2;
+        // Recorre los pozos intermedios para retirar todas las fichas saltadas.
+        for (let paso = 1; paso < distanciaSalto; paso++) {
+            // Calcula la fila de la ficha intermedia actual.
+            const filaIntermedia = filaOrigen + pasoFila * paso;
+            // Calcula la columna de la ficha intermedia actual.
+            const columnaIntermedia = colOrigen + pasoColumna * paso;
+            // Vacía el pozo intermedio y retira la ficha que estaba allí.
+            this.matriz[filaIntermedia][columnaIntermedia] = 2;
+        }
         this.matriz[filaDestino][colDestino] = 1;
 
     }

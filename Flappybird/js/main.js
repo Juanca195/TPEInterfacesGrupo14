@@ -1,0 +1,1 @@
+// → punto de entrada: crea Juego y lo inicia
