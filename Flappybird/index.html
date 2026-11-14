@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#87ceeb">
+  <title>Goku Bird</title>
+  <!-- Carga desde la carpeta css los estilos que definen la presentación. -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="contenedor-juego">
+    <!-- El título presenta el personaje usado en esta versión del juego. -->
+    <h1>Goku Bird</h1>
+
+    <!-- JavaScript actualiza este texto cada vez que cambia el puntaje. -->
+    <p class="marcador" id="marcador" aria-live="polite">Puntaje: 0</p>
+
+    <!-- Este marco mantiene juntos el área de dibujo y los mensajes del juego. -->
+    <div class="marco-canvas">
+      <!-- El canvas es donde JavaScript dibuja el fondo, a Goku y los obstáculos. -->
+      <canvas
+        id="lienzo-juego"
+        width="480"
+        height="640"
+        aria-label="Juego Goku Bird. Evitá los obstáculos para sumar puntos."
+        role="img"
+      ></canvas>
+
+      <!-- Esta pantalla se muestra al entrar y al terminar una partida. -->
+      <section class="pantalla" id="pantalla-mensaje" aria-labelledby="titulo-mensaje">
+        <div class="tarjeta">
+          <h2 id="titulo-mensaje">¡Listo para jugar!</h2>
+          <p id="texto-mensaje">Ayudá a Goku a pasar entre los obstáculos.</p>
+          <button id="boton-inicio" type="button">Empezar</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Se recuerdan los controles que se pueden usar durante la partida. -->
+    <p class="ayuda">Clic, toque o barra espaciadora para volar. Evitá los obstáculos.</p>
+  </main>
+
+  <!-- Carga la lógica del juego después de que existan sus elementos HTML. -->
+  <script src="js/main.js"></script>
+</body>
+</html>
