@@ -8,11 +8,12 @@
 
 /* Centra el juego y deja espacio alrededor en pantallas pequeñas. */
 body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  display: grid;
   place-items: center;
-  padding: 20px;
   box-sizing: border-box;
 }
 
