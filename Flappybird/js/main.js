@@ -29,7 +29,8 @@ const controlador = new Controlador(
   juego,
   renderizador,
   interfaz,
-  canvas
+  canvas,
+  obtenerElemento("#jugador")
 );
 
 // Inicia el controlador, que conecta los eventos y dibuja la pantalla inicial.

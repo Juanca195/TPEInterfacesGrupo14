@@ -1,14 +1,28 @@
 /**
  * Coordina la entrada del usuario, el ciclo de animación y las otras capas.
- * Recibe eventos y delega las reglas al juego, el dibujo al renderizador
- * y los mensajes a la interfaz.
+ * Recibe eventos y delega las reglas al juego, el escenario al renderizador,
+ * las animaciones del avatar al HTML/CSS y los mensajes a la interfaz.
  */
 export class Controlador {
-  constructor(juego, renderizador, interfaz, canvas) {
+  constructor(juego, renderizador, interfaz, canvas, jugadorElemento) {
     this.juego = juego;
     this.renderizador = renderizador;
     this.interfaz = interfaz;
     this.canvas = canvas;
+    this.jugadorElemento = jugadorElemento;
+    // Guarda las dos capas que se alternan para fundir las poses del personaje.
+    this.capasSprite = Array.from(
+      jugadorElemento.querySelectorAll(".jugador__sprite")
+    );
+
+    // Falla claramente si el HTML no contiene las dos capas que necesita el fundido.
+    if (this.capasSprite.length !== 2) {
+      throw new Error("El jugador necesita exactamente dos capas de spritesheet.");
+    }
+
+    // Registra el cuadro actual y qué capa está mostrando ese cuadro.
+    this.cuadroActual = 0;
+    this.capaVisible = 0;
     this.ultimoTiempo = 0;
     this.ultimoPuntaje = 0;
   }
@@ -24,7 +38,14 @@ export class Controlador {
     document.addEventListener("keydown", (evento) => {
       this.manejarTecla(evento);
     });
+    this.jugadorElemento.addEventListener("animationend", (evento) => {
+      this.manejarFinDeAnimacion(evento);
+    });
 
+    // Coloca al avatar en su posición inicial antes de empezar la partida.
+    this.actualizarPosicionJugador(this.juego.obtenerEstado());
+
+    // Dibuja el escenario inicial; Goku se representa como una capa HTML aparte.
     this.renderizador.dibujar(this.juego.obtenerEstado());
   }
 
@@ -37,8 +58,22 @@ export class Controlador {
     this.juego.iniciar();
     this.ultimoTiempo = 0;
     this.ultimoPuntaje = 0;
+    this.jugadorElemento.classList.remove("choque", "impulso");
+    this.jugadorElemento.classList.add("volando");
+
+    // Reinicia el cuadro y deja visible solo la primera capa al comenzar de nuevo.
+    this.cuadroActual = 0;
+    this.capaVisible = 0;
+    this.capasSprite.forEach((capa, indice) => {
+      capa.style.backgroundPosition = "0% 50%";
+      capa.classList.toggle("visible", indice === this.capaVisible);
+    });
+
     this.interfaz.actualizarPuntaje(0);
     this.interfaz.ocultarMensaje();
+
+    // Recoloca al jugador y actualiza la escala para el tamaño visible del Canvas.
+    this.actualizarPosicionJugador(this.juego.obtenerEstado());
     requestAnimationFrame((tiempo) => this.actualizarCuadro(tiempo));
   }
 
@@ -53,13 +88,17 @@ export class Controlador {
     this.juego.actualizar(deltaTime);
 
     const estadoActual = this.juego.obtenerEstado();
+    this.actualizarPosicionJugador(estadoActual);
+
     if (estadoActual.puntaje !== this.ultimoPuntaje) {
       this.ultimoPuntaje = estadoActual.puntaje;
       this.interfaz.actualizarPuntaje(estadoActual.puntaje);
     }
 
     if (estadoAnterior === "jugando" && estadoActual.estado === "terminado") {
-      this.interfaz.mostrarFinDePartida(estadoActual.puntaje);
+      // Detiene el aleteo y deja que la animación de choque termine primero.
+      this.jugadorElemento.classList.remove("volando", "impulso");
+      this.jugadorElemento.classList.add("choque");
     }
 
     this.renderizador.dibujar(estadoActual);
@@ -74,7 +113,7 @@ export class Controlador {
   // Convierte un clic o toque en el Canvas en un salto del jugador.
   manejarPulsacionDelCanvas(evento) {
     evento.preventDefault();
-    this.juego.hacerSaltar();
+    this.aplicarImpulso();
   }
 
   // Convierte la barra espaciadora o la flecha hacia arriba en un salto.
@@ -85,7 +124,60 @@ export class Controlador {
 
     evento.preventDefault();
     if (!evento.repeat) {
-      this.juego.hacerSaltar();
+      this.aplicarImpulso();
+    }
+  }
+
+  // Aplica el salto del modelo y reinicia la animación CSS del impulso.
+  aplicarImpulso() {
+    if (this.juego.estado !== "jugando") {
+      return;
+    }
+
+    this.juego.hacerSaltar();
+
+    // Avanza una pose y vuelve a la primera después de la sexta.
+    this.cuadroActual = (this.cuadroActual + 1) % 6;
+
+    // Calcula la posición horizontal de la pose dentro de la fila de seis cuadros.
+    const posicionX = (this.cuadroActual / 5) * 100;
+
+    // Actualiza la capa que está oculta antes de hacerla visible.
+    const capaAnterior = this.capasSprite[this.capaVisible];
+    const siguienteCapaIndice = 1 - this.capaVisible;
+    const siguienteCapa = this.capasSprite[siguienteCapaIndice];
+    siguienteCapa.style.backgroundPosition = `${posicionX}% 50%`;
+    siguienteCapa.classList.add("visible");
+    capaAnterior.classList.remove("visible");
+    this.capaVisible = siguienteCapaIndice;
+
+    // Reinicia la animación del impulso para que responda a cada toque.
+    this.jugadorElemento.classList.remove("impulso");
+    void this.jugadorElemento.offsetWidth;
+    this.jugadorElemento.classList.add("impulso");
+  }
+
+  // Sincroniza posición y tamaño del avatar con el Canvas, incluso si este escala.
+  actualizarPosicionJugador(estado) {
+    const escalaX = this.canvas.clientWidth / estado.ancho;
+    const escalaY = this.canvas.clientHeight / estado.alto;
+    const jugador = estado.jugador;
+
+    this.jugadorElemento.style.left = `${jugador.x * escalaX}px`;
+    this.jugadorElemento.style.top = `${jugador.y * escalaY}px`;
+    this.jugadorElemento.style.width = `${jugador.ancho * escalaX * 1.3}px`;
+  }
+
+  // Limpia las animaciones de impulso y muestra el fin al terminar el choque.
+  manejarFinDeAnimacion(evento) {
+    if (evento.animationName === "impulso") {
+      this.jugadorElemento.classList.remove("impulso");
+      return;
+    }
+
+    if (evento.animationName === "choque" && this.juego.estado === "terminado") {
+      this.jugadorElemento.classList.remove("choque");
+      this.interfaz.mostrarFinDePartida(this.juego.puntaje);
     }
   }
 }

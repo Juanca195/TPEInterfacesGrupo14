@@ -11,16 +11,6 @@ export class Renderizador {
       throw new Error("No se pudo crear el contexto 2D del Canvas.");
     }
 
-    // Resuelve la imagen desde la ubicación de este módulo, no desde otra página.
-    this.imagenJugador = new Image();
-    this.imagenJugador.src = new URL(
-      "../../img/GokuNube.png",
-      import.meta.url
-    ).href;
-    this.imagenJugador.addEventListener("error", () => {
-      console.error("No se pudo cargar img/goku_base_vuelo_3f.png; se usará el dibujo alternativo.");
-    });
-
     this.imagenFondo = new Image();
     this.imagenFondo.src = new URL(
       "../../img/fondoParaBird.jpg",
@@ -49,7 +39,6 @@ export class Renderizador {
     }
 
     this.dibujarSuelo(estado);
-    this.dibujarJugador(estado.jugador);
   }
 
   // por el momento es estatico, se debe modificar en 4
@@ -168,70 +157,4 @@ export class Renderizador {
     }
   }
 
-  // Dibuja el cuadro actual del spritesheet o una figura alternativa.
-  dibujarJugador(jugador) {
-    // Usa el spritesheet solo cuando la imagen terminó de cargar correctamente.
-  if (this.imagenJugador.complete && this.imagenJugador.naturalWidth > 0) {
-    //cantidad de poses en la fila del spritesheet
-    const cantidadCuadros = 6;
-    //calculamos el ancho
-    const anchoCuadro = this.imagenJugador.naturalWidth / cantidadCuadros;
-
-    // Recorta el espacio transparente arriba y abajo de las poses.
-    const inicioRecorteY = 200;
-    const altoRecorte = 330;
-
-    // Agranda el dibujo conservando la proporción del recorte.
-    const escala = 1.3;
-    const anchoDibujo = jugador.ancho * escala;
-     // Calcula el alto según la proporción del cuadro recortado.
-    const altoDibujo = anchoDibujo * (altoRecorte / anchoCuadro);
-    const x = jugador.x - anchoDibujo / 2;
-    const y = jugador.y - altoDibujo / 2;
-
-    // Dibuja una sola pose del spritesheet en la posición calculada.
-    this.contexto.drawImage(
-      this.imagenJugador,
-      jugador.cuadro * anchoCuadro,
-      inicioRecorteY,
-      anchoCuadro,
-      altoRecorte,
-      x,
-      y,
-      anchoDibujo,
-      altoDibujo
-    );
-    return;
-  }
-  // Si el spritesheet no cargó, muestra el dibujo alternativo del personaje.
-  this.dibujarJugadorAlternativo(jugador);
-  }
-
-  // Dibuja una versión simple del personaje mientras carga o si falta el sprite.
-  dibujarJugadorAlternativo(jugador) {
-    const contexto = this.contexto;
-
-    contexto.fillStyle = "#f28c28";
-    contexto.beginPath();
-    contexto.arc(jugador.x, jugador.y, jugador.ancho / 2, 0, Math.PI * 2);
-    contexto.fill();
-    contexto.strokeStyle = "#8b3e12";
-    contexto.lineWidth = 3;
-    contexto.stroke();
-
-    contexto.fillStyle = "#fff";
-    contexto.beginPath();
-    contexto.arc(jugador.x + 10, jugador.y - 7, 8, 0, Math.PI * 2);
-    contexto.fill();
-    contexto.fillStyle = "#17324d";
-    contexto.beginPath();
-    contexto.arc(jugador.x + 12, jugador.y - 7, 3, 0, Math.PI * 2);
-    contexto.fill();
-    contexto.fillStyle = "#242424";
-    contexto.beginPath();
-    contexto.moveTo(jugador.x - 12, jugador.y - 22);
-    contexto.lineTo(jugador.x - 5, jugador.y - 35);
-    contexto.lineTo(jugador.x + 1, jugador.y - 20);
-    contexto.fill();
-  }
 }
