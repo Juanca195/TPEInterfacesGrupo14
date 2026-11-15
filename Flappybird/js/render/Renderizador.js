@@ -14,11 +14,29 @@ export class Renderizador {
     // Resuelve la imagen desde la ubicación de este módulo, no desde otra página.
     this.imagenJugador = new Image();
     this.imagenJugador.src = new URL(
-      "../../img/goku_base_vuelo_3f.png",
+      "../../img/GokuNube.png",
       import.meta.url
     ).href;
     this.imagenJugador.addEventListener("error", () => {
       console.error("No se pudo cargar img/goku_base_vuelo_3f.png; se usará el dibujo alternativo.");
+    });
+
+    this.imagenFondo = new Image();
+    this.imagenFondo.src = new URL(
+      "../../img/fondoParaBird.jpg",
+      import.meta.url
+    ).href;
+
+    // Carga la roca transparente que se usará como obstáculo.
+    this.imagenObstaculo = new Image();
+    this.imagenObstaculo.src = new URL(
+      "../../img/roca_obstaculo_transparente.png",
+      import.meta.url
+    ).href;
+
+    // Informa si la imagen no se pudo cargar.
+    this.imagenObstaculo.addEventListener("error", () => {
+      console.error("No se pudo cargar roca_obstaculo_transparente.png");
     });
   }
 
@@ -34,15 +52,43 @@ export class Renderizador {
     this.dibujarJugador(estado.jugador);
   }
 
+  // por el momento es estatico, se debe modificar en 4
   // Pinta el cielo y las nubes decorativas del fondo.
   dibujarFondo(estado) {
     const contexto = this.contexto;
     contexto.fillStyle = "#87ceeb";
     contexto.fillRect(0, 0, estado.ancho, estado.alto);
 
-    this.dibujarNube(80, 110);
-    this.dibujarNube(340, 205);
-    this.dibujarNube(220, 330);
+    // this.dibujarNube(80, 110);
+    // this.dibujarNube(340, 205);
+    // this.dibujarNube(220, 330);  
+      const imagen = this.imagenFondo;
+
+      // Usa el cielo como fondo temporal mientras se carga la imagen.
+      contexto.fillStyle = "#87ceeb";
+      contexto.fillRect(0, 0, estado.ancho, estado.alto);
+
+      if (!imagen.complete || imagen.naturalWidth === 0) {
+        return;
+      }
+
+      // Escala la imagen para cubrir el canvas sin deformarla.
+      const escala = Math.max(
+        estado.ancho / imagen.naturalWidth,
+        estado.alto / imagen.naturalHeight
+      );
+      const ancho = imagen.naturalWidth * escala;
+      const alto = imagen.naturalHeight * escala;
+
+      // Centra la imagen; puede recortar un poco los bordes para llenar el canvas.
+      contexto.drawImage(
+        imagen,
+        (estado.ancho - ancho) / 2,
+        (estado.alto - alto) / 2,
+        ancho,
+        alto
+      );
+    
   }
 
   // Dibuja una nube sencilla formada por círculos superpuestos.
@@ -124,27 +170,41 @@ export class Renderizador {
 
   // Dibuja el cuadro actual del spritesheet o una figura alternativa.
   dibujarJugador(jugador) {
-    const x = jugador.x - jugador.ancho / 2;
-    const y = jugador.y - jugador.alto / 2;
+    // Usa el spritesheet solo cuando la imagen terminó de cargar correctamente.
+  if (this.imagenJugador.complete && this.imagenJugador.naturalWidth > 0) {
+    //cantidad de poses en la fila del spritesheet
+    const cantidadCuadros = 6;
+    //calculamos el ancho
+    const anchoCuadro = this.imagenJugador.naturalWidth / cantidadCuadros;
 
-    if (this.imagenJugador.complete && this.imagenJugador.naturalWidth > 0) {
-      const anchoCuadro = this.imagenJugador.naturalWidth / 3;
+    // Recorta el espacio transparente arriba y abajo de las poses.
+    const inicioRecorteY = 200;
+    const altoRecorte = 330;
 
-      this.contexto.drawImage(
-        this.imagenJugador,
-        jugador.cuadro * anchoCuadro,
-        0,
-        anchoCuadro,
-        this.imagenJugador.naturalHeight,
-        x,
-        y,
-        jugador.ancho,
-        jugador.alto
-      );
-      return;
-    }
+    // Agranda el dibujo conservando la proporción del recorte.
+    const escala = 1.3;
+    const anchoDibujo = jugador.ancho * escala;
+     // Calcula el alto según la proporción del cuadro recortado.
+    const altoDibujo = anchoDibujo * (altoRecorte / anchoCuadro);
+    const x = jugador.x - anchoDibujo / 2;
+    const y = jugador.y - altoDibujo / 2;
 
-    this.dibujarJugadorAlternativo(jugador);
+    // Dibuja una sola pose del spritesheet en la posición calculada.
+    this.contexto.drawImage(
+      this.imagenJugador,
+      jugador.cuadro * anchoCuadro,
+      inicioRecorteY,
+      anchoCuadro,
+      altoRecorte,
+      x,
+      y,
+      anchoDibujo,
+      altoDibujo
+    );
+    return;
+  }
+  // Si el spritesheet no cargó, muestra el dibujo alternativo del personaje.
+  this.dibujarJugadorAlternativo(jugador);
   }
 
   // Dibuja una versión simple del personaje mientras carga o si falta el sprite.

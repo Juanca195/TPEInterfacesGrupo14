@@ -19,7 +19,7 @@ body {
 
 /* Mantiene el título, el marcador y el canvas en una misma columna. */
 .contenedor-juego {
-  width: min(100%, 480px);
+  width: min(100%, 900px);
   text-align: center;
 }
 
@@ -55,10 +55,9 @@ canvas {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 4;
+  max-width: 100%;
   touch-action: manipulation;
 }
-
 /* Coloca los mensajes y botones encima del canvas. */
 .pantalla {
   position: absolute;

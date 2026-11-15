@@ -34,7 +34,9 @@ export class Jugador {
 
     if (this.tiempoAnimacion >= 0.12) {
       this.tiempoAnimacion = 0;
-      this.cuadro = (this.cuadro + 1) % 3;
+
+      //Definimos la cantidad en que definimos los spritesheet 
+      this.cuadro = (this.cuadro + 1) % 6;
     }
   }
 
