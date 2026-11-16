@@ -1,5 +1,5 @@
 import { Juego } from "./juego/Juego.js";
-import { Renderizador } from "./render/Renderizador.js";
+import { Vista } from "./vista/Vista.js";
 import { Controlador } from "./control/Controlador.js";
 import { Interfaz } from "./ui/Interfaz.js";
 
@@ -17,7 +17,7 @@ function obtenerElemento(selector) {
 // Reúne las dependencias del juego y las conecta sin implementar su lógica.
 const canvas = obtenerElemento("#lienzo-juego");
 const juego = new Juego(canvas.width, canvas.height);
-const renderizador = new Renderizador(canvas);
+const vista = new Vista(canvas);
 const interfaz = new Interfaz(
   obtenerElemento("#marcador"),
   obtenerElemento("#pantalla-mensaje"),
@@ -27,7 +27,7 @@ const interfaz = new Interfaz(
 );
 const controlador = new Controlador(
   juego,
-  renderizador,
+  vista,
   interfaz,
   canvas,
   obtenerElemento("#jugador")

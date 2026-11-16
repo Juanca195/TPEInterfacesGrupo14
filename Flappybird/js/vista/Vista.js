@@ -2,7 +2,7 @@
  * Dibuja en el Canvas el estado que recibe del juego.
  * Solo representa datos: no cambia posiciones ni aplica reglas de partida.
  */
-export class Renderizador {
+export class Vista {
   constructor(canvas) {
     this.canvas = canvas;
     this.contexto = canvas.getContext("2d");

@@ -1,12 +1,12 @@
 /**
  * Coordina la entrada del usuario, el ciclo de animación y las otras capas.
- * Recibe eventos y delega las reglas al juego, el escenario al renderizador,
+ * Recibe eventos y delega las reglas al juego, el escenario a la vista,
  * las animaciones del avatar al HTML/CSS y los mensajes a la interfaz.
  */
 export class Controlador {
-  constructor(juego, renderizador, interfaz, canvas, jugadorElemento) {
+  constructor(juego, vista, interfaz, canvas, jugadorElemento) {
     this.juego = juego;
-    this.renderizador = renderizador;
+    this.vista = this.vista;
     this.interfaz = interfaz;
     this.canvas = canvas;
     this.jugadorElemento = jugadorElemento;
@@ -46,7 +46,7 @@ export class Controlador {
     this.actualizarPosicionJugador(this.juego.obtenerEstado());
 
     // Dibuja el escenario inicial; Goku se representa como una capa HTML aparte.
-    this.renderizador.dibujar(this.juego.obtenerEstado());
+    this.vista.dibujar(this.juego.obtenerEstado());
   }
 
   // Inicia una partida nueva y programa su primer cuadro de animación.
@@ -101,7 +101,7 @@ export class Controlador {
       this.jugadorElemento.classList.add("choque");
     }
 
-    this.renderizador.dibujar(estadoActual);
+    this.vista.dibujar(estadoActual);
 
     if (estadoActual.estado === "jugando") {
       requestAnimationFrame((siguienteTiempo) => {
