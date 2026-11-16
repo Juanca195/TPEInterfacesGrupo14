@@ -25,9 +25,42 @@ export class Juego {
     this.puntaje = 0;
     this.desplazamientoSuelo = 0;
     this.jugador.reiniciar(this.alto / 2);
-    this.obstaculos = [
-      new Obstaculo(this.ancho + 100, this.sueloY)
-    ];
+    this.obstaculos = [];
+    this.obstaculos.push(this.crearObstaculo(this.ancho + 100));
+  }
+
+  calcularAltoHueco(puntajePrevisto = this.puntaje) {
+    // Cada 3 puntos previstos aumenta un nivel; cada nivel reduce el hueco 10 px.
+    const nivelDificultad = Math.min(Math.floor(puntajePrevisto / 3), 10);
+    // Mantiene el hueco en 75 px o más para que no se vuelva demasiado estrecho.
+    return Math.max(75, 175 - nivelDificultad * 10);
+  }
+
+  crearObstaculo(x, obstaculoAnterior = null) {
+    let centroHuecoAnterior = null;
+    let cantidadObstaculosPendientes = 0;
+
+    for (let i = 0; i < this.obstaculos.length; i++) {
+      const obstaculoActual = this.obstaculos[i];
+
+      if (obstaculoActual.pasado === false) {
+        cantidadObstaculosPendientes += 1;
+      }
+    }
+    const puntajePrevisto = this.puntaje + cantidadObstaculosPendientes;
+
+    if (obstaculoAnterior !== null) {
+      // Calcula el centro del hueco anterior para limitar el cambio de altura.
+      centroHuecoAnterior = obstaculoAnterior.huecoY + obstaculoAnterior.altoHueco / 2;
+    }
+
+    // Anticipa los puntos de los obstáculos pendientes para que el siguiente ya cambie.
+    return new Obstaculo(
+      x,
+      this.sueloY,
+      this.calcularAltoHueco(puntajePrevisto),
+      centroHuecoAnterior
+    );
   }
 
   // Aplica las reglas de movimiento, generación, puntaje y colisiones.
@@ -38,7 +71,7 @@ export class Juego {
 
     this.jugador.actualizar(deltaTime);
     this.desplazamientoSuelo =
-      (this.desplazamientoSuelo + this.velocidadObstaculos * deltaTime) % 40;
+      this.desplazamientoSuelo + this.velocidadObstaculos * deltaTime;
 
     for (const obstaculo of this.obstaculos) {
       obstaculo.actualizar(this.velocidadObstaculos, deltaTime);
@@ -47,7 +80,7 @@ export class Juego {
     // Mantiene un obstáculo nuevo en camino cuando el último ya avanzó.
     const ultimoObstaculo = this.obstaculos[this.obstaculos.length - 1];
     if (ultimoObstaculo && ultimoObstaculo.x < this.ancho - 250) {
-      this.obstaculos.push(new Obstaculo(this.ancho + 20, this.sueloY));
+      this.obstaculos.push(this.crearObstaculo(this.ancho + 20, ultimoObstaculo));
     }
 
     // Descarta los obstáculos que ya salieron de la pantalla.

@@ -17,6 +17,15 @@ export class Vista {
       import.meta.url
     ).href;
 
+    this.imagenSuelo = new Image();
+    this.imagenSuelo.addEventListener("error", () => {
+      console.error("No se pudo cargar suelo_sin_fondo.png");
+    });
+    this.imagenSuelo.src = new URL(
+      "../../img/suelo_sin_fondo.png",
+      import.meta.url
+    ).href;
+
     // Carga la roca transparente que se usará como obstáculo.
     this.imagenObstaculo = new Image();
     this.imagenObstaculo.src = new URL(
@@ -80,16 +89,6 @@ export class Vista {
     
   }
 
-  // Dibuja una nube sencilla formada por círculos superpuestos.
-  dibujarNube(x, y) {
-    const contexto = this.contexto;
-    contexto.fillStyle = "#ffffffb8";
-    contexto.beginPath();
-    contexto.arc(x, y, 22, 0, Math.PI * 2);
-    contexto.arc(x + 24, y - 10, 28, 0, Math.PI * 2);
-    contexto.arc(x + 52, y, 21, 0, Math.PI * 2);
-    contexto.fill();
-  }
 
   // Dibuja la parte superior y la inferior de un obstáculo dejando el hueco.
   dibujarObstaculo(obstaculo, sueloY) {
@@ -111,6 +110,8 @@ export class Vista {
       true
     );
   }
+
+  
 // Dibuja la roca; la parte superior va invertida para que la punta apunte al hueco.
 dibujarParteDelObstaculo(x, y, ancho, alto, esInferior) {
   const imagen = this.imagenObstaculo;
@@ -170,24 +171,68 @@ dibujarParteDelObstaculo(x, y, ancho, alto, esInferior) {
   //   );
   // }
 
-  // Dibuja el suelo y sus franjas móviles.
+  // Recorta la franja inferior y la repite sin deformarla.
   dibujarSuelo(estado) {
     const contexto = this.contexto;
     const inicioSuelo = estado.sueloY;
+    const imagen = this.imagenSuelo;
 
-    contexto.fillStyle = "#d9a441";
+    contexto.save();
+    contexto.beginPath();
+    contexto.rect(0, inicioSuelo, estado.ancho, estado.altoSuelo);
+    contexto.clip();
+
+    // Respalda las transparencias para que no queden huecos en la franja.
+    contexto.fillStyle = "#633b2e";
     contexto.fillRect(0, inicioSuelo, estado.ancho, estado.altoSuelo);
-    contexto.fillStyle = "#73bf45";
-    contexto.fillRect(0, inicioSuelo, estado.ancho, 12);
 
-    contexto.strokeStyle = "#b47d2c";
-    contexto.lineWidth = 3;
-    for (let x = -estado.desplazamientoSuelo; x < estado.ancho; x += 40) {
-      contexto.beginPath();
-      contexto.moveTo(x, inicioSuelo + 20);
-      contexto.lineTo(x + 20, inicioSuelo + estado.altoSuelo);
-      contexto.stroke();
+    if (imagen.complete && imagen.naturalWidth > 0) {
+      const inicioFuenteY = Math.round(imagen.naturalHeight * 0.75);
+      const altoFuente = imagen.naturalHeight - inicioFuenteY;
+      const altoDestino = estado.altoSuelo;
+      const anchoDestino =
+        altoDestino * (imagen.naturalWidth / altoFuente);
+      const periodo = anchoDestino * 2;
+      const desplazamiento = estado.desplazamientoSuelo % periodo;
+      let x = -desplazamiento;
+      let indiceCapa = 0;
+
+      while (x < estado.ancho) {
+        contexto.save();
+        if (Math.abs(indiceCapa % 2) === 1) {
+          contexto.translate(x + anchoDestino, 0);
+          contexto.scale(-1, 1);
+          contexto.drawImage(
+            imagen,
+            0,
+            inicioFuenteY,
+            imagen.naturalWidth,
+            altoFuente,
+            0,
+            inicioSuelo,
+            anchoDestino,
+            altoDestino
+          );
+        } else {
+          contexto.drawImage(
+            imagen,
+            0,
+            inicioFuenteY,
+            imagen.naturalWidth,
+            altoFuente,
+            x,
+            inicioSuelo,
+            anchoDestino,
+            altoDestino
+          );
+        }
+        contexto.restore();
+        x += anchoDestino;
+        indiceCapa += 1;
+      }
     }
+
+    contexto.restore();
   }
 
 }

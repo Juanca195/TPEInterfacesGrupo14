@@ -64,10 +64,18 @@ export class Controlador {
     // Reinicia el cuadro y deja visible solo la primera capa al comenzar de nuevo.
     this.cuadroActual = 0;
     this.capaVisible = 0;
-    this.capasSprite.forEach((capa, indice) => {
-      capa.style.backgroundPosition = "0% 50%";
-      capa.classList.toggle("visible", indice === this.capaVisible);
-    });
+
+    for (let indiceCapa = 0; indiceCapa < this.capasSprite.length; indiceCapa++) {
+
+      const capaSprite = this.capasSprite[indiceCapa];
+      capaSprite.style.backgroundPosition = "0% 50%";
+
+      if (indiceCapa === this.capaVisible) {
+        capaSprite.classList.add("visible");
+      } else {
+        capaSprite.classList.remove("visible");
+      }
+    }
 
     this.interfaz.actualizarPuntaje(0);
     this.interfaz.ocultarMensaje();
@@ -79,13 +87,23 @@ export class Controlador {
 
   // Actualiza la partida, sincroniza la interfaz y dibuja el siguiente cuadro.
   actualizarCuadro(tiempo) {
-    const deltaTime = this.ultimoTiempo === 0
-      ? 0
-      : Math.min((tiempo - this.ultimoTiempo) / 1000, 0.032);
+    let tiempoTranscurridoEnSegundos = 0;
+
+    if (this.ultimoTiempo !== 0) {
+      const diferenciaEnMilisegundos = tiempo - this.ultimoTiempo;
+      const diferenciaEnSegundos = diferenciaEnMilisegundos / 1000;
+
+      if (diferenciaEnSegundos > 0.032) {
+        tiempoTranscurridoEnSegundos = 0.032;
+      } else {
+        tiempoTranscurridoEnSegundos = diferenciaEnSegundos;
+      }
+    }
+
     const estadoAnterior = this.juego.estado;
 
     this.ultimoTiempo = tiempo;
-    this.juego.actualizar(deltaTime);
+    this.juego.actualizar(tiempoTranscurridoEnSegundos);
 
     const estadoActual = this.juego.obtenerEstado();
     this.actualizarPosicionJugador(estadoActual);
