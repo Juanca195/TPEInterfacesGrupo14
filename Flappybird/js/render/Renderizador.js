@@ -111,31 +111,64 @@ export class Renderizador {
       true
     );
   }
-
-  // Dibuja una sección de obstáculo con tapa y un reflejo claro.
-  dibujarParteDelObstaculo(x, y, ancho, alto, tieneTapaArriba) {
-    const contexto = this.contexto;
-    const altoTapa = 22;
-    const tapaY = tieneTapaArriba ? y : y + alto - altoTapa;
-
-    contexto.fillStyle = "#42a84a";
-    contexto.strokeStyle = "#246b31";
-    contexto.lineWidth = 4;
-    contexto.fillRect(x, y, ancho, alto);
-    contexto.strokeRect(x, y, ancho, alto);
-
-    contexto.fillStyle = "#63c65c";
-    contexto.fillRect(x - 5, tapaY, ancho + 10, altoTapa);
-    contexto.strokeRect(x - 5, tapaY, ancho + 10, altoTapa);
-
-    contexto.fillStyle = "#a3e879";
-    contexto.fillRect(
-      x + 10,
-      y + (tieneTapaArriba ? altoTapa : 0),
-      8,
-      Math.max(0, alto - altoTapa)
-    );
+// Dibuja la roca; la parte superior va invertida para que la punta apunte al hueco.
+dibujarParteDelObstaculo(x, y, ancho, alto, esInferior) {
+  const imagen = this.imagenObstaculo;
+  if (!imagen.complete || imagen.naturalWidth === 0 || alto <= 0) {
+    return;
   }
+
+  const contexto = this.contexto;
+  // Escala sin deformar y cubre todo el alto necesario.
+  const escala = Math.max(
+    ancho / imagen.naturalWidth,
+    alto / imagen.naturalHeight
+  );
+  const anchoImg = imagen.naturalWidth * escala;
+  const altoImg = imagen.naturalHeight * escala;
+  const centroX = x + ancho / 2;
+
+  contexto.save();
+  contexto.beginPath();
+  contexto.rect(centroX - anchoImg / 2, y, anchoImg, alto); // recorta lo que sobra
+  contexto.clip();
+
+  if (esInferior) {
+    contexto.drawImage(imagen, centroX - anchoImg / 2, y, anchoImg, altoImg);
+  } else {
+    contexto.translate(centroX, y + alto);
+    contexto.scale(1, -1);
+    contexto.drawImage(imagen, -anchoImg / 2, 0, anchoImg, altoImg);
+  }
+  contexto.restore();
+}
+
+
+  // Tubos verdes 
+  // // Dibuja una sección de obstáculo con tapa y un reflejo claro.
+  // dibujarParteDelObstaculo(x, y, ancho, alto, tieneTapaArriba) {
+  //   const contexto = this.contexto;
+  //   const altoTapa = 22;
+  //   const tapaY = tieneTapaArriba ? y : y + alto - altoTapa;
+
+  //   contexto.fillStyle = "#42a84a";
+  //   contexto.strokeStyle = "#246b31";
+  //   contexto.lineWidth = 4;
+  //   contexto.fillRect(x, y, ancho, alto);
+  //   contexto.strokeRect(x, y, ancho, alto);
+
+  //   contexto.fillStyle = "#63c65c";
+  //   contexto.fillRect(x - 5, tapaY, ancho + 10, altoTapa);
+  //   contexto.strokeRect(x - 5, tapaY, ancho + 10, altoTapa);
+
+  //   contexto.fillStyle = "#a3e879";
+  //   contexto.fillRect(
+  //     x + 10,
+  //     y + (tieneTapaArriba ? altoTapa : 0),
+  //     8,
+  //     Math.max(0, alto - altoTapa)
+  //   );
+  // }
 
   // Dibuja el suelo y sus franjas móviles.
   dibujarSuelo(estado) {

@@ -5,7 +5,7 @@
 export class Obstaculo {
   constructor(x, sueloY) {
     this.x = x;
-    this.ancho = 76;
+    this.ancho = 110;
     this.altoHueco = 175;
     this.huecoY = this.generarPosicionDelHueco(sueloY);
     this.pasado = false;
