@@ -6,7 +6,7 @@
 export class Controlador {
   constructor(juego, vista, interfaz, canvas, jugadorElemento) {
     this.juego = juego;
-    this.vista = this.vista;
+    this.vista = vista;
     this.interfaz = interfaz;
     this.canvas = canvas;
     this.jugadorElemento = jugadorElemento;

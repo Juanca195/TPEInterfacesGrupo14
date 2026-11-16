@@ -18,7 +18,7 @@ export class Obstaculo {
 
   // Elige una altura aleatoria que deja espacio entre el techo y el suelo.
   generarPosicionDelHueco(sueloY) {
-    const margen = 200;
+    const margen = 55;
     const minimo = margen;
     const maximo = sueloY - this.altoHueco - margen;
 
