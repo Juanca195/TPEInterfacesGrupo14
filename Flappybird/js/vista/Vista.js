@@ -37,11 +37,27 @@ export class Vista {
     this.imagenObstaculo.addEventListener("error", () => {
       console.error("No se pudo cargar roca_obstaculo_transparente.png");
     });
+    const definiciones = [
+          { archivo: "capa_cielo_completo.png",  factor: 0.10, y: 0,   alto: 150 },
+          { archivo: "montania_sin_fondo.png",       factor: 0.25, y: 260, alto: 280 },
+          // { archivo: "arbol_medio.png",  factor: 0.25, y: 200, alto:200}
+          // { archivo: "islas.png",          factor: 0.50, y: 300, alto: 220 }
+        ];
+        this.capasParallax = [];
+        for (const definicion of definiciones) {
+          const imagen = new Image();
+          imagen.src = new URL(
+            `../../img/${definicion.archivo}`,
+            import.meta.url
+          ).href;
+          this.capasParallax.push({ ...definicion, imagen });
+        }
   }
 
   // Dibuja una escena completa usando una copia del estado actual.
   dibujar(estado) {
     this.dibujarFondo(estado);
+    this.dibujarCapasParallax(estado);
 
     for (const obstaculo of estado.obstaculos) {
       this.dibujarObstaculo(obstaculo, estado.sueloY);
@@ -49,6 +65,26 @@ export class Vista {
 
     this.dibujarSuelo(estado);
   }
+
+  dibujarCapasParallax(estado) {
+    const contexto = this.contexto;
+
+    for (const capa of this.capasParallax) {
+      const imagen = capa.imagen;
+      if (!imagen.complete || imagen.naturalWidth === 0) {
+        continue;
+      }
+
+      const ancho = imagen.naturalWidth * (capa.alto / imagen.naturalHeight);
+      const desplazamiento = (estado.desplazamientoSuelo * capa.factor) % ancho;
+
+      // Redondea para evitar líneas finas entre las repeticiones.
+      for (let x = -Math.floor(desplazamiento); x < estado.ancho; x += ancho) {
+        contexto.drawImage(imagen, Math.floor(x), capa.y, ancho, capa.alto);
+      }
+    }
+  }
+
 
   // por el momento es estatico, se debe modificar en 4
   // Pinta el cielo y las nubes decorativas del fondo.
