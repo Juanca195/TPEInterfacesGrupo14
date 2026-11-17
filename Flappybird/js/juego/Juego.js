@@ -1,5 +1,6 @@
 import { Jugador } from "./Jugador.js";
 import { Obstaculo } from "./Obstaculo.js";
+import { EsferaDragon } from "./EsferaDragon.js";
 
 /**
  * Contiene el estado y las reglas de la partida.
@@ -17,6 +18,10 @@ export class Juego {
     this.desplazamientoSuelo = 0;
     this.jugador = new Jugador(120, alto / 2, 58, 58);
     this.obstaculos = [];
+
+    this.esferas = [];
+    this.esferasConseguidad = new Set();
+    this.ultimoPuntajeConEsferas = 0; 
   }
 
   // Prepara un estado nuevo y deja la partida lista para jugar.
@@ -27,6 +32,23 @@ export class Juego {
     this.jugador.reiniciar(this.alto / 2);
     this.obstaculos = [];
     this.obstaculos.push(this.crearObstaculo(this.ancho + 100));
+    this.esferas = [];
+    this.esferasConseguidad.clear();
+    this.ultimoPuntajeConEsferas = 0;
+  }
+  crearEsfera() {
+    const numero = Math.floor(Math.random() * 7) + 1;
+
+    const y =
+      Math.random() * (this.sueloY - 150) + 50;
+
+    this.esferas.push(
+      new EsferaDragon(
+        this.ancho + 50,
+        y,
+        numero
+      )
+    );
   }
 
   calcularAltoHueco(puntajePrevisto = this.puntaje) {
@@ -95,11 +117,49 @@ export class Juego {
         this.puntaje += 1;
       }
     }
-
+      if (this.puntaje > 3 && this.esferas.length === 0) {
+          this.crearEsfera();
+          this.ultimoPuntajeConEsferas  = this.puntaje;
+      }
+      for (const esfera of this.esferas) {
+      esfera.actualizar(
+        this.velocidadObstaculos,
+        deltaTime
+        );
+      }
+      this.recolectarEsferas();
     // Una colisión con los límites o con un obstáculo termina la partida.
     if (this.colisionaConLimites() || this.colisionaConObstaculo()) {
       this.estado = "terminado";
     }
+  }
+  recolectarEsferas() {
+    const jugador = this.jugador;
+
+    const izquierda = jugador.x - jugador.ancho / 2;
+    const derecha = jugador.x + jugador.ancho / 2;
+
+    const arriba = jugador.y - jugador.alto / 2;
+    const abajo = jugador.y + jugador.alto / 2;
+
+    this.esferas = this.esferas.filter(esfera => {
+
+      const colision =
+        derecha > esfera.x &&
+        izquierda < esfera.x + esfera.ancho &&
+        abajo > esfera.y &&
+          arriba < esfera.y + esfera.alto;
+
+        if (colision) {
+          this.esferasConseguidad.add(
+            esfera.numero
+          );
+
+          return false;
+        }
+
+        return true;
+      });
   }
 
   // Impulsa al jugador solo mientras una partida está en curso.
@@ -120,7 +180,14 @@ export class Juego {
       altoSuelo: this.altoSuelo,
       desplazamientoSuelo: this.desplazamientoSuelo,
       jugador: this.jugador.obtenerEstado(),
-      obstaculos: this.obstaculos.map((obstaculo) => obstaculo.obtenerEstado())
+      obstaculos: this.obstaculos.map((obstaculo) => obstaculo.obtenerEstado()),
+
+      esferas: this.esferas.map(
+        esfera => esfera.obtenerEstado()
+      ),
+      esferasConseguidad: [
+        ...this.esferasConseguidad
+      ]
     };
   }
 

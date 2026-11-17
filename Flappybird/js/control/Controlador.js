@@ -187,7 +187,8 @@ export class Controlador {
   }
 
   // Limpia las animaciones de impulso y muestra el fin al terminar el choque.
-  manejarFinDeAnimacion(evento) {
+  
+manejarFinDeAnimacion(evento) {
     if (evento.animationName === "impulso") {
       this.jugadorElemento.classList.remove("impulso");
       return;
@@ -195,7 +196,14 @@ export class Controlador {
 
     if (evento.animationName === "choque" && this.juego.estado === "terminado") {
       this.jugadorElemento.classList.remove("choque");
-      this.interfaz.mostrarFinDePartida(this.juego.puntaje);
+
+      const estado = this.juego.obtenerEstado();
+
+      this.interfaz.mostrarFinDePartida(
+        estado.puntaje,
+        estado.esferasConseguidad
+      );
     }
-  }
+}
+
 }

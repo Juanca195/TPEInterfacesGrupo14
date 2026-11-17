@@ -22,10 +22,24 @@ export class Interfaz {
   }
 
   // Muestra el resultado y habilita el botón para volver a jugar.
-  mostrarFinDePartida(puntaje) {
+  mostrarFinDePartida(puntaje, esferasConseguidas) {
     this.titulo.textContent = "¡Fin del juego!";
+
+    let textoEsferas = "";
+
+    for (let numero = 1; numero <= 7; numero++) {
+      if (esferasConseguidas.includes(numero)) {
+        textoEsferas += "⭐ ";
+      } else {
+        textoEsferas += "⚫ ";
+      }
+    }
+
     this.texto.textContent =
-      `Tu puntaje fue ${puntaje}. ¿Querés intentarlo otra vez?`;
+      `Tu puntaje fue ${puntaje}.\n` +
+      `Esferas recolectadas: ${esferasConseguidas.length}/7\n` +
+      `${textoEsferas}`;
+
     this.botonInicio.textContent = "Volver a jugar";
     this.pantalla.hidden = false;
   }

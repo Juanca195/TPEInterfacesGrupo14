@@ -55,6 +55,9 @@ export class Vista {
       capa.imagen = this.cargarImagen(capa.archivo, procesarImagen);
       return capa;
     });
+
+    this.imagenEsferas = this.cargarImagen("esferas_dragon.png" );
+    this.tiempoAnimacion = 0; 
   }
 
   // Carga una imagen y deja registrado su error si no se encuentra.
@@ -81,10 +84,58 @@ export class Vista {
     for (const obstaculo of estado.obstaculos) {
       this.dibujarObstaculo(obstaculo, estado.sueloY);
     }
-
+    if (estado.esferas) {
+      for (const esfera of estado.esferas) {
+        this.dibujarEsfera(esfera);
+      }
+    }
+    this.tiempoAnimacion += 0.05; 
     this.dibujarSuelo(estado);
   }
 
+// Dibuja una esfera del dragón en el canvas, seleccionando la esfera
+// correspondiente de la imagen original según su número.
+// También aplica un pequeño movimiento vertical para generar
+// una animación de flotación, sin modificar la posición real de la esfera
+// dentro del juego.
+ dibujarEsfera(esfera) {
+  const imagen = this.imagenEsferas;
+
+  if (!imagen.complete || imagen.naturalWidth === 0) {
+    return;
+  }
+
+  const cantidadEsferas = 7;
+
+  const anchoFuente = imagen.naturalWidth / cantidadEsferas;
+
+  const tamañoFuente = Math.min(
+    anchoFuente,
+    imagen.naturalHeight
+  );
+
+  const posicionX =
+    (esfera.numero - 1) * anchoFuente
+    + (anchoFuente - tamañoFuente) / 2;
+
+  const posicionY =
+    (imagen.naturalHeight - tamañoFuente) / 2;
+
+  const movimientoY =
+    Math.sin(this.tiempoAnimacion) * 5;
+
+  this.contexto.drawImage(
+    imagen,
+    posicionX,
+    posicionY,
+    tamañoFuente,
+    tamañoFuente,
+    esfera.x,
+    esfera.y + movimientoY,
+    esfera.ancho,
+    esfera.alto
+  );
+}
   // Dibuja cada capa parallax usando su velocidad y posición configuradas.
   dibujarCapasParallax(estado) {
     for (const capa of this.capasParallax) {
