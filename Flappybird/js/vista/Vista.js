@@ -17,8 +17,17 @@ const RECORTE_HORIZONTAL_ARBOLES = { x: 1672, ancho: 2200 };
 // Cada capa define su velocidad relativa, posición vertical y alto dibujado.
 // Un factor 0.1 mueve el cielo 10 px por cada 100 px que avanza el juego.
 const CAPAS_PARALLAX = [
-  { archivo: "capa_cielo_completo.png", factor: 0.1, y: 0, alto: 600 },
-  { archivo: "montania_sin_fondo.png", factor: 0.25, y: 260, alto: 280 },
+  { archivo: "capa_cielo_completo.png", 
+    factor: 0.1, 
+    y: 0, 
+    alto: 600 },
+  {
+    archivo: "montania_sin_fondo.png",
+    factor: 0.25,
+    y: 260,
+    alto: 280,
+    repetirConEspejo: true
+  },
   {
     archivo: "arboles.png",
     factor: 0.45,
@@ -165,8 +174,30 @@ export class Vista {
       (estado.desplazamientoSuelo * capa.factor) % ancho;
 
     // Dibuja copias consecutivas para cubrir el ancho visible del Canvas.
+    let indiceCapa = 0;
     for (let x = -Math.floor(desplazamiento); x < estado.ancho; x += ancho) {
-      this.contexto.drawImage(imagen, Math.floor(x), capa.y, ancho, capa.alto);
+      if (capa.repetirConEspejo && indiceCapa % 2 === 1) {
+        this.contexto.save();
+        this.contexto.translate(Math.floor(x) + ancho, 0);
+        this.contexto.scale(-1, 1);
+        this.contexto.drawImage(
+          imagen,
+          0,
+          capa.y,
+          ancho,
+          capa.alto
+        );
+        this.contexto.restore();
+      } else {
+        this.contexto.drawImage(
+          imagen,
+          Math.floor(x),
+          capa.y,
+          ancho,
+          capa.alto
+        );
+      }
+      indiceCapa += 1;
     }
   }
 
