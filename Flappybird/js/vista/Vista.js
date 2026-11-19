@@ -44,6 +44,7 @@ export class Vista {
     }
 
     this.escenario = escenario;
+    this.escala = 1;
 
     // Listas de elementos HTML que se reutilizan entre cuadros.
     this.obstaculos = [];
@@ -77,6 +78,10 @@ export class Vista {
         this.crearTiraEspejada(imagen, FRACCION_RECORTE_SUELO)
       );
     });
+  }
+
+  establecerEscala(escala) {
+    this.escala = escala;
   }
 
   // Carga una imagen y deja registrado su error si no se encuentra.
@@ -194,19 +199,21 @@ export class Vista {
 
     estado.obstaculos.forEach((datos, indice) => {
       const { arriba, abajo } = this.obstaculos[indice];
+      const escalaEnPixeles = this.escala * window.devicePixelRatio;
+      const xVisual = Math.round(datos.x * escalaEnPixeles) / escalaEnPixeles;
 
       // El tramo inferior comienza justo después del hueco.
       // Ejemplo: huecoY 180 + altoHueco 150 = inicio inferior en y 330.
       const inicioParteInferior = datos.huecoY + datos.altoHueco;
 
       // La roca de arriba va desde el techo hasta el comienzo del hueco.
-      arriba.style.left = `${datos.x}px`;
+      arriba.style.left = `${xVisual}px`;
       arriba.style.top = "0px";
       arriba.style.width = `${datos.ancho}px`;
       arriba.style.height = `${Math.max(0, datos.huecoY)}px`;
 
       // La roca de abajo va desde el final del hueco hasta el suelo.
-      abajo.style.left = `${datos.x}px`;
+      abajo.style.left = `${xVisual}px`;
       abajo.style.top = `${inicioParteInferior}px`;
       abajo.style.width = `${datos.ancho}px`;
       abajo.style.height = `${Math.max(0, estado.sueloY - inicioParteInferior)}px`;

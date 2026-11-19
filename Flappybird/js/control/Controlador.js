@@ -53,6 +53,7 @@ export class Controlador {
     const aplicarEscala = () => {
       const escala = marco.clientWidth / this.juego.ancho;
       this.escenario.style.transform = `scale(${escala})`;
+      this.vista.establecerEscala(escala);
     };
 
     aplicarEscala();
