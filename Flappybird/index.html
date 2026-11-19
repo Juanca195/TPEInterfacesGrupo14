@@ -179,18 +179,20 @@
     <!-- JavaScript actualiza este texto cada vez que cambia el puntaje. -->
     <p class="marcador" id="marcador" aria-live="polite">Puntaje: 0</p>
 
-    <!-- Este marco mantiene juntos el área de dibujo y los mensajes del juego. -->
+    <!-- Este marco mantiene juntos el escenario y los mensajes del juego. -->
     <div class="marco-canvas">
-      <!-- JavaScript dibuja el fondo, las rocas y el suelo en este Canvas. -->
-      <canvas id="lienzo-juego" width="900" height="600"
-        aria-label="Juego Goku Bird. Evitá los obstáculos para sumar puntos." role="img"></canvas>
+      <!-- CAMBIO: este div reemplaza al <canvas>. JavaScript crea aquí las capas
+           del fondo, las rocas, las esferas y el suelo. Su tamaño lo fija main.js. -->
+      <div class="escenario" id="escenario" role="img"
+        aria-label="Juego Goku Bird. Evitá los obstáculos para sumar puntos.">
 
-      <!-- Goku es HTML superpuesto al Canvas para poder animarlo con CSS. -->
-      <div class="jugador" id="jugador" aria-hidden="true">
-        <!-- La primera capa empieza visible con el primer cuadro del spritesheet. -->
-        <span class="jugador__sprite visible"></span>
-        <!-- La segunda capa recibe el siguiente cuadro durante el fundido. -->
-        <span class="jugador__sprite"></span>
+        <!-- CAMBIO: Goku ahora va dentro del escenario para escalarse junto con él. -->
+        <div class="jugador" id="jugador" aria-hidden="true">
+          <!-- La primera capa empieza visible con el primer cuadro del spritesheet. -->
+          <span class="jugador__sprite visible"></span>
+          <!-- La segunda capa recibe el siguiente cuadro durante el fundido. -->
+          <span class="jugador__sprite"></span>
+        </div>
       </div>
 
       <!-- Esta pantalla se muestra al entrar y al terminar una partida. -->

@@ -1,4 +1,4 @@
-/* Define los colores y la tipografía general de la página. */
+  /* Define los colores y la tipografía general de la página. */
 :root {
   color-scheme: light;
   font-family: Arial, Helvetica, sans-serif;
@@ -17,7 +17,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Mantiene el título, el marcador y el canvas en una misma columna. */
+/* Mantiene el título, el marcador y el escenario en una misma columna. */
 .contenedor-juego {
   width: min(100%, 900px);
   text-align: center;
@@ -39,10 +39,11 @@ h1 {
   font-weight: bold;
 }
 
-/* El canvas tiene un tamaño lógico fijo y se adapta al ancho disponible. */
+/* El marco mantiene la proporción 900:600 y recorta el escenario escalado. */
 .marco-canvas {
   position: relative;
   width: 100%;
+  aspect-ratio: 900 / 600;
   overflow: hidden;
   border: 4px solid #17324d;
   border-radius: 12px;
@@ -50,19 +51,97 @@ h1 {
   box-shadow: 0 8px 20px #17324d33;
 }
 
-/* Evita espacios debajo del canvas y conserva la proporción del juego. */
-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
+/* Escenario con tamaño lógico fijo (lo define main.js).
+   JavaScript lo escala con transform para adaptarlo al ancho del marco.
+   z-index: 0 crea un contexto de apilamiento propio, así la pantalla de
+   mensajes (z-index: 2) siempre queda por encima de todo lo del escenario. */
+.escenario {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  background: #87ceeb;
+  transform-origin: top left;
   touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-/* Superpone a Goku al Canvas y permite ubicarlo desde el controlador. */
+/* Capas parallax: la imagen se repite en horizontal y JavaScript mueve su posición.
+   El z-index de cada una lo asigna la vista (0, 1, 2). */
+.capa {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: 0 0;
+  pointer-events: none;
+}
+
+/* Cada mitad de un obstáculo se recorta al rectángulo que le corresponde. */
+.roca {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  background-image: url("../img/roca_obstaculo_transparente.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  pointer-events: none;
+}
+
+/* La roca superior se invierte verticalmente para que apunte hacia el hueco. */
+.roca--arriba {
+  transform: scaleY(-1);
+}
+
+/* Cada esfera toma una de las siete imágenes de la fila y flota con CSS. */
+.esfera {
+  position: absolute;
+  z-index: 3;
+
+  width: 42px;
+  height: 102px;
+
+  background-image: url("../img/esferas_dragon.png");
+  background-repeat: no-repeat;
+  background-size: 700% 100%;
+  background-position-y: 50%;
+
+  pointer-events: none;
+  animation: flotar 1.2s ease-in-out infinite alternate;
+}
+
+/* Movimiento vertical de flotación; no cambia la posición real de la esfera. */
+@keyframes flotar {
+  from {
+    transform: translateY(-5px);
+  }
+
+  to {
+    transform: translateY(5px);
+  }
+}
+
+/* El suelo va por encima de las rocas y por debajo de Goku.
+   El color de respaldo se ve mientras la imagen no está lista. */
+.suelo {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  width: 100%;
+  background-color: #633b2e;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: 0 0;
+  pointer-events: none;
+}
+
+/* Superpone a Goku al fondo y permite ubicarlo desde el controlador.
+   Ahora vive dentro del escenario, así que se escala junto con él. */
 .jugador {
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   width: 58px;
   aspect-ratio: 180 / 157;
   pointer-events: none;
@@ -148,7 +227,7 @@ canvas {
   }
 }
 
-/* Coloca los mensajes y botones encima del canvas. */
+/* Coloca los mensajes y botones encima del escenario. */
 .pantalla {
   position: absolute;
   inset: 0;

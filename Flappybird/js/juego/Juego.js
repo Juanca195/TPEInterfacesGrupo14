@@ -36,18 +36,33 @@ export class Juego {
     this.esferasConseguidad.clear();
     this.ultimoPuntajeConEsferas = 0;
   }
-  crearEsfera() {
+  crearEsfera(obstaculo) {
     const numero = Math.floor(Math.random() * 7) + 1;
+    const tamaño = 40;
+    const margen = 10;
 
-    const y =
-      Math.random() * (this.sueloY - 150) + 50;
+    // Calcula el espacio vertical disponible para la esfera.
+    const espacioDisponible =
+        obstaculo.altoHueco - tamaño - margen * 2;
+
+    // Si no entra, no genera la esfera.
+    if (espacioDisponible < 0) {
+        return;
+    }
+
+    // Elige una posición vertical dentro del hueco.
+    const yMinima = obstaculo.huecoY + margen;
+
+    const y = yMinima +
+        Math.random() * espacioDisponible;
+
+    // Centra la esfera horizontalmente respecto al obstáculo.
+    const x = obstaculo.x +
+        obstaculo.ancho / 2 -
+        tamaño / 2;
 
     this.esferas.push(
-      new EsferaDragon(
-        this.ancho + 50,
-        y,
-        numero
-      )
+        new EsferaDragon(x, y, numero)
     );
   }
 
@@ -101,9 +116,24 @@ export class Juego {
 
     // Mantiene un obstáculo nuevo en camino cuando el último ya avanzó.
     const ultimoObstaculo = this.obstaculos[this.obstaculos.length - 1];
-    if (ultimoObstaculo && ultimoObstaculo.x < this.ancho - 250) {
-      this.obstaculos.push(this.crearObstaculo(this.ancho + 20, ultimoObstaculo));
+  if (ultimoObstaculo && ultimoObstaculo.x < this.ancho - 250) {
+    const nuevoObstaculo = this.crearObstaculo(
+        this.ancho + 20,
+        ultimoObstaculo
+    );
+
+    this.obstaculos.push(nuevoObstaculo);
+
+    // Genera una esfera cada 3 puntos, a partir de los 4.
+    if (
+        this.puntaje > 3 &&
+        this.puntaje - this.ultimoPuntajeConEsferas >= 3
+    ) {
+        this.crearEsfera(nuevoObstaculo);
+
+        this.ultimoPuntajeConEsferas = this.puntaje;
     }
+  } 
 
     // Descarta los obstáculos que ya salieron de la pantalla.
     this.obstaculos = this.obstaculos.filter(
@@ -117,10 +147,6 @@ export class Juego {
         this.puntaje += 1;
       }
     }
-      if (this.puntaje > 3 && this.esferas.length === 0) {
-          this.crearEsfera();
-          this.ultimoPuntajeConEsferas  = this.puntaje;
-      }
       for (const esfera of this.esferas) {
       esfera.actualizar(
         this.velocidadObstaculos,
@@ -128,6 +154,10 @@ export class Juego {
         );
       }
       this.recolectarEsferas();
+
+      this.esferas = this.esferas.filter(
+      esfera => esfera.x + esfera.ancho > 0
+      );
     // Una colisión con los límites o con un obstáculo termina la partida.
     if (this.colisionaConLimites() || this.colisionaConObstaculo()) {
       this.estado = "terminado";
