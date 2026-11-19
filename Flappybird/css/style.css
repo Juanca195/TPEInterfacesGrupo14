@@ -138,92 +138,95 @@ h1 {
 }
 
 /* Superpone a Goku al fondo y permite ubicarlo desde el controlador.
-   Ahora vive dentro del escenario, así que se escala junto con él. */
+   Vive dentro del escenario, así que se escala junto con él.
+   "aspect-ratio" define la proporción del cuadro de VUELO (153 x 151),
+   que es el estado por defecto; "impulso" y "choque" la pisan más abajo
+   porque sus hojas de sprites tienen cuadros de otra proporción. */
 .jugador {
   position: absolute;
   z-index: 5;
   width: 58px;
-  aspect-ratio: 180 / 157;
+  aspect-ratio: 153 / 151;
   pointer-events: none;
   transform: translate(-50%, -50%);
 }
 
-/* Apila las dos capas que muestran los cuadros del spritesheet. */
+/* Mientras dura el impulso (salto) el cuadro es más alto por la estela de fuego. */
+.jugador.impulso {
+  aspect-ratio: 150 / 218;
+}
+
+/* Durante la explosión final el cuadro es más ancho por la nube creciendo. */
+.jugador.choque {
+  aspect-ratio: 204 / 184;
+}
+
+/* Una sola capa muestra siempre la hoja de sprites activa.
+   Ya no hace falta una segunda capa para fundir poses: cada estado
+   tiene su propia animación de "background-position" con pasos fijos. */
 .jugador__sprite {
   position: absolute;
   inset: 0;
-  display: block;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  background-image: url("../img/GokuNube_alta_resolucion.png");
   background-repeat: no-repeat;
-  background-size: 600% 100%;
-  background-position: 0 50%;
-  transition: opacity 0.12s ease;
+  background-position: 0% 50%;
 }
 
-/* Hace visible la capa que contiene el cuadro actual. */
-.jugador__sprite.visible {
-  opacity: 1;
+/* Vuelo normal: 5 cuadros en bucle mientras Goku no salta. */
+.jugador.volando .jugador__sprite {
+  background-image: url("../img/goku_vuelo.png");
+  background-size: 500% 100%;
+  animation: vuelo-aleteo 0.8s steps(4) infinite;
 }
 
-/* Combina la reacción del salto con un breve resplandor al cambiar de pose. */
-.jugador.impulso .jugador__sprite.visible {
-  animation:
-    impulso 0.28s ease-out,
-    cambio-pose 0.12s ease-out;
+/* Impulso: 5 cuadros con la estela de fuego creciendo, una sola vez por salto.
+   Esta regla va después de la de "volando" para que gane cuando las dos
+   clases están puestas a la vez (mientras dura el salto). */
+.jugador.impulso .jugador__sprite {
+  background-image: url("../img/goku_impulso.png");
+  background-size: 500% 100%;
+  animation: impulso-despegue 0.3s steps(4) 1;
 }
 
-/* Reproduce la reacción al choque solo en la capa que está visible. */
-.jugador.choque .jugador__sprite.visible {
-  animation: choque 0.55s ease-in forwards;
+/* Choque: 4 cuadros de la nube deshaciéndose en humo, una sola vez,
+   y se queda en el último cuadro ("forwards") hasta la pantalla de fin. */
+.jugador.choque .jugador__sprite {
+  background-image: url("../img/goku_choque.png");
+  background-size: 400% 100%;
+  animation: choque-explosion 0.6s steps(3) 1 forwards;
 }
 
-/* Ilumina sutilmente la nueva pose mientras aparece con el fundido. */
-@keyframes cambio-pose {
+/* Cada @keyframes recorre su hoja de izquierda a derecha.
+   "steps(cantidadDeCuadros - 1)" hace que salte de cuadro en cuadro
+   en vez de deslizar la imagen de forma continua. */
+@keyframes vuelo-aleteo {
   from {
-    filter: brightness(1.2);
+    background-position-x: 0%;
   }
 
   to {
-    filter: brightness(1);
+    background-position-x: 100%;
   }
 }
 
-/* Inclina y agranda a Goku brevemente cuando recibe un impulso. */
-@keyframes impulso {
-  0% {
-    transform: rotate(0) scale(1);
+@keyframes impulso-despegue {
+  from {
+    background-position-x: 0%;
   }
 
-  45% {
-    transform: rotate(-18deg) scale(1.12);
-  }
-
-  100% {
-    transform: rotate(0) scale(1);
+  to {
+    background-position-x: 100%;
   }
 }
 
-/* Hace parpadear y girar al personaje cuando choca con un obstáculo. */
-@keyframes choque {
-  0% {
-    opacity: 1;
-    filter: brightness(1);
-    transform: rotate(0) scale(1);
+@keyframes choque-explosion {
+  from {
+    background-position-x: 0%;
   }
 
-  35% {
-    opacity: 0.45;
-    filter: brightness(2) sepia(1);
-    transform: rotate(-25deg) scale(1.15);
-  }
-
-  100% {
-    opacity: 0;
-    filter: brightness(1);
-    transform: rotate(65deg) scale(0.75);
+  to {
+    background-position-x: 100%;
   }
 }
 
@@ -291,3 +294,4 @@ button:focus-visible {
   color: #31536e;
   line-height: 1.5;
 }
+  
