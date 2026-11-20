@@ -3,6 +3,8 @@ import { Obstaculo } from "./Obstaculo.js";
 import { EsferaDragon } from "./EsferaDragon.js";
 import { Dragon } from "./Dragon.js";
 
+//vidas para el choque
+const VIDAS_INICIALES = 3;
 /**
  * Contiene el estado y las reglas de la partida.
  * No accede al DOM ni dibuja: solo actualiza los datos del juego.
@@ -21,11 +23,12 @@ export class Juego {
     this.obstaculos = [];
 
     this.esferas = [];
-    this.esferasConseguidad = new Set();
+    this.esferasConseguidad = [];
     this.ultimoPuntajeConEsferas = 0; 
     this.dragones = [];
     this.tiempoHastaDragon = 5;
     this.tiempoParpadeo = 0; 
+    this.vidas = VIDAS_INICIALES;
   }
 
   // Prepara un estado nuevo y deja la partida lista para jugar.
@@ -37,12 +40,17 @@ export class Juego {
     this.obstaculos = [];
     this.obstaculos.push(this.crearObstaculo(this.ancho + 100));
     this.esferas = [];
-    this.esferasConseguidad.clear();
+    this.esferasConseguidad = [];
     this.ultimoPuntajeConEsferas = 0;
     this.dragones = [];
     this.tiempoHastaDragon = 5;
+    this.vidas = VIDAS_INICIALES;
+    this.tiempoParpadeo = 0; 
   }
   crearEsfera(obstaculo) {
+    if (this.esferasConseguidad.length >= 7) {
+      return;
+    }
     const numero = 2;
     const tamaño = 40;
     const margen = 10;
@@ -203,6 +211,7 @@ export class Juego {
         // El choque resta un punto, pero no termina la partida.
         this.puntaje = Math.max(0, this.puntaje - 1);
         this.tiempoParpadeo = 1.2;
+        this.perderVida();
         return false;
       }
 
@@ -210,6 +219,13 @@ export class Juego {
       return dragon.x + dragon.ancho > 0;
     });
   }
+  perderVida() {
+    this.vidas = Math.max(0, this.vidas - 1);
+
+    if (this.vidas === 0) {
+      this.estado = "terminado";
+    }
+  } 
 
   // Comprueba si los rectángulos del jugador y el dragón se superponen.
   jugadorTocaDragon(dragon) {
@@ -244,9 +260,7 @@ export class Juego {
           arriba < esfera.y + esfera.alto;
 
         if (colision) {
-          this.esferasConseguidad.add(
-            esfera.numero
-          );
+          this.esferasConseguidad.push(esfera.numero);
 
           return false;
         }
@@ -267,6 +281,8 @@ export class Juego {
     return {
       estado: this.estado,
       puntaje: this.puntaje,
+      vidas: this.vidas,
+      vidasMaximas: VIDAS_INICIALES,
       ancho: this.ancho,
       alto: this.alto,
       sueloY: this.sueloY,

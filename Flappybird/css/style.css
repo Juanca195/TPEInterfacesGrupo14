@@ -30,7 +30,6 @@ h1 {
   font-size: clamp(1.8rem, 8vw, 2.5rem);
   text-shadow: 1px 2px 0 #ffd76a;
 }
-
 /* Hace que el puntaje sea fácil de encontrar antes y durante la partida. */
 .marcador {
   min-height: 1.5em;
