@@ -170,7 +170,17 @@ export class Controlador {
     this.jugadorElemento.style.left = `${jugador.x}px`;
     this.jugadorElemento.style.top = `${jugador.y}px`;
     this.jugadorElemento.style.width = `${jugador.ancho * 1.3}px`;
+    this.parpadearJugador(estado);
   }
+  // Hace titilar a Goku mientras dura el parpadeo tras tocar un dragón.
+parpadearJugador(estado) {
+  const parpadeando = estado.estado === "jugando" && estado.tiempoParpadeo > 0;
+
+  // Alterna visible / semitransparente cada 0,1 segundos.
+  const visible = !parpadeando || Math.floor(estado.tiempoParpadeo * 10) % 2 === 0;
+
+  this.jugadorElemento.style.opacity = visible ? "1" : "0.25";
+}
 
   // Cuando termina el impulso vuelve al vuelo en bucle; cuando termina
   // la explosión del choque, recién ahí se muestra la pantalla de fin.

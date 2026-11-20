@@ -109,18 +109,29 @@ h1 {
   background-position-y: 50%;
 
   pointer-events: none;
-  animation: flotar 1.2s ease-in-out infinite alternate;
+   animation: animaesfera-aparecer 0.4s ease-out,
+    esfera-flotar 1.4s ease-in-out infinite alternate,
+    esfera-brillo 1.4s ease-in-out infinite alternate;
+  
 }
 
-/* Movimiento vertical de flotación; no cambia la posición real de la esfera. */
-@keyframes flotar {
-  from {
-    transform: translateY(-5px);
-  }
+/* Entra con un pequeño rebote. */
+@keyframes esfera-aparecer {
+  from { scale: 0; opacity: 0; }
+  60%  { scale: 1.25; opacity: 1; }
+  to   { scale: 1; opacity: 1; }
+}
 
-  to {
-    transform: translateY(5px);
-  }
+/* Flota y se balancea un poco. */
+@keyframes esfera-flotar {
+  from { translate: 0 -6px; rotate: -4deg; }
+  to   { translate: 0 6px;  rotate: 4deg; }
+}
+
+/* Resplandor dorado que late. */
+@keyframes esfera-brillo {
+  from { filter: drop-shadow(0 0 4px #ffb300) brightness(1); }
+  to   { filter: drop-shadow(0 0 14px #ffd76a) brightness(1.25); }
 }
 
 /* El suelo va por encima de las rocas y por debajo de Goku.
@@ -195,6 +206,39 @@ h1 {
   background-image: url("../img/goku_choque.png");
   background-size: 400% 100%;
   animation: choque-explosion 0.6s steps(3) 1 forwards;
+}
+/* Muestra al dragón encima del fondo y recorre el spritesheet horizontal. */
+.dragon {
+  position: absolute;
+  z-index: 4;
+  background-image: url("../img/dragonAnimacion.png");
+  background-repeat: no-repeat;
+  background-size: 600% 100%;
+  background-position: 0 50%;
+  pointer-events: none;
+  transform-origin: center;
+  animation:
+    dragon-volando 1.5s steps(1, end) infinite,
+    dragon-vaiven 1.5s ease-in-out infinite alternate;
+}
+
+/* 10 pasos: 1-2-3-4-5-6-5-4-3-2. Cada keyframe se mantiene hasta el siguiente. */
+@keyframes dragon-volando {
+  0%   { background-position-x: 0%; }
+  10%  { background-position-x: 20%; }
+  20%  { background-position-x: 40%; }
+  30%  { background-position-x: 60%; }
+  40%  { background-position-x: 80%; }
+  50%  { background-position-x: 100%; }
+  60%  { background-position-x: 80%; }
+  70%  { background-position-x: 60%; }
+  80%  { background-position-x: 40%; }
+  90%  { background-position-x: 20%; }
+}
+
+@keyframes dragon-vaiven {
+  from { transform: translateY(-4px); }
+  to   { transform: translateY(4px); }
 }
 
 /* Cada @keyframes recorre su hoja de izquierda a derecha.

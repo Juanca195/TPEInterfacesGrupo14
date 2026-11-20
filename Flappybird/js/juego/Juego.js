@@ -1,6 +1,7 @@
 import { Jugador } from "./Jugador.js";
 import { Obstaculo } from "./Obstaculo.js";
 import { EsferaDragon } from "./EsferaDragon.js";
+import { Dragon } from "./Dragon.js";
 
 /**
  * Contiene el estado y las reglas de la partida.
@@ -22,6 +23,9 @@ export class Juego {
     this.esferas = [];
     this.esferasConseguidad = new Set();
     this.ultimoPuntajeConEsferas = 0; 
+    this.dragones = [];
+    this.tiempoHastaDragon = 5;
+    this.tiempoParpadeo = 0; 
   }
 
   // Prepara un estado nuevo y deja la partida lista para jugar.
@@ -35,9 +39,11 @@ export class Juego {
     this.esferas = [];
     this.esferasConseguidad.clear();
     this.ultimoPuntajeConEsferas = 0;
+    this.dragones = [];
+    this.tiempoHastaDragon = 5;
   }
   crearEsfera(obstaculo) {
-    const numero = Math.floor(Math.random() * 7) + 1;
+    const numero = 2;
     const tamaño = 40;
     const margen = 10;
 
@@ -105,10 +111,13 @@ export class Juego {
     if (this.estado !== "jugando") {
       return;
     }
+    this.tiempoParpadeo = Math.max(0, this.tiempoParpadeo - deltaTime);
 
     this.jugador.actualizar(deltaTime);
     this.desplazamientoSuelo =
-      this.desplazamientoSuelo + this.velocidadObstaculos * deltaTime;
+    this.desplazamientoSuelo + this.velocidadObstaculos * deltaTime;
+    // Actualiza la posición y las colisiones de los dragones.
+    this.actualizarDragones(deltaTime);
 
     for (const obstaculo of this.obstaculos) {
       obstaculo.actualizar(this.velocidadObstaculos, deltaTime);
@@ -163,6 +172,60 @@ export class Juego {
       this.estado = "terminado";
     }
   }
+
+  // Genera dragones, los mueve y aplica una penalización al tocarlos.
+  actualizarDragones(deltaTime) {
+    // Reduce el tiempo restante hasta el próximo dragón.
+    this.tiempoHastaDragon -= deltaTime;
+
+    // Crea un dragón cuando termina la espera.
+    if (this.tiempoHastaDragon <= 0) {
+      const altoDragon = 97;
+      const margen = 60;
+      const espacioVertical = this.sueloY - altoDragon - margen * 2;
+      const y = margen + Math.random() * espacioVertical;
+
+      // Lo inicia fuera del borde derecho, a una altura aleatoria segura.
+      this.dragones.push(new Dragon(this.ancho + 40, y));
+
+      // Programa el próximo dragón para dentro de cinco a ocho segundos.
+      this.tiempoHastaDragon = 5 + Math.random() * 3;
+    }
+
+    // Mueve los dragones a la misma velocidad horizontal que el escenario.
+    for (const dragon of this.dragones) {
+     dragon.actualizar(this.velocidadObstaculos, deltaTime);
+    }
+
+    // Quita los dragones que ya salieron o que chocaron con el jugador.
+    this.dragones = this.dragones.filter((dragon) => {
+      if (this.jugadorTocaDragon(dragon)) {
+        // El choque resta un punto, pero no termina la partida.
+        this.puntaje = Math.max(0, this.puntaje - 1);
+        this.tiempoParpadeo = 1.2;
+        return false;
+      }
+
+      // Conserva solamente los dragones que siguen en pantalla.
+      return dragon.x + dragon.ancho > 0;
+    });
+  }
+
+  // Comprueba si los rectángulos del jugador y el dragón se superponen.
+  jugadorTocaDragon(dragon) {
+    const jugador = this.jugador;
+
+    const jugadorIzquierda = jugador.x - jugador.ancho / 2;
+    const jugadorDerecha = jugador.x + jugador.ancho / 2;
+    const jugadorArriba = jugador.y - jugador.alto / 2;
+    const jugadorAbajo = jugador.y + jugador.alto / 2;
+
+    return jugadorDerecha > dragon.x
+      && jugadorIzquierda < dragon.x + dragon.ancho
+      && jugadorAbajo > dragon.y
+      && jugadorArriba < dragon.y + dragon.alto;
+  }
+
   recolectarEsferas() {
     const jugador = this.jugador;
 
@@ -210,14 +273,18 @@ export class Juego {
       altoSuelo: this.altoSuelo,
       desplazamientoSuelo: this.desplazamientoSuelo,
       jugador: this.jugador.obtenerEstado(),
+      tiempoParpadeo: this.tiempoParpadeo,
       obstaculos: this.obstaculos.map((obstaculo) => obstaculo.obtenerEstado()),
 
+      // Entrega a la vista las posiciones de los dragones activos.
+      dragones: this.dragones.map((dragon) => dragon.obtenerEstado()),
       esferas: this.esferas.map(
         esfera => esfera.obtenerEstado()
       ),
       esferasConseguidad: [
         ...this.esferasConseguidad
       ]
+      
     };
   }
 

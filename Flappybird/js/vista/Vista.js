@@ -49,6 +49,7 @@ export class Vista {
     // Listas de elementos HTML que se reutilizan entre cuadros.
     this.obstaculos = [];
     this.esferas = [];
+    this.dragones = [];
 
     // Cada capa parallax es un div con la imagen como fondo repetido en horizontal.
     this.capasParallax = CAPAS_PARALLAX.map((definicion, indice) => {
@@ -170,6 +171,36 @@ export class Vista {
     this.sincronizarObstaculos(estado);
     this.sincronizarEsferas(estado);
     this.actualizarSuelo(estado);
+    // Actualiza los dragones en pantalla con las posiciones del modelo.
+    this.sincronizarDragones(estado);
+  }
+  // Crea, posiciona y elimina los elementos visuales de los dragones.
+  sincronizarDragones(estado) {
+    const dragones = estado.dragones ?? [];
+
+    // Crea un elemento HTML por cada dragón nuevo.
+    while (this.dragones.length < dragones.length) {
+      const elemento = document.createElement("div");
+      elemento.className = "dragon";
+      elemento.setAttribute("aria-hidden", "true");
+      this.escenario.append(elemento);
+      this.dragones.push(elemento);
+    }
+
+    // Elimina elementos que ya no están en el estado del juego.
+    while (this.dragones.length > dragones.length) {
+      this.dragones.pop().remove();
+    }
+
+    // Actualiza la posición y el tamaño de cada elemento existente.
+    dragones.forEach((datos, indice) => {
+      const elemento = this.dragones[indice];
+
+      elemento.style.left = `${datos.x}px`;
+      elemento.style.top = `${datos.y}px`;
+      elemento.style.width = `${datos.ancho}px`;
+      elemento.style.height = `${datos.alto}px`;
+    });
   }
 
   // Coloca el suelo y lo desplaza a la velocidad del juego.
