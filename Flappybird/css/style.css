@@ -338,7 +338,7 @@ h1 {
 }
 
 /* Hace que los controles se vean como botones y sean fáciles de pulsar. */
-button {
+.tarjeta button {
   min-height: 44px;
   padding: 10px 20px;
   border: 0;
@@ -351,7 +351,7 @@ button {
 }
 
 /* Señala visualmente que el botón está siendo enfocado con teclado. */
-button:focus-visible {
+.tarjeta button:focus-visible {
   outline: 3px solid #17324d;
   outline-offset: 3px;
 }
