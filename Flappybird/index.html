@@ -172,43 +172,56 @@
     </nav>
   </header>
 
-  <main class="contenedor-juego">
-    <!-- El título presenta el personaje usado en esta versión del juego. -->
-    <h1>Goku Bird</h1>
+    <main class="contenedor-juego">
+      <!-- El título presenta el personaje usado en esta versión del juego. -->
+      <h1>Goku Bird</h1>
 
-    <!-- JavaScript actualiza este texto cada vez que cambia el puntaje. -->
-    <div class="hud">
-      <p class="marcador" id="marcador" aria-live="polite">Puntaje: 0</p>
-      <p class="vidas" id="vidas" role="img" aria-label="Vidas: 3 de 3">❤️ ❤️ ❤️</p>
-    </div>
-
-    <!-- Este marco mantiene juntos el escenario y los mensajes del juego. -->
-    <div class="marco-canvas">
-      <!-- CAMBIO: este div reemplaza al <canvas>. JavaScript crea aquí las capas
-           del fondo, las rocas, las esferas y el suelo. Su tamaño lo fija main.js. -->
-      <div class="escenario" id="escenario" role="img"
-        aria-label="Juego Goku Bird. Evitá los obstáculos para sumar puntos.">
-
-        <!-- CAMBIO: Goku ahora va dentro del escenario para escalarse junto con él. -->
-        <div class="jugador" id="jugador" aria-hidden="true">
-          <!-- La segunda capa recibe el siguiente cuadro durante el fundido. -->
-          <span class="jugador__sprite"></span>
-        </div>
+      <!-- JavaScript actualiza este texto cada vez que cambia el puntaje. -->
+      <div class="hud">
+        <p class="marcador" id="marcador" aria-live="polite">Puntaje: 0</p>
+        <p class="vidas" id="vidas" role="img" aria-label="Vidas: 3 de 3">❤️ ❤️ ❤️</p>
       </div>
 
-      <!-- Esta pantalla se muestra al entrar y al terminar una partida. -->
-      <section class="pantalla" id="pantalla-mensaje" aria-labelledby="titulo-mensaje">
-        <div class="tarjeta">
-          <h2 id="titulo-mensaje">¡Listo para jugar!</h2>
-          <p id="texto-mensaje">Ayudá a Goku a pasar entre los obstáculos.</p>
-          <button id="boton-inicio" type="button">Empezar</button>
+    <div class="zona-juego">
+      <!-- Este marco mantiene juntos el escenario y los mensajes del juego. -->
+        <div class="marco-canvas">
+          <!-- CAMBIO: este div reemplaza al <canvas>. JavaScript crea aquí las capas
+              del fondo, las rocas, las esferas y el suelo. Su tamaño lo fija main.js. -->
+          <div class="escenario" id="escenario" role="img"
+            aria-label="Juego Goku Bird. Evitá los obstáculos para sumar puntos.">
+
+            <!-- CAMBIO: Goku ahora va dentro del escenario para escalarse junto con él. -->
+            <div class="jugador" id="jugador" aria-hidden="true">
+              <!-- La segunda capa recibe el siguiente cuadro durante el fundido. -->
+              <span class="jugador__sprite"></span>
+            </div>
         </div>
-      </section>
+
+        <!-- Esta pantalla se muestra al entrar y al terminar una partida. -->
+        <section class="pantalla" id="pantalla-mensaje" aria-labelledby="titulo-mensaje">
+          <div class="tarjeta">
+            <h2 id="titulo-mensaje">¡Listo para jugar!</h2>
+            <p id="texto-mensaje">Ayudá a Goku a pasar entre los obstáculos.</p>
+            <button id="boton-inicio" type="button">Empezar</button>
+          </div>
+        </section>
+      </div>
+      <aside class="ayuda-lateral" aria-labelledby="titulo-ayuda">
+      <h2 id="titulo-ayuda">Cómo jugar</h2>
+      <ul>
+        <li><kbd>Espacio</kbd>, <kbd>↑</kbd> o clic: Goku sube.</li>
+        <li>Pasá por el hueco de las rocas: +1 punto.</li>
+        <li>Esquivá al dragón: si lo tocás perdés 1 vida.</li>
+        <li>Agarrá las esferas para completar tu colección.</li>
+        <li>Perdés si chocás con una roca, el techo o el suelo, o si te quedás sin vidas.</li>
+      </ul>
+      </aside>
     </div>
 
-    <!-- Se recuerdan los controles que se pueden usar durante la partida. -->
-    <p class="ayuda">Clic, toque o barra espaciadora para volar. Evitá los obstáculos.</p>
-  </main>
+      <!-- Se recuerdan los controles que se pueden usar durante la partida. -->
+      <p class="ayuda">Clic, toque o barra espaciadora para volar. Evitá los obstáculos.</p>
+    </main>
+    
 
   <!-- Carga el punto de entrada, que conecta los módulos del juego. -->
   <script type="module" src="js/main.js"></script>

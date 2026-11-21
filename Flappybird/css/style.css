@@ -19,8 +19,17 @@ body {
 
 /* Mantiene el título, el marcador y el escenario en una misma columna. */
 .contenedor-juego {
-  width: min(100%, 900px);
   text-align: center;
+  position: relative;
+  left: -135px;
+}
+.zona-juego {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
 }
 
 /* Da estilo al título sin depender de imágenes o librerías externas. */
@@ -38,6 +47,22 @@ h1 {
   font-weight: bold;
 }
 
+.ayuda-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% + 20px);
+  width: 300px;
+  height: auto;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 3px solid #e6e5e2;
+  border-radius: 16px;
+  background: #2a2370;
+  color: #e7f2fc;
+  line-height: 1.5;
+  text-align: left;
+}
 /* El marco mantiene la proporción 900:600 y recorta el escenario escalado. */
 .marco-canvas {
   position: relative;
@@ -338,3 +363,16 @@ button:focus-visible {
   line-height: 1.5;
 }
   
+/* Envuelve el marco del juego: sirve de referencia para ubicar la ayuda. */
+/* .zona-juego {
+  position: relative;
+} */
+
+/* Si no hay lugar a la derecha del juego, la ayuda pasa debajo. */
+/* @media (max-width: 1360px) {
+  .ayuda-lateral {
+    position: static;
+    width: auto;
+    margin-top: 16px;
+  }
+} */
